@@ -1,7 +1,7 @@
 # Week 1: Introduction to time series {.unnumbered}
 
-[Slides]({{< var base_url>}}slides/ts/week01/slides.html){.btn .btn-outline-primary .btn role="button"} 
-[Slides PDF]({{< var base_url>}}slides/ts/week01/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
+[Slides]({{< var base_url>}}slides/week01/slides.html){.btn .btn-outline-primary .btn role="button"} 
+[Slides PDF]({{< var base_url>}}slides/week01/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
 
 ## Definition of time series
 According to you, what is a time series?

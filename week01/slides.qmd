@@ -4,13 +4,13 @@ subtitle: "Introduction to time series"
 format:
  live-revealjs:
   slide-number: true
-  brand: ../../_brand.yml
-  theme: ../../hevs.scss
+  brand: ../_brand.yml
+  theme: ../hevs.scss
   show-slide-number: all
   preview-links: auto
   chalkboard: true
   logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
-  footer: "[Time Series](https://www.delabays.xyz/math-hevs/ts/week01/)"
+  footer: "[Time Series](https://www.delabays.xyz/dls-ts/week01/)"
 ---
 
 ## Definition of time series

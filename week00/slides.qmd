@@ -4,8 +4,8 @@ subtitle: "Course introduction"
 format:
  live-revealjs:
   slide-number: true
-  brand: ../../_brand.yml
-  theme: ../../hevs.scss
+  brand: ../_brand.yml
+  theme: ../hevs.scss
   show-slide-number: all
   preview-links: auto
   chalkboard: true

@@ -1,7 +1,7 @@
 # Week 1: Course introduction {.unnumbered}
 
-[Slides]({{< var base_url>}}slides/ts/week00/slides.html){.btn .btn-outline-primary .btn role="button"} 
-[Slides PDF]({{< var base_url>}}slides/ts/week00/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
+[Slides]({{< var base_url>}}slides/week00/slides.html){.btn .btn-outline-primary .btn role="button"} 
+[Slides PDF]({{< var base_url>}}slides/week00/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
 
 ## Course organization
 
@@ -9,7 +9,7 @@
 Variable throughout the semester
 
 ### Online material
-All material will be made available from [this webpage](https://www.delabays.xyz/math-hevs/ts/).
+All material will be made available from [this webpage](https://www.delabays.xyz/dls-ts/).
 
 ### Exams
 First exam on Novemver 10, 2026: Brief exam (most likely QCM), approx. 45 minutes.
