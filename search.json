@@ -1,0 +1,176 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Applied Statistics: Time Series",
+    "section": "",
+    "text": "Table of content\nThis page contains the material for the class Applied Statistics: Time Series.",
+    "crumbs": [
+      "Table of content"
+    ]
+  },
+  {
+    "objectID": "index.html#fall-2026",
+    "href": "index.html#fall-2026",
+    "title": "Applied Statistics: Time Series",
+    "section": "Fall 2026",
+    "text": "Fall 2026\n\nSeptember 15, 2026 (Course intro)\nSeptember 15, 2026\nSeptember 22, 2026\nSeptember 29, 2026\nOctober 6, 2026\nOctober 8, 2026\nOctober 15, 2026\nOctober 20, 2026\nNovember 3, 2026\nNovember 9, 2026\nNovember 10, 2026\nNovember 17, 2026\nNovember 19, 2026\nDecember 10, 2026\nDecember 17, 2026\nJanuary 19, 2027",
+    "crumbs": [
+      "Table of content"
+    ]
+  },
+  {
+    "objectID": "week00/index.html",
+    "href": "week00/index.html",
+    "title": "Week 1: Course introduction",
+    "section": "",
+    "text": "Course organization\nSlides Slides PDF",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#course-organization",
+    "href": "week00/index.html#course-organization",
+    "title": "Week 1: Course introduction",
+    "section": "",
+    "text": "Day and time\nVariable throughout the semester\n\n\nOnline material\nAll material will be made available from this webpage.\n\n\nExams\nFirst exam on Novemver 10, 2026: Brief exam (most likely QCM), approx. 45 minutes.\nSecond exam on January 19, 2027: Longer exam with hands on, approx. 90 minutes.\n\n\nCourse wiki\nA course wiki will be set up. The idea is that you ceate your own list of important concepts. You fill it, I check it.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#course-approximate-schedule",
+    "href": "week00/index.html#course-approximate-schedule",
+    "title": "Week 1: Course introduction",
+    "section": "Course (approximate) schedule",
+    "text": "Course (approximate) schedule\n15.9.26: Intro to the course and intro to time series\n22.9.26: Recap of statistics\n29.9.26: Advanced basics\n6.10.26: Lab on time series basics\n8.10.26: Recap on vectorial geometry\n15.10.26: Fourier 1/2\n20.10.26: Fourier 2/2\n3.11.26: Lab on Fourier\n9.11.26: Recap and mock exam\n10.11.26: CC and correction\n17.11.26: Autoregressive models\n19.11.26: Moving average (recap) and ARMA models\n10.12.26: ARMA fitting\n17.12.26: Lab on ARMA\n19.1.27: Final exam",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#special-needs",
+    "href": "week00/index.html#special-needs",
+    "title": "Week 1: Course introduction",
+    "section": "Special needs",
+    "text": "Special needs\nSome of you may need some specific arrangements for the courses and/or the exams.\n\nMy first suggestion is to make it official by talking to your Responsable de filière (Mme Birgit Sievert).\nIn case you need indeptendent help, you can reach out to our mediator: Laurence Laffargue-Rieder, laurence.laffargue@hevs.ch\nFinally, I strongly encourage you to tell me what I can do to help.\n\nAdditionnal reading: Diversité et réussite dans l’enseignement supérieur",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#working-practice",
+    "href": "week00/index.html#working-practice",
+    "title": "Week 1: Course introduction",
+    "section": "Working practice",
+    "text": "Working practice\nYou are now in third year and I am sure that you know how to learn. I like to recap some (of my) good practices:\n\nTaking notes helps you stay active and attentive to the class.\nTaking breaks helps you study longer. More than two hours of studying in a row is counterproductive.\nRemember that studying is a social activity. Of course, you are developping new skills for your future job, but you are also making new friendships that may last for long. So again, take some breaks.\nFor the same amount of time dedicated to the course, speading it over a long period is much more efficient than using it all at the same time. Regularity is the key!",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#llms",
+    "href": "week00/index.html#llms",
+    "title": "Week 1: Course introduction",
+    "section": "LLMs…",
+    "text": "LLMs…\nI will not tell you not to use it, but as everyone else, I will tell you to use it with care. LLMs are very strong tools for learning, but they can also dramatically deteriorate your work.\nUse LLMs as sparring partners. Talk with it, challenge it. Make sure that you understand how and why it gave an answer.\nIf the LLM only gives you the answer, then you have learned nothing.\nCheating: We have had some strong suspicions of cheating using LLMs in the past. We will be extra careful from now on.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week00/index.html#contact",
+    "href": "week00/index.html#contact",
+    "title": "Week 1: Course introduction",
+    "section": "Contact",
+    "text": "Contact\n\nRobin Delabays\nOffices: 21.N203 or 23.N403\nE-mail: robin.delabays@hevs.ch\nPhone: +41 58 606 86 09",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Course introduction"
+    ]
+  },
+  {
+    "objectID": "week01/index.html",
+    "href": "week01/index.html",
+    "title": "Week 1: Introduction to time series",
+    "section": "",
+    "text": "Definition of time series\nSlides Slides PDF\nAccording to you, what is a time series?\nTwo main ingredients: 1. Series: A “thing”, usually measurable, i.e., a number. 1. Time: This number changes over time.\nFormally, a time series is a sequence of values each indexed by a time step: \\[ X = (x_{t_1}, x_{t_2},...,x_{t_N})\\, ,\\] where \\(x_t\\) is the value (usually a real number) of the time series at time \\(t\\) and \\(t_1,t_2,...\\) are the time steps. Each element \\(x_{t_i}\\) of a time series is called a sample.\nIn general, there is no contraints on the time steps. But for this course, we will always consider times steps are evenly spaced. Therefore, we will skip the \\(t\\) in the indexing and just number the components of the time series: \\[ X = (x_1,x_2,...,x_N)\\, .\\] Note that we then have to specify the time of first recording and the sampling rate, i.e., the time between two consecutive samples.\nTODO: Add a figure here.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#examples-of-time-series",
+    "href": "week01/index.html#examples-of-time-series",
+    "title": "Week 1: Introduction to time series",
+    "section": "Examples of time series",
+    "text": "Examples of time series\n\nAny meteorological quantity, measured over time (temperature, pressure, wind speed,…)\nStock market prices\nAny quantity measured inside a bioreactor (temparature, pH,…)\nAny health constant measured on a patient (temperature, heart rate, blood pressure,…)\n\nTODO: Figures?",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#acquisition",
+    "href": "week01/index.html#acquisition",
+    "title": "Week 1: Introduction to time series",
+    "section": "Acquisition",
+    "text": "Acquisition\n\nTime step\nThe acquisition of measurements requires the recording device to “read” the phenomenon and then “write” the recorded value. By nature, a time series cannot be continuous, because there is necessarily a gap between two consecutive values. Depending on the context, however, this gap can be made extremely small.\nIn practice, the duration of a time step, or sampling rate, should be made as small as needed for the purpose, but as large as possible to spare memory and computation.\nExample: Recording sounds requires to sample at a frequency of approximately 20 kHz (largest audible frequency). Actually, we need to record at twice this frequency because of aliasing (see later, Nyquist’s Theorem).\nIn this course, the time step of a time series will be denoted as \\(\\delta_t\\), measured in seconds.\n\n\nRecording time\nDepending on the context, there is also a minimal recording time required in order to observe certain phenomena.\nExample: In sound recording, if one does not record for more than 0.05 seconds, some audible sounds may not be recorded, because the lower bound of the audible spectrum is 20 Hz, i.e., 20 oscillations per second.\nIn this course, the duration of a time series will be denoted \\(T\\), measured in seconds.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#resampling",
+    "href": "week01/index.html#resampling",
+    "title": "Week 1: Introduction to time series",
+    "section": "Resampling",
+    "text": "Resampling\nSometimes, the given time step of a time series is not appropriate for our purpose.\nExample: I want to study the impact of the season on temperature. If the time step of my time series is at 15 minutes, this is too fine.\nGiven a fine time series, coarse graining is easy, but comes with a question. For each coarser time step, I have multiple values measured. Which one(?) should I use?\nTODO: Have illustrating figures",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#representing",
+    "href": "week01/index.html#representing",
+    "title": "Week 1: Introduction to time series",
+    "section": "Representing",
+    "text": "Representing\nThe first step in the analysis of a time series is visual inspection.\nMake sure to use an appropriate plotting tool. You need to be able to rescale, zoom in, zoom out of you time series.\nI recommend pyplot from matplotlib, which is a powerful plotting library.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#noise",
+    "href": "week01/index.html#noise",
+    "title": "Week 1: Introduction to time series",
+    "section": "Noise",
+    "text": "Noise\nExample: Measure the height of someone in millimeters.\nAny data acquisition is imperfect. Deviations of the measurements from the “real” system’s values are called noise. Noise is usually added (or substracted) from the measured values in the acquisition process.\nOne goal in time series analysis will be to mitigate the impact of noise.\nIn general, we will assume that the noise has zero mean. Therefore, the measured signal remains around the real signal.",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  },
+  {
+    "objectID": "week01/index.html#hands-on",
+    "href": "week01/index.html#hands-on",
+    "title": "Week 1: Introduction to time series",
+    "section": "Hands on",
+    "text": "Hands on\nTODO",
+    "crumbs": [
+      "Week 1",
+      "Week 1: Introduction to time series"
+    ]
+  }
+]
