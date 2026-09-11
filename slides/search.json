@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "week01/slides.html#definition-of-time-series",
+    "href": "week01/slides.html#definition-of-time-series",
+    "title": "Applied Statistics: Time Series",
+    "section": "Definition of time series",
+    "text": "Definition of time series\nAccording to you, what is a time series?"
+  },
+  {
+    "objectID": "week01/slides.html#definition-of-time-series-1",
+    "href": "week01/slides.html#definition-of-time-series-1",
+    "title": "Applied Statistics: Time Series",
+    "section": "Definition of time series",
+    "text": "Definition of time series\nAccording to you, what is a time series?\nTwo main ingredients:\n\nSeries: A “thing”, usually measurable, i.e., a number.\nTime: This number changes over time."
+  },
+  {
+    "objectID": "week01/slides.html#definition-of-time-series-2",
+    "href": "week01/slides.html#definition-of-time-series-2",
+    "title": "Applied Statistics: Time Series",
+    "section": "Definition of time series",
+    "text": "Definition of time series\nFormally, a time series is a sequence of values each indexed by a time step: \\[ X = (x_{t_1}, x_{t_2},...,x_{t_N})\\, ,\\]\n\n\\(x_t\\): the value at time \\(t\\)\n\\(t_1,t_2,...\\) are the time steps.\n\nEach element \\(x_{t_i}\\) of a time series is called a sample."
+  },
+  {
+    "objectID": "week01/slides.html#time-steps",
+    "href": "week01/slides.html#time-steps",
+    "title": "Applied Statistics: Time Series",
+    "section": "Time steps",
+    "text": "Time steps\nFor this course, we consider evenly spaced times steps.\nTherefore, it is enough to enumerate the components: \\[ X = (x_1,x_2,...,x_N)\\, .\\]\nBut we have to specify:\n\nthe time of first recording \\(t_0\\)\nthe sampling rate, i.e., the time between two consecutive samples.\n\nTODO: Add a figure here."
+  },
+  {
+    "objectID": "week01/slides.html#examples-of-time-series",
+    "href": "week01/slides.html#examples-of-time-series",
+    "title": "Applied Statistics: Time Series",
+    "section": "Examples of time series",
+    "text": "Examples of time series\n\nAny meteorological quantity, measured over time (temperature, pressure, wind speed,…)\nStock market prices\nAny quantity measured inside a bioreactor (temparature, pH,…)\nAny health constant measured on a patient (temperature, heart rate, blood pressure,…)\n\nTODO: Figures?"
+  },
+  {
+    "objectID": "week01/slides.html#acquisition---time-step",
+    "href": "week01/slides.html#acquisition---time-step",
+    "title": "Applied Statistics: Time Series",
+    "section": "Acquisition - Time step",
+    "text": "Acquisition - Time step\n“Read” and “write” implies a gap between two consecutive values.\nThe time step should be:\n\nas large as possible…\nas small as necessary.\n\nExample: Recording sounds requires \\(20\\,000\\) samples per second, i.e., \\(20 {\\rm kHz}\\).\nNotation: \\(\\delta_t\\)\nUnit: second"
+  },
+  {
+    "objectID": "week01/slides.html#acquisition---recording-time",
+    "href": "week01/slides.html#acquisition---recording-time",
+    "title": "Applied Statistics: Time Series",
+    "section": "Acquisition - Recording time",
+    "text": "Acquisition - Recording time\nWe cannot record for ever…\nThe recording time should be:\n\nas short as possible…\nas long as necessary.\n\nExample: Recording a sound of less that \\(0.05 {\\rm s}\\), soudns at \\(20 {\\rm Hz}\\) cannot be heard.\nNotation: \\(T\\)\nUnit: second"
+  },
+  {
+    "objectID": "week01/slides.html#resampling",
+    "href": "week01/slides.html#resampling",
+    "title": "Applied Statistics: Time Series",
+    "section": "Resampling",
+    "text": "Resampling\nTODO: Do it on figures."
+  },
+  {
+    "objectID": "week01/slides.html#representing",
+    "href": "week01/slides.html#representing",
+    "title": "Applied Statistics: Time Series",
+    "section": "Representing",
+    "text": "Representing\nRecommendation: pyplot from matplotlib.\nTODO: Make some code."
+  },
+  {
+    "objectID": "week01/slides.html#noise",
+    "href": "week01/slides.html#noise",
+    "title": "Applied Statistics: Time Series",
+    "section": "Noise",
+    "text": "Noise\nExample: Measure the height of someone in millimeters."
+  },
+  {
+    "objectID": "week01/slides.html#noise-1",
+    "href": "week01/slides.html#noise-1",
+    "title": "Applied Statistics: Time Series",
+    "section": "Noise",
+    "text": "Noise\nExample: Measure the height of someone in millimeters.\nData acquisition is imperfect.\nDeviations from the “real” value are the noise.\nGoal: Mitigate the effect of noise."
+  },
+  {
+    "objectID": "week01/slides.html#hands-on",
+    "href": "week01/slides.html#hands-on",
+    "title": "Applied Statistics: Time Series",
+    "section": "Hands on",
+    "text": "Hands on\nTODO"
+  },
+  {
+    "objectID": "week00/slides.html#course-organization",
+    "href": "week00/slides.html#course-organization",
+    "title": "Applied Statistics: Time Series",
+    "section": "Course organization",
+    "text": "Course organization\nDay and time: Variable throughout the semester.\nOnline material: All material will be made available from this webpage.\nFirst exam: Novemver 10, 2026: Brief exam (most likely QCM), approx. 45 minutes.\nSecond exam: January 19, 2027: Longer exam with hands on, approx. 90 minutes.\nCourse wiki: A course wiki will be set up. You fill it, I check it."
+  },
+  {
+    "objectID": "week00/slides.html#course-approximate-schedule",
+    "href": "week00/slides.html#course-approximate-schedule",
+    "title": "Applied Statistics: Time Series",
+    "section": "Course (approximate) schedule",
+    "text": "Course (approximate) schedule\n15.9.26: Intro to the course and intro to time series\n22.9.26: Recap of statistics\n29.9.26: Advanced basics\n6.10.26: Lab on time series basics\n8.10.26: Recap on vectorial geometry\n15.10.26: Fourier 1/2\n20.10.26: Fourier 2/2\n3.11.26: Lab on Fourier\n9.11.26: Recap and mock exam\n10.11.26: CC and correction"
+  },
+  {
+    "objectID": "week00/slides.html#course-approximate-schedule-bis",
+    "href": "week00/slides.html#course-approximate-schedule-bis",
+    "title": "Applied Statistics: Time Series",
+    "section": "Course (approximate) schedule (bis)",
+    "text": "Course (approximate) schedule (bis)\n17.11.26: Autoregressive models\n19.11.26: Moving average (recap) and ARMA models\n10.12.26: ARMA fitting\n17.12.26: Lab on ARMA\n19.1.27: Final exam"
+  },
+  {
+    "objectID": "week00/slides.html#special-needs",
+    "href": "week00/slides.html#special-needs",
+    "title": "Applied Statistics: Time Series",
+    "section": "Special needs",
+    "text": "Special needs\n\nTalk to your Responsable de filière (Mme Birgit Sievert).\nMediator: Laurence Laffargue-Rieder, laurence.laffargue@hevs.ch.\nTell me what I can do to help.\n\nAdditionnal reading: Diversité et réussite dans l’enseignement supérieur"
+  },
+  {
+    "objectID": "week00/slides.html#working-practice",
+    "href": "week00/slides.html#working-practice",
+    "title": "Applied Statistics: Time Series",
+    "section": "Working practice",
+    "text": "Working practice\n\nTake notes\nTake breaks\nStudying is a social activity\nRegularity"
+  },
+  {
+    "objectID": "week00/slides.html#llms",
+    "href": "week00/slides.html#llms",
+    "title": "Applied Statistics: Time Series",
+    "section": "LLMs…",
+    "text": "LLMs…\nUse it with care!\n\nSparring partner\nTalk with it, challenge it.\nUnderstand how and why it gave an answer.\n\nCheating: We will be extra careful from now on."
+  },
+  {
+    "objectID": "week00/slides.html#contact",
+    "href": "week00/slides.html#contact",
+    "title": "Applied Statistics: Time Series",
+    "section": "Contact",
+    "text": "Contact\n\nRobin Delabays\nOffices: 21.N203 or 23.N403\nE-mail: robin.delabays@hevs.ch\nPhone: +41 58 606 86 09"
+  }
+]
