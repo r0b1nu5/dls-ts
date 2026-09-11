@@ -5,7 +5,10 @@ project:
 
 
 format:
-  revealjs:
+  live-revealjs:
     slide-number: true
     show-slide-number: all
     logo: img/hesso.svg
+    width: 1400
+    height: 787
+    margin: 0.04

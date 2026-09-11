@@ -9,105 +9,161 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # Toolchain is pinned to the local teaching environment so that figure
+      # sizes in the rendered slides match local renders (see dls-mlai).
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          version: 1.7.31
           tinytex: true
       - name: Install Python and Dependencies
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
           cache: 'pip'
       - run: pip install jupyter
       - run: pip install -r requirements.txt
+      - name: Point Quarto at the setup-python interpreter
+        run: echo "QUARTO_PYTHON=$(which python3)" >> "$GITHUB_ENV"
+      - name: Report toolchain versions
+        run: |
+          quarto --version
+          python --version
+          echo "QUARTO_PYTHON=$QUARTO_PYTHON"
+          python3 -c "import sys, yaml, jupyter_core; print(sys.executable, 'yaml', yaml.__version__)"
+          pip show matplotlib numpy | grep -E '^(Name|Version)'
+          quarto check jupyter 2>&1 | grep -E 'Version|Path|Jupyter|OK|ERROR' || true
       - name: Remove .onlyteacher blocks from .qmd files
         run: |
-          for file in Week*/*.qmd; do
+          for file in week*/*.qmd; do
             [ -f "$file" ] || continue  # Skip if not a regular file
             sed -i '/::: {.onlyteacher}/,/:::/d' "$file"
           done
+
+      # This course has no Jupyter notebooks. If .ipynb files are added later, see
+      # lse-dsc or dls-mlai for the "Remove Solution Cells", "Reformat jupyter
+      # notebooks" and "Copy notebooks and data files to output" steps.
+
       - name: Render Book and Slides
         run: |
           quarto render --profile book
-      - name: Build PDFs from slides
+
+      - name: Compute slide source hashes
+        id: slide-hashes
         run: |
-          python3 -m http.server 8000 &
-          find ./_slides -name 'slides.html' | while read slide; do
-          echo "Converting $slide to PDF"
-          pdf_path="${slide%.html}.pdf"
-          relative_slide_path="${slide#./}"
-          url_path="/slides/$relative_slide_path"
-          # Output path inside container: use /tmp
-          tmp_pdf_name="$(basename "$pdf_path")"
-          tmp_pdf_path="/tmp/$tmp_pdf_name"
-          clean_slide=$(echo "$slide" | sed 's|^\./||')
-          echo "http://localhost:8000/$clean_slide"
-          docker run --rm -t --network=host -v "$(pwd)":/slides -v /tmp:/tmp astefanutti/decktape "http://localhost:8000/$clean_slide" "$tmp_pdf_path"
-          cp "/tmp/$tmp_pdf_name" "$pdf_path"
+          # Create a hash file for each slide source
+          mkdir -p .slide-hashes
+          for qmd in week*/*slides*.qmd; do
+            [ -f "$qmd" ] || continue
+            hash=$(sha256sum "$qmd" | cut -d' ' -f1)
+            basename=$(basename "$qmd" .qmd)
+            dirname=$(dirname "$qmd")
+            echo "$hash" > ".slide-hashes/${dirname}-${basename}.hash"
           done
-      - name: Deploy _book to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+          # Create overall hash for cache key
+          overall_hash=$(find .slide-hashes -type f -exec cat {} \; | sha256sum | cut -d' ' -f1)
+          echo "hash=$overall_hash" >> $GITHUB_OUTPUT
+
+      - name: Restore cached slide PDFs
+        uses: actions/cache@v4
+        id: pdf-cache
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_book
-          publish_branch: gh-pages
-          keep_files: true
+          path: |
+            .cached-pdfs
+            .cached-hashes
+          key: slide-pdfs-${{ steps.slide-hashes.outputs.hash }}
+          restore-keys: |
+            slide-pdfs-
 
-      - name: Deploy _slides to gh-pages (subfolder)
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Build PDFs from slides (incremental)
+        run: |
+          mkdir -p .cached-pdfs .cached-hashes
+          # Start web server for Decktape
+          python3 -m http.server 8000 &
+          SERVER_PID=$!
+          sleep 2
+          find ./_slides -name 'slides.html' | while read slide; do
+            # Determine source file and cache paths
+            week_dir=$(echo "$slide" | sed 's|./_slides/||' | cut -d'/' -f1)
+            slide_name=$(basename "$slide" .html)
+            cache_key="${week_dir}-${slide_name}"
+            pdf_path="${slide%.html}.pdf"
+            cached_pdf=".cached-pdfs/${cache_key}.pdf"
+            cached_hash=".cached-hashes/${cache_key}.hash"
+            current_hash=".slide-hashes/${cache_key}.hash"
+            # Check if we need to rebuild
+            needs_rebuild=true
+            if [ -f "$cached_pdf" ] && [ -f "$cached_hash" ] && [ -f "$current_hash" ]; then
+              if diff -q "$cached_hash" "$current_hash" > /dev/null 2>&1; then
+                echo "✓ Using cached PDF for $slide"
+                cp "$cached_pdf" "$pdf_path"
+                needs_rebuild=false
+              fi
+            fi
+            if [ "$needs_rebuild" = true ]; then
+              echo "→ Building PDF for $slide"
+              tmp_pdf_name="$(basename "$pdf_path")"
+              tmp_pdf_path="/tmp/$tmp_pdf_name"
+              clean_slide=$(echo "$slide" | sed 's|^\./||')
+              docker run --rm -t --network=host -v "$(pwd)":/slides -v /tmp:/tmp \
+                astefanutti/decktape "http://localhost:8000/$clean_slide" "$tmp_pdf_path"
+              cp "/tmp/$tmp_pdf_name" "$pdf_path"
+              # Update cache
+              cp "$pdf_path" "$cached_pdf"
+              [ -f "$current_hash" ] && cp "$current_hash" "$cached_hash"
+            fi
+          done
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Read folder and set as env variable
+        run: |
+          # Use the pinned interpreter (it has pyyaml installed from requirements.txt).
+          "$QUARTO_PYTHON" - <<'PYEOF'
+          import yaml
+          import os
+
+          # Load _variables.yml
+          with open('_variables.yml', 'r') as f:
+              data = yaml.safe_load(f)
+
+          # Get the folder value
+          folder = data.get('folder')
+          print(f"Folder: {folder}")
+
+          # Write to GITHUB_ENV to pass to future steps
+          with open(os.environ['GITHUB_ENV'], 'a') as env_file:
+              env_file.write(f"FOLDER={folder}\n")
+          PYEOF
+
+      - name: Package and upload book
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          echo "Folder: $FOLDER"
+
+          # Create zip file with _book
+          (cd _book && zip -r ../${FOLDER}.zip * .)
+          mv _slides slides
+          zip -r ${FOLDER}.zip slides
+
+          # Upload to dls.hevs.ch using the API_TOKEN secret
+          curl -X POST \
+            -F "API_TOKEN=${API_TOKEN}" \
+            -F "destination=${FOLDER}" \
+            -F "zip_file=@${FOLDER}.zip" \
+            -F "trigger=gitpush" \
+            https://dls.hevs.ch/upload/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_slides
-          publish_branch: gh-pages
-          destination_dir: slides
-          keep_files: true
-      # Deploy to dls.hevs.ch, contact me for API_TOKEN
-      # - name: Read folder and set as env variable
-      #   run: |
-      #     python3 - <<'EOF'
-      #     import yaml
-      #     import os
-
-      #     # Load _variables.yml
-      #     with open('_variables.yml', 'r') as f:
-      #         data = yaml.safe_load(f)
-
-      #     # Get the folder value
-      #     folder = data.get('folder')
-      #     print(f"Folder: {folder}")
-
-      #     # Write to GITHUB_ENV to pass to future steps
-      #     with open(os.environ['GITHUB_ENV'], 'a') as env_file:
-      #         env_file.write(f"FOLDER={folder}\n")
-      #     EOF
-      # - name: Package and upload book
-      #   env:
-      #     API_TOKEN: ${{ secrets.API_TOKEN }}
-      #   run: |
-
-      #     echo "Folder: $FOLDER"
-
-      #     # Create zip file with _book
-      #     (cd _book && zip -r ../${FOLDER}.zip * .)
-      #     mv _slides slides
-      #     zip -r ${FOLDER}.zip slides
-
-      #     # Upload using curl with API_TOKEN secret
-      #     curl -X POST \
-      #       -F "API_TOKEN=${API_TOKEN}" \
-      #       -F "destination=${FOLDER}" \
-      #       -F "zip_file=@${FOLDER}.zip" \
-      #       https://dls.hevs.ch/upload/
-      # - name: 'Upload Artifact'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: folder
-      #     path: folder.zip
-      #     retention-days: 5
+          name: folder
+          path: ${{ env.FOLDER }}.zip
+          retention-days: 5
