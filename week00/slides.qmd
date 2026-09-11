@@ -1,0 +1,97 @@
+---
+title: "Applied Statistics: Time Series"
+subtitle: "Course introduction"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../../_brand.yml
+  theme: ../../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://www.delabays.xyz/math-hevs/ts/week00/)"
+---
+
+## Course organization
+
+**Day and time:** Variable throughout the semester.
+
+**Online material:** All material will be made available from [this webpage](https://www.delabays.xyz/math-hevs/ts/).
+
+**First exam:** Novemver 10, 2026: Brief exam (most likely QCM), approx. 45 minutes.
+
+**Second exam:** January 19, 2027: Longer exam with hands on, approx. 90 minutes.
+
+**Course wiki:** A course wiki will be set up. 
+You fill it, I check it.
+
+## Course (approximate) schedule
+**15.9.26**: Intro to the course and intro to time series
+
+**22.9.26**: Recap of statistics
+
+**29.9.26**: Advanced basics
+
+**6.10.26**: *Lab on time series basics*
+
+**8.10.26**: Recap on vectorial geometry
+
+**15.10.26**: Fourier 1/2
+
+**20.10.26**: Fourier 2/2
+
+**3.11.26**: *Lab on Fourier*
+
+**9.11.26**: Recap and mock exam
+
+**10.11.26**: CC and correction
+
+## Course (approximate) schedule (bis)
+**17.11.26**: Autoregressive models
+
+**19.11.26**: Moving average (recap) and ARMA models
+
+**10.12.26**: ARMA fitting
+
+**17.12.26**: *Lab on ARMA*
+
+**19.1.27**: Final exam
+
+## Special needs
+1. Talk to your *Responsable de filière* (Mme Birgit Sievert). 
+
+1. Mediator: Laurence Laffargue-Rieder, [laurence.laffargue@hevs.ch](mailto:laurence.laffargue@hevs.ch).
+
+1. Tell me what I can do to help.
+
+*Additionnal reading: [Diversité et réussite dans l'enseignement supérieur](https://www.hetsl.ch/organisation/egalite-et-diversite/apprentissages-et-diversite)*
+
+## Working practice
+- Take notes
+
+- Take breaks 
+
+- Studying is a social activity
+ 
+- Regularity
+
+## LLMs...
+Use it with care!
+
+- Sparring partner
+
+- Talk with it, challenge it.
+
+- Understand how and why it gave an answer. 
+
+
+**Cheating:** We will be extra careful from now on.
+
+## Contact
+- Robin Delabays
+- Offices: 21.N203 or 23.N403
+- E-mail: [robin.delabays@hevs.ch](mailto:robin.delabays@hevs.ch)
+- Phone: +41 58 606 86 09
+
+

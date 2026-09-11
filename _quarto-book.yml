@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: _book
+  post-render: quarto render --profile slides
+
+number-depth: 1
+
+book:
+  reader-mode: false
+  title: "Applied Statistics: Time Series"
+  chapters:
+    - index.qmd
+    - part: "Week 1"
+      chapters:
+        - week00/index.qmd
+        - week01/index.qmd
+    - part: "Week 2"
+    - part: "Week 3"
+    - part: "Week 4"
+    - part: "Week 5"
+    - part: "Week 6"
+    - part: "Week 7"
+    - part: "Week 8"
+    - part: "Week 9"
+    - part: "Week 10"
+    - part: "Week 11"
+    - part: "Week 12"
+    - part: "Week 13"
+    - part: "Week 14"
+    - part: "Week 15"
+
+format:
+  live-html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt

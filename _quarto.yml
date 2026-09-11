@@ -1,0 +1,12 @@
+profile:
+  default: slides
+author:
+    - name: Robin Delabays
+      institute: HES-SO Valais-Wallis
+date: last-modified
+date-format: long
+  
+bibliography: references.bib
+
+project:
+  type: website

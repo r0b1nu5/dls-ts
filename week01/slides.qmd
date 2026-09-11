@@ -1,0 +1,127 @@
+---
+title: "Applied Statistics: Time Series"
+subtitle: "Introduction to time series"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../../_brand.yml
+  theme: ../../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://www.delabays.xyz/math-hevs/ts/week01/)"
+---
+
+## Definition of time series
+According to you, what is a time series?
+
+## Definition of time series
+According to you, what is a time series?
+
+Two main ingredients:
+
+1. **Series:** A "thing", usually measurable, i.e., a number.
+
+1. **Time:** This number changes over time.
+
+## Definition of time series
+Formally, a time series is *a sequence of values each indexed by a time step*:
+$$ X = (x_{t_1}, x_{t_2},...,x_{t_N})\, ,$$
+
+- $x_t$: the value at time $t$
+
+- $t_1,t_2,...$ are the **time steps**. 
+
+Each element $x_{t_i}$ of a time series is called a **sample**.
+
+## Time steps
+For this course, we consider evenly spaced times steps.
+
+Therefore, it is enough to enumerate the components:
+$$ X = (x_1,x_2,...,x_N)\, .$$
+
+But we have to specify:
+
+- the time of first recording $t_0$
+
+- the **sampling rate**, i.e., the time between two consecutive samples.
+
+**TODO: Add a figure here.**
+
+## Examples of time series
+- Any meteorological quantity, measured over time (temperature, pressure, wind speed,...)
+
+- Stock market prices
+
+- Any quantity measured inside a bioreactor (temparature, pH,...)
+
+- Any health constant measured on a patient (temperature, heart rate, blood pressure,...)
+
+**TODO: Figures?**
+
+## Acquisition - Time step
+"Read" and "write" implies a gap between two consecutive values. 
+
+The time step should be: 
+
+- as large as possible...
+
+- as small as necessary.
+    
+**Example:**
+*Recording sounds requires $20\,000$ samples per second, i.e., $20 {\rm kHz}$.*
+
+**Notation:** $\delta_t$
+
+**Unit:** second
+
+
+## Acquisition - Recording time
+We cannot record for ever...
+
+The recording time should be:
+
+- as short as possible...
+
+- as long as necessary.
+
+**Example:**
+*Recording a sound of less that $0.05 {\rm s}$, soudns at $20 {\rm Hz}$ cannot be heard.*
+
+**Notation:** $T$
+
+**Unit:** second
+
+## Resampling
+**TODO: Do it on figures.**
+
+
+## Representing
+Recommendation: pyplot from matplotlib.
+
+**TODO: Make some code.**
+
+
+## Noise
+
+**Example:** 
+*Measure the height of someone in millimeters.*
+
+## Noise
+
+**Example:**
+*Measure the height of someone in millimeters.*
+
+Data acquisition is imperfect. 
+
+Deviations from the "real" value are the **noise**. 
+
+**Goal:** Mitigate the effect of noise.
+
+
+## Hands on
+
+**TODO**
+
+

@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "an3/251104/index.html",
+    "href": "an3/251104/index.html",
+    "title": "Série de Fourier et équation différentielle",
+    "section": "",
+    "text": "import numpy as np\n\nt = np.linspace(0,10,200)\n\nprint(t)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Mathématiques HEI",
+    "section": "",
+    "text": "Mathématiques HEI\nCette page regroupe quelques documents additionnel pour les cours de mathématiques donnés à la Haute Ecole d’Inénierie de Sion.\n\nAnalyse 3"
+  },
+  {
+    "objectID": "an3/index.html",
+    "href": "an3/index.html",
+    "title": "Analyse 3",
+    "section": "",
+    "text": "Activité du mardi 4 novembre 2025"
+  },
+  {
+    "objectID": "an3/index.html#section",
+    "href": "an3/index.html#section",
+    "title": "Analyse 3",
+    "section": "",
+    "text": "Activité du mardi 4 novembre 2025"
+  }
+]
