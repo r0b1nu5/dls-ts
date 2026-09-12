@@ -97,11 +97,11 @@ Therefore, the measured signal remains around the real signal.
 
 ## Hands-on
 
-This [file](./penicillin-data-01.csv) contains a subset of the data simulated by this [Industrial-Scale Penicillin Simulator](http://www.industrialpenicillinsimulation.com/).
+This [file](./files/penicillin-data-01.csv) contains a subset of the data simulated by this [Industrial-Scale Penicillin Simulator](http://www.industrialpenicillinsimulation.com/).
 
 1. Read the description of the data set provided on the [simulator's website](http://www.industrialpenicillinsimulation.com/). 
 
-1. Extract the data from the [file](./penicillin-data-01.csv) in a DataFrame format.
+1. Extract the data from the [file](./files/penicillin-data-01.csv) in a DataFrame format.
 
 1. What is the time step $\delta_t$? What is the recording time $T$?
 
