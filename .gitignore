@@ -5,3 +5,5 @@ _slides
 /.quarto/
 
 **/*.quarto_ipynb
+
+sandbox/

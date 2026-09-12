@@ -120,8 +120,9 @@ Deviations from the "real" value are the **noise**.
 **Goal:** Mitigate the effect of noise.
 
 
-## Hands on
+## Hands-on
 
-**TODO**
+See [webpage](https://dls.hevs.ch/ts/week01/).
+
 
 

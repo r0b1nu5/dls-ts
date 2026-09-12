@@ -7,7 +7,9 @@
 According to you, what is a time series?
 
 Two main ingredients:
+
 1. Series: A "thing", usually measurable, i.e., a number.
+
 1. Time: This number changes over time.
 
 Formally, a time series is a sequence of values each indexed by a **time step**:
@@ -93,9 +95,20 @@ In general, we will assume that the noise has zero mean.
 Therefore, the measured signal remains around the real signal.
 
 
-## Hands on
+## Hands-on
 
-**TODO**
+This [file](./penicillin-data-01.csv) contains a subset of the data simulated by this [Industrial-Scale Penicillin Simulator](http://www.industrialpenicillinsimulation.com/).
+
+1. Read the description of the data set provided on the [simulator's website](http://www.industrialpenicillinsimulation.com/). 
+
+1. Extract the data from the [file](./penicillin-data-01.csv) in a DataFrame format.
+
+1. What is the time step $\delta_t$? What is the recording time $T$?
+
+1. Choose one batch and one measured quantity, and plot the time series.
+
+1. Resample the time series with time step of one hour and represent it on top of the original time series. How did you choose the value of the resampled time series?
+
 
 
 

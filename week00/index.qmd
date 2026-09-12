@@ -9,7 +9,7 @@
 Variable throughout the semester
 
 ### Online material
-All material will be made available from [this webpage](https://www.delabays.xyz/dls-ts/).
+All material will be made available from [this webpage](https://dls.hevs.ch/ts/).
 
 ### Exams
 First exam on Novemver 10, 2026: Brief exam (most likely QCM), approx. 45 minutes.
