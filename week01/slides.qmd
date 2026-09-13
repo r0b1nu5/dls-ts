@@ -10,7 +10,7 @@ format:
   preview-links: auto
   chalkboard: true
   logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
-  footer: "[Time Series](https://www.delabays.xyz/dls-ts/week01/)"
+  footer: "[Time Series](https://dls.hevs.ch/ts/week01/)"
 ---
 
 ## Definition of time series
@@ -47,7 +47,7 @@ But we have to specify:
 
 - the **sampling rate**, i.e., the time between two consecutive samples.
 
-**TODO: Add a figure here.**
+![Time series](./figs/time-series-1.pdf)
 
 ## Examples of time series
 - Any meteorological quantity, measured over time (temperature, pressure, wind speed,...)
@@ -58,7 +58,8 @@ But we have to specify:
 
 - Any health constant measured on a patient (temperature, heart rate, blood pressure,...)
 
-**TODO: Figures?**
+![Weather forecast](./figs/meteo-suisse.png)
+![Stock market](./figs/stock-market.png)
 
 ## Acquisition - Time step
 "Read" and "write" implies a gap between two consecutive values. 
@@ -94,14 +95,33 @@ The recording time should be:
 **Unit:** second
 
 ## Resampling
-**TODO: Do it on figures.**
+**Example:**
+*I want to study the impact of the season on temperature.
+If the time step of my time series is at 15 minutes, this it too fine.*
 
+![Resampling](./figs/resampling.pdf)
 
 ## Representing
 Recommendation: pyplot from matplotlib.
 
-**TODO: Make some code.**
+```{pyodide}
+import matplotlib.pyplot as plt
+import random
 
+# Generate 12 random values
+n = 12
+t = list(range(1,n+1))
+X = [random.random() for _ in range(n)]
+
+# Plot as bullets
+plt.figure(figsize=(8,5))
+plt.plot(t, X, 'o')
+
+plt.xlabel('t')
+plt.ylabel('X')
+
+plt.show()
+```
 
 ## Noise
 

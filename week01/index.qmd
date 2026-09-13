@@ -12,7 +12,7 @@ Two main ingredients:
 
 1. Time: This number changes over time.
 
-Formally, a time series is a sequence of values each indexed by a **time step**:
+Formally, a time series is a sequence of values each indexed by a **time**:
 $$ X = (x_{t_1}, x_{t_2},...,x_{t_N})\, ,$$
 where $x_t$ is the value (usually a real number) of the time series at time $t$ and $t_1,t_2,...$ are the time steps. 
 Each element $x_{t_i}$ of a time series is called a **sample**.
@@ -21,20 +21,25 @@ In general, there is no contraints on the time steps.
 But for this course, we will always consider times steps are evenly spaced. 
 Therefore, we will skip the $t$ in the indexing and just number the components of the time series:
 $$ X = (x_1,x_2,...,x_N)\, .$$
-Note that we then have to specify the time of first recording and the **sampling rate**, i.e., the time between two consecutive samples.
+Note that we then have to specify the time of first recording and the **sampling rate**, i.e., the number of measurements per second. 
 
-**TODO: Add a figure here.**
+![Illustration of a time series](./figs/time-series-1.pdf)
 
 ## Examples of time series
 - Any meteorological quantity, measured over time (temperature, pressure, wind speed,...)
 
+![Weather and temparature forecast for Sion (source: meteosuisse.ch)](./figs/meteo-suisse.png)
+
 - Stock market prices
 
-- Any quantity measured inside a bioreactor (temparature, pH,...)
+![Stock market snapshot (source: Google)](./figs/stock-market.png)
+
+- Any quantity measured inside a [bioreactor](http://www.industrialpenicillinsimulation.com/) (temperature, pH,...)
 
 - Any health constant measured on a patient (temperature, heart rate, blood pressure,...)
 
-**TODO: Figures?**
+![Electrocardiogram (source: Wikipedia)](./figs/ecg.jpeg)
+
 
 ## Acquisition
 
@@ -70,7 +75,9 @@ Given a fine time series, coarse graining is easy, but comes with a question.
 For each coarser time step, I have multiple values measured. 
 Which one(?) should I use?
 
-**TODO: Have illustrating figures**
+**Example:**
+What are my options for the example above?
+
 
 ## Representing
 The first step in the analysis of a time series is visual inspection. 
@@ -79,6 +86,25 @@ Make sure to use an appropriate plotting tool.
 You need to be able to rescale, zoom in, zoom out of you time series. 
 
 I recommend pyplot from matplotlib, which is a powerful plotting library. 
+
+```{pyodide}
+import matplotlib.pyplot as plt
+import random
+
+# Generate 12 random values
+n = 12
+t = list(range(1,n+1))
+X = [random.random() for _ in range(n)]
+
+# Plot as bullets
+plt.figure(figsize=(8,5))
+plt.plot(t, X, 'o')
+
+plt.xlabel('t')
+plt.ylabel('X')
+
+plt.show()
+```
 
 ## Noise
 
