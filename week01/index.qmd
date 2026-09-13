@@ -1,4 +1,4 @@
-# Week 1: Introduction to time series {.unnumbered}
+# Introduction to time series {.unnumbered}
 
 [Slides]({{< var base_url>}}slides/week01/slides.html){.btn .btn-outline-primary .btn role="button"} 
 [Slides PDF]({{< var base_url>}}slides/week01/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
@@ -23,7 +23,7 @@ Therefore, we will skip the $t$ in the indexing and just number the components o
 $$ X = (x_1,x_2,...,x_N)\, .$$
 Note that we then have to specify the time of first recording and the **sampling rate**, i.e., the number of measurements per second. 
 
-![Illustration of a time series](./figs/time-series-1.pdf)
+![Illustration of a time series](./figs/time-series-1.png)
 
 ## Examples of time series
 - Any meteorological quantity, measured over time (temperature, pressure, wind speed,...)

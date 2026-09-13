@@ -50,15 +50,14 @@ But we have to specify:
 ![Time series](./figs/time-series-1.pdf)
 
 ## Examples of time series
-- Any meteorological quantity, measured over time (temperature, pressure, wind speed,...)
+- Any meteorological quantity, measured over time (temperature, pressure,...)
 
 - Stock market prices
 
 - Any quantity measured inside a bioreactor (temparature, pH,...)
 
-- Any health constant measured on a patient (temperature, heart rate, blood pressure,...)
+- Any health constant measured on a patient (temperature, heart rate,...)
 
-![Weather forecast](./figs/meteo-suisse.png)
 ![Stock market](./figs/stock-market.png)
 
 ## Acquisition - Time step
