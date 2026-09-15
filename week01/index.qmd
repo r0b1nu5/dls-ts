@@ -17,7 +17,7 @@ $$ X = (x_{t_1}, x_{t_2},...,x_{t_N})\, ,$$
 where $x_t$ is the value (usually a real number) of the time series at time $t$ and $t_1,t_2,...$ are the time steps. 
 Each element $x_{t_i}$ of a time series is called a **sample**.
 
-In general, there is no contraints on the time steps. 
+In general, there is no constraints on the time steps. 
 But for this course, we will always consider times steps are evenly spaced. 
 Therefore, we will skip the $t$ in the indexing and just number the components of the time series:
 $$ X = (x_1,x_2,...,x_N)\, .$$
@@ -73,7 +73,7 @@ If the time step of my time series is at 15 minutes, this is too fine.*
 
 Given a fine time series, coarse graining is easy, but comes with a question.
 For each coarser time step, I have multiple values measured. 
-Which one(?) should I use?
+Which one(s) should I use?
 
 **Example:**
 What are my options for the example above?
