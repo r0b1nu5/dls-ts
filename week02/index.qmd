@@ -23,21 +23,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 data = pd.from_csv('../files/penicillin-data-01.csv')
-
-
-
-
-
-
-
-# Plot as bullets
-plt.figure(figsize=(8,5))
-plt.plot(t, X, 'o')
-
-plt.xlabel('t')
-plt.ylabel('X')
-
-plt.show()
+data.describe()
 ```
 
 ### Mean and variance
