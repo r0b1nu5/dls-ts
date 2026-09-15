@@ -37,8 +37,6 @@ Each element $x_{t_i}$ of a time series is called a **sample**.
 
 ## Time steps
 For this course, we consider evenly spaced times steps.
-
-Therefore, it is enough to enumerate the components:
 $$ X = (x_1,x_2,...,x_N)\, .$$
 
 But we have to specify:
@@ -47,14 +45,14 @@ But we have to specify:
 
 - the **sampling rate**, i.e., the time between two consecutive samples.
 
-![Time series](./figs/time-series-1.pdf)
+![Time series](./figs/time-series-1.png)
 
 ## Examples of time series
 - Any meteorological quantity, measured over time (temperature, pressure,...)
 
 - Stock market prices
 
-- Any quantity measured inside a bioreactor (temparature, pH,...)
+- Any quantity measured inside a bioreactor (temperature, pH,...)
 
 - Any health constant measured on a patient (temperature, heart rate,...)
 
@@ -87,7 +85,7 @@ The recording time should be:
 - as long as necessary.
 
 **Example:**
-*Recording a sound of less that $0.05 {\rm s}$, soudns at $20 {\rm Hz}$ cannot be heard.*
+*Recording a sound of less that $0.05 {\rm s}$, sounds at $20 {\rm Hz}$ cannot be heard.*
 
 **Notation:** $T$
 
@@ -98,7 +96,7 @@ The recording time should be:
 *I want to study the impact of the season on temperature.
 If the time step of my time series is at 15 minutes, this it too fine.*
 
-![Resampling](./figs/resampling.pdf)
+![Resampling](./figs/resampling.png)
 
 ## Representing
 Recommendation: pyplot from matplotlib.
@@ -142,6 +140,5 @@ Deviations from the "real" value are the **noise**.
 ## Hands-on
 
 See [webpage](https://dls.hevs.ch/ts/week01/).
-
 
 
