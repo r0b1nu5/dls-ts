@@ -43,14 +43,14 @@ plt.show()
 
 ### Mean and variance
 Given a set of values $X = (x_0,x_1,x_2,...,x_{N-1})$, the **mean** of $X$ is
-$$ {\rm mean}(X) = \mu_X = \langle X\rangle = \frac{1}{N}\sum_{i=0}^{N-1}x_i\, .$$
+$$ \mathrm{mean}(X) = \mu_X = \langle X\rangle = \frac{1}{N}\sum_{i=0}^{N-1}x_i\, .$$
 The mean value of a set is the value that would give the same total sum if each element of the set had the same value.
 In a sense, the mean is the "center of mass" of a data set.
 
 The mean is the most basic and intuitive summarizing value of a data set.
 
 To measure the dispersion of the data around the mean, one can compute the **variance** of $X$,
-$${\rm var}(X) = \sigma_X^2 = \langle (X - \langle X\rangle)^2\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)^2\, .$$
+$$\mathrm{var}(X) = \sigma_X^2 = \langle (X - \langle X\rangle)^2\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)^2\, .$$
 
 The square root of the variance is the **standard deviation**.
 
@@ -84,7 +84,7 @@ The **median** $m$ is the value such that half of the samples are larger than $m
 
 To compute the median, let us renumber the elements of $X$ such they are ordered in increasing order.
 Then
-$${\rm median}(X) = \left\{\begin{array}{ll}
+$$\mathrm{median}(X) = \left\{\begin{array}{ll}
     x_{(N-1)/2} & \text{if } N \text{ is odd,} \\
     (x_{N/2-1}+x_{N/2})/2 & \text{if } N \text{ is even.}
 \end{array}\right.$$
@@ -115,9 +115,9 @@ plt.show()
 ```
 
 In particular,
-- $q_{0.5}(X) = {\rm median}(X)$
-- $q_{0}(X) = {\rm min}(X)$
-- $q_{1}(X) = {\rm max}(X)$
+- $q_{0.5}(X) = \mathrm{median}(X)$
+- $q_{0}(X) = \mathrm{min}(X)$
+- $q_{1}(X) = \mathrm{max}(X)$
 
 ### Special cases
 The five **quartiles** $(q_0, q_{0.25}, q_{0.5}, q_{0.75}, q_1)$ divide the samples into four groups of same cardinality.
@@ -134,8 +134,8 @@ A box plot is represented along the axis of values taken by the samples.
 It is composed of:
 - A rectangle (the box itself) filling the space between the first ($q_{0.25}$) and third ($q_{0.75}$) quartiles.
 - A bold line at the median of the sample.
-- Whiskers that run from the side of the box to the largest sample value that is smaller than $q_{0.75}+1.5\cdot{\rm IQR}$ (resp. larger than $q_{0.25}-1.5\cdot{\rm IQR}$).
-- Dots at **outlier** values, namely, values that are larger than $q_{0.75}+1.5\cdot{\rm IQR}$ (resp. smaller than $q_{0.25}-1.5\cdot{\rm IQR}$).
+- Whiskers that run from the side of the box to the largest sample value that is smaller than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. larger than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
+- Dots at **outlier** values, namely, values that are larger than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. smaller than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
 
 ```{pyodide}
 fig, (ax1,ax2) = plt.subplot(nrows=2, sharex=True, gridspec_kw={'height_ratios': (1,4)'})
@@ -157,9 +157,9 @@ plt.show()
 Given two time series $X$ and $Y$ with the **same time steps**, their **covariance** quantifies their shared variability.
 In other words, the larger the covariance, the more similar the time series.
 The covariance is computed as
-$$ {\rm cov}(X,Y) \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
+$$ \mathrm{cov}(X,Y) \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
 In particular, if the time series are normalized to zero-mean, the covariance reduces to
-$$ {\rm cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
+$$ \mathrm{cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
 
 The problem with covariance is that it is a relative quantity.
 Given a covariance value, it is hard to tell if the two associated time series are similar or not.
@@ -167,7 +167,7 @@ Given a covariance value, it is hard to tell if the two associated time series a
 ### Correlation
 This problem is solved with the **correlation** which considers normalized time series.
 The **Pearson correlation coefficient** of two time series $X$ and $Y$ is
-$$ r_{XY} = \frac{\sum_{i=0}^{N-1}(x_i-\mu_X)(y_i-\mu_Y)}{\sqrt{\sum_{i=0}^{N-1}(x_i-\mu_X)^2}\sqrt{\sum_{i=0}^{N-1}(y_i-\mu_Y)^2}} = \frac{{\rm cov}(X,Y)}{\sigma_X\sigma_Y}\, .$$
+$$ r_{XY} = \frac{\sum_{i=0}^{N-1}(x_i-\mu_X)(y_i-\mu_Y)}{\sqrt{\sum_{i=0}^{N-1}(x_i-\mu_X)^2}\sqrt{\sum_{i=0}^{N-1}(y_i-\mu_Y)^2}} = \frac{\mathrm{cov}(X,Y)}{\sigma_X\sigma_Y}\, .$$
 
 The correlation coefficient takes value between $-1$ and $1$.
 A value of $1$ (resp. $-1$) indicates two perfectly correlated (resp. anticorrelated) time series, i.e., knowing the value of one time series fully informs about the value of the other.
