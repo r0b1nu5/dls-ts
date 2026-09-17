@@ -15,6 +15,8 @@ book:
         - week00/index.qmd
         - week01/index.qmd
     - part: "Course 2"
+      chapters:
+        - week02/index.qmd
     - part: "Course 3"
     - part: "Course 4"
     - part: "Course 5"

@@ -5,7 +5,7 @@ This page contains the material for the class *Applied Statistics: Time Series*.
 ## Fall 2026
 - [September 15, 2026 (Course intro)](week00/index.qmd)
 - [September 15, 2026](week01/index.qmd)
-- September 22, 2026
+- [September 22, 2026](week02/index.qmd)
 - September 29, 2026
 - October 6, 2026
 - October 8, 2026
