@@ -159,11 +159,15 @@ plt.show()
 Given two time series $X$ and $Y$ with the **same time steps**, their **covariance** quantifies their shared variability.
 In other words, the larger the covariance, the more similar the time series.
 The covariance is computed as
-$$ \mathrm{cov}(X,Y) \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
+$$ \mathrm{cov}(X,Y) =  \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
 In particular, if the time series are normalized to zero-mean, the covariance reduces to
 $$ \mathrm{cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
 
 The problem with covariance is that it is an absolute quantity, i.e., covariances are hard to compare.
+
+```{pyodide}
+data.cov()
+```
 
 ### Correlation
 This problem is solved with the **correlation** which considers normalized time series.
@@ -173,6 +177,20 @@ $$ r_{XY} = \frac{\sum_{i=0}^{N-1}(x_i-\mu_X)(y_i-\mu_Y)}{\sqrt{\sum_{i=0}^{N-1}
 The correlation coefficient takes value between $-1$ and $1$.
 A value of $1$ (resp. $-1$) indicates two perfectly correlated (resp. anticorrelated) time series, i.e., knowing the value of one time series fully informs about the value of the other.
 A correlation coefficient of $0$ indicates that the two time series are completely independent.
+
+```{pyodide}
+r = data.corr()
+print(r)
+
+fig, ax = plt.subplots()
+rax = ax.matshow(r, cmap='coolwarm', vmin=-1, vmax=1)
+fig.colorbar(rax)
+
+ax.set_yticks(range(len(r.columns)))
+ax.set_yticklabels(r.columns)
+
+plt.show()
+```
 
 
 ## Hands on

@@ -21,17 +21,16 @@ format:
 **Weakness:** Necessarily partial and biased.
 
 
-## Example data set
+## Example data set {.smaller}
+
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
-::: {.smaller}
 ```{pyodide}
 import pandas as pd
 
 data = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
 data.describe()
 ```
-:::
 
 ## Example data set
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
@@ -157,35 +156,35 @@ They divide the samples into 100 groups of same cardinality.
 
 ## Box plot
 
+![Box plot](./figs/box-plot.png)
+
 *[[John Tukey](https://en.wikipedia.org/wiki/John_Tukey), [Mary Eleanor Spear](https://en.wikipedia.org/wiki/Mary_Eleanor_Spear)]*.
 
 **Strength:** A lot of information, compact.
 
-![Box plot](./figs/box-plot.png)
-
 ## Box plot - IQR
-
-A rectangle (the box itself) filling the space between the first ($q_{0.25}$) and third ($q_{0.75}$) quartiles.
 
 ![Box plot - IQR](./figs/box-plot-box.png)
 
-## Box plot - Median
+A rectangle (the box itself) filling the space between the first ($q_{0.25}$) and third ($q_{0.75}$) quartiles.
 
-A line at the median of the sample.
+## Box plot - Median
 
 ![Box plot - Median](./figs/box-plot-med.png)
 
-## Box plot - Outliers
+A line at the median of the sample.
 
-Dots at **outlier** values: values that are larger than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. smaller than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
+## Box plot - Outliers
 
 ![Box plot - Outliers](./figs/box-plot-out.png)
 
+Dots at **outlier** values: values that are larger than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. smaller than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
+
 ## Box plot - Whiskers 
 
-Whiskers from the box to the largest sample value that is smaller than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. larger than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
-
 ![Box plot - Whiskers](./figs/box-plot-whi.png)
+
+Whiskers from the box to the largest sample value that is smaller than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. larger than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
 
 ## Box plot
 
@@ -216,6 +215,11 @@ The larger the covariance, the more similar the time series.
 If the time series have zero-mean, 
 $$ \mathrm{cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
 
+## Covariance
+
+```{pyodide}
+data.cov()
+```
 
 ## Correlation
 
@@ -234,6 +238,23 @@ $r=1$ means perfect correlation.
 $r=-1$ means perfect anticorrelation.
 
 $r=0$ means no correlation.
+
+
+## Correlation
+
+```{pyodide}
+r = data.corr()
+print(r)
+
+fig, ax = plt.subplots()
+rax = ax.matshow(r, cmap='coolwarm', vmin=-1, vmax=1)
+fig.colorbar(rax)
+
+ax.set_yticks(range(len(r.columns)))
+ax.set_yticklabels(r.columns)
+
+plt.show()
+```
 
 
 ## Hands-on
