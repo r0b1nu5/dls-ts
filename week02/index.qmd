@@ -133,6 +133,7 @@ The strength of the box plot is that it represents a lot of information in a ver
 
 A box plot is represented along the axis of values taken by the samples.
 It is composed of:
+
 - A rectangle (the box itself) filling the space between the first ($q_{0.25}$) and third ($q_{0.75}$) quartiles.
 - A bold line at the median of the sample.
 - Whiskers that run from the side of the box to the largest sample value that is smaller than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. larger than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
@@ -162,8 +163,7 @@ $$ \mathrm{cov}(X,Y) \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0
 In particular, if the time series are normalized to zero-mean, the covariance reduces to
 $$ \mathrm{cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
 
-The problem with covariance is that it is a relative quantity.
-Given a covariance value, it is hard to tell if the two associated time series are similar or not.
+The problem with covariance is that it is an absolute quantity, i.e., covariances are hard to compare.
 
 ### Correlation
 This problem is solved with the **correlation** which considers normalized time series.
@@ -177,7 +177,7 @@ A correlation coefficient of $0$ indicates that the two time series are complete
 
 ## Hands on
 
-
+**TODO...**
 
 
 
