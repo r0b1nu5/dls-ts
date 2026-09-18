@@ -21,7 +21,7 @@ We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 ```{pyodide}
 import pandas as pd
 
-data = pd.from_csv('../files/penicillin-data-01.csv')
+data = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
 data.describe()
 ```
 
@@ -60,11 +60,12 @@ import numpy as np
 mu = subdata.describe()["mean"]
 sig = subdata.describe()["std"]
 
+ax = subdata.hist(bins=49)
+
 max_val = np.histogram(subdata,bins=50)[0].max()
 ax.plot([mu,mu],[0,1.1*max_val],"--",color="C1",lw=2)
-ax.fill([mu-std,mu+std,mu+std,mu-std],[0,0,1.1*max_val,1.1*max_val],color="C1",alpha=.2)
+ax.fill([mu-sig,mu+sig,mu+sig,mu-sig],[0,0,1.1*max_val,1.1*max_val],color="C1",alpha=.2)
 
-ax = subdata.hist(bins=50)
 ax.set_xlabel("pH")
 ax.set_ylabel("occurence")
 
@@ -138,7 +139,7 @@ It is composed of:
 - Dots at **outlier** values, namely, values that are larger than $q_{0.75}+1.5\cdot\mathrm{IQR}$ (resp. smaller than $q_{0.25}-1.5\cdot\mathrm{IQR}$).
 
 ```{pyodide}
-fig, (ax1,ax2) = plt.subplot(nrows=2, sharex=True, gridspec_kw={'height_ratios': (1,4)'})
+fig, (ax1,ax2) = plt.subplot(nrows=2, sharex=True, gridspec_kw={'height_ratios': (1,4)})
 
 ax1.boxplot(subdata, orientation='horizontal', widths=.6)
 ax1.set(yticks=[])

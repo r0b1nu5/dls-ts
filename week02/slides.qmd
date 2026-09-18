@@ -14,22 +14,24 @@ format:
 ---
 
 ## Statistics
-The goal of statistics is to provide a summarized description of a (large) set of values.
-As raw data, a large set of measurement can be hard to parse.
-Statistics are an attempt to help humans parse large, complex set of values.
+**Goal:** Provide a summarized description of a (large) set of values.
 
-Of course, no statistics can replace the aforementioned set of values and is merely a partial, biased summary thereof.
-Nevertheless, an appropriate use of statistical tools can help extract crucial informations from these data sets.
+**Strength:** Readable by a human.
+
+**Weakness:** Necessarily partial and biased.
+
 
 ## Example data set
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
+::: {.smaller}
 ```{pyodide}
 import pandas as pd
 
-data = pd.from_csv('../files/penicillin-data-01.csv')
+data = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
 data.describe()
 ```
+:::
 
 ## Example data set
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
