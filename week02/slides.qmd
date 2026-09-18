@@ -25,6 +25,12 @@ format:
 
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
+```{=html}
+<style>
+talbe.dataframe { font-size: 0.5em !important; }
+</style>
+```
+
 ```{pyodide}
 import pandas as pd
 
