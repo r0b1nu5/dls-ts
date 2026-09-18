@@ -223,6 +223,12 @@ $$ \mathrm{cov}(X,Y) = \frac{1}{N}\sum_{i=0}^{N-1}x_iy_i\, .$$
 
 ## Covariance
 
+```{=html}
+<style>
+talbe.dataframe { font-size: 0.5em !important; }
+</style>
+```
+
 ```{pyodide}
 data.cov()
 ```
@@ -250,7 +256,6 @@ $r=0$ means no correlation.
 
 ```{pyodide}
 r = data.corr()
-print(r)
 
 fig, ax = plt.subplots()
 rax = ax.matshow(r, cmap='coolwarm', vmin=-1, vmax=1)
@@ -259,6 +264,7 @@ fig.colorbar(rax)
 ax.set_yticks(range(len(r.columns)))
 ax.set_yticklabels(r.columns)
 
+print(r)
 plt.show()
 ```
 

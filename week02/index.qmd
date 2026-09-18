@@ -195,8 +195,29 @@ plt.show()
 
 ## Hands on
 
-**TODO...**
+Use again our [penicillin data set](../files/penicillin-data-01.csv).
 
+1. What is the batch with maximal average temperature?
+
+1. Is this batch's temperature time series really exceptional compared to the others? Justify.
+   
+   1. Find the batch whose average temperature is the most "central" one.
+   
+   1. Compare the distribution of temperature between theses two batches (e.g., with a histogram or a box plot).
+
+   1. What can you see?
+
+1. Do the same with the batch with lowest average temperature.
+   What changes?
+
+1. In theses samples, is there a correlation between concentration and pH? Between concentration and temperature? Between pH and temperature?
+
+1. Is it expected?
+
+1. Among the other quantities in the [original data set](http://www.industrialpenicillinsimulation.com/) is there one where you expect to see a correlation with the penicillin concentration? 
+   Justify.
+
+1. (Optional) Test your prediction by importing the data and computing the correlation.
 
 
 
