@@ -38,7 +38,7 @@ data = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
 data.describe()
 ```
 
-## Example data set
+## Example data set {.smaller}
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
 ```{=html}
@@ -52,7 +52,7 @@ subdata = data.loc[data["Batch ID"]==2,"pH(pH:pH)"]
 subdata.describe()
 ```
 
-## Example data set
+## Example data set {.smaller}
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
 ```{=html}
@@ -262,12 +262,6 @@ talbe.dataframe { font-size: 0.5em !important; }
 </style>
 ```
 
-```{=html}
-<style>
-talbe.dataframe { font-size: 0.5em !important; }
-</style>
-```
-
 ```{pyodide}
 data.cov()
 ```
@@ -300,9 +294,9 @@ fig, ax = plt.subplots()
 rax = ax.matshow(r, cmap='coolwarm', vmin=-1, vmax=1)
 fig.colorbar(rax)
 
-for i in range(len(rax.columns)):
- for j in range(len(rax.columns)):
-  ax.text(j, i, f'{rax.iloc[i, j]:.2f}', ha='center', va='center', color='black')
+for i in range(len(r.columns)):
+ for j in range(len(r.columns)):
+  ax.text(j, i, f'{r.iloc[i, j]:.2f}', ha='center', va='center', color='black')
 
 ax.set_yticks(range(len(r.columns)))
 ax.set_yticklabels(r.columns)
