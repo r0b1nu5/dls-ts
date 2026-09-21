@@ -41,6 +41,12 @@ data.describe()
 ## Example data set
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
 
+```{=html}
+<style>
+talbe.dataframe { font-size: 0.5em !important; }
+</style>
+```
+
 ```{pyodide}
 subdata = data.loc[data["Batch ID"]==2,"pH(pH:pH)"]
 subdata.describe()
@@ -48,6 +54,12 @@ subdata.describe()
 
 ## Example data set
 We will again use our [bioreactor time series](../files/penicillin-data-01.csv)
+
+```{=html}
+<style>
+talbe.dataframe { font-size: 0.5em !important; }
+</style>
+```
 
 ```{pyodide}
 import matplotlib.pyplot as plt
@@ -93,6 +105,27 @@ ax.set_xlabel("pH")
 ax.set_ylabel("occurence")
 
 plt.show()
+```
+
+## Weakness of the mean
+Consider a company with 10 employees and 1 boss. 
+All employees have the same monthly salary of CHF 3'000.- and the boss has a CHF 30'000.- monthly salary. 
+
+Let us compute the average and variance of salaries within this company.
+
+```{pyodide}
+salary = np.concatenate((np.full(10,3000),[30000]))
+
+salary.mean()
+```
+
+## Weakness of the mean
+And how about a similar company where employees are paid CHF 5'000.- monthly and the boss is paid CHF 10'000.-?
+
+```{pyodide}
+salary = np.concatenate((np.full(10,5000),[10000]))
+
+salary.mean()
 ```
 
 
@@ -229,6 +262,12 @@ talbe.dataframe { font-size: 0.5em !important; }
 </style>
 ```
 
+```{=html}
+<style>
+talbe.dataframe { font-size: 0.5em !important; }
+</style>
+```
+
 ```{pyodide}
 data.cov()
 ```
@@ -260,6 +299,10 @@ r = data.corr()
 fig, ax = plt.subplots()
 rax = ax.matshow(r, cmap='coolwarm', vmin=-1, vmax=1)
 fig.colorbar(rax)
+
+for i in range(len(rax.columns)):
+ for j in range(len(rax.columns)):
+  ax.text(j, i, f'{rax.iloc[i, j]:.2f}', ha='center', va='center', color='black')
 
 ax.set_yticks(range(len(r.columns)))
 ax.set_yticklabels(r.columns)
