@@ -122,7 +122,7 @@ In particular,
 
 ### Special cases
 The five **quartiles** $(q_0, q_{0.25}, q_{0.5}, q_{0.75}, q_1)$ divide the samples into four groups of same cardinality.
-The difference $q_{0.75}-q_{0.25}$ si called the **interquartile range (IQR)**.
+The difference $q_{0.75}-q_{0.25}$ is called the **interquartile range (IQR)**.
 
 The 101 percentiles $(q_0, q_{0.01}, q_{0.02},..., q_{0.99}, q_1)$ divide the samples into 100 groups of same cardinality.
 

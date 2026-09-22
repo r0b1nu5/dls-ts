@@ -1,0 +1,78 @@
+# Advanced basics {.unnumbered}
+
+[Slides]({{< var base_url>}}slides/week03/slides.html){.btn .btn-outline-primary .btn role="button"} 
+[Slides PDF]({{< var base_url>}}slides/week03/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
+
+## Interpolating
+The other way around, sometimes, the sampling is too coarse for my purpose.
+Can I split each time step into finer ones?
+
+The answer is yes, but with care.
+
+Of course, we cannot create measurements out of the blue.
+However, there are various ways to fill the gaps with reasonable guesses.
+
+### Linear interpolation
+The most intuitive interpolation is the linear one.
+Basically, it boils down to drawing a strait line between two known measurements and assume the time steps in between fall on this line.
+
+### Polynomial interpolation (see Modélisation)
+Using more than two points, we can perform more elaborate interpolations.
+
+**Question:** What is the maximal degree of a polynomial that interpolates $n$ points?
+
+## Smoothing
+In order to mitigate noise in a signal, one may want to smooth it in post-processing.
+
+### Sliding average
+The most intuitive way to smooth a time series is to apply a **moving average**.
+Namely, given a time series $X=(x_0,x_1,...,x_{N-1})$, one chooses a window size $T\in\mathbb{N}$ and computes a new time series $Y$, where
+$$ y_i = \frac{1}{2T+1}\sum_{k=-T}^{T}x_{i+k}\, .$$
+Notice that in the smoothing process, we loose some information.
+The new time series $Y$ starts at time step $T$ and ends at time step $N-T-1$.
+
+**TODO: Illustrate the moving average with a rectangular window.**
+
+### Sliding window
+Sometimes, one may want to smooth a signal, but give more weight to some time steps than others.
+In this case, we use more fancy windows for the moving average.
+
+**TODO: Illustrate different windows.**
+
+
+## Stationarity
+In this course, we will assume that the processes we study are **stationary**, i.e., their statistical characteristics remain constant over time.
+In a stationary process, mean and variance remain consant over time.
+
+    Example: ...
+
+When a process is not stationary, there are some techniques to preprocess the data and make it stationary.
+
+## Autocorrelation function (ACF)
+The **autocorrelation function (ACF)** computes the correlation of a time series with itself after a given time lag $\tau$.
+Given a time series $X=(x_0,x_1,x_2,...)$, let us define the shifted time series $X_{\tau}=(x_{\tau},x_{\tau+1},x_{\tau+2},...)$.
+Then the ACF of $X$ at time lag $\tau$ is
+$$ {\rm ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{{\rm cov}(X,X_{\tau})}{\sigma_X^2} = \frac{\sum_{i=0}^{N-\tau-1}(x_i-\mu_X)(x_{i+\tau}-\mu_X)}{\sigma_X^2}\, .$$
+
+**Remarks:**
+- Notice that we assumed stationarity because the mean $\mu_X$ is the same for any value of the time lag $\tau$.
+- We had to truncate the summation to $N-\tau-1$ to accommodate for the time lag.
+
+**TODO: Examples of computation, illustration, and interpretation.**
+
+### Seasonality
+Typically, the ACF can be used to detect any seasonality in a time series.
+
+**Seasonality** in a time series is a recurring, periodic behavior.
+
+    Example:
+    There is obviously seasonality in the daily temperature measurements at an outdoor location.
+    In this case, the seasonality period is one year.
+
+## Hands on
+
+
+
+
+
+

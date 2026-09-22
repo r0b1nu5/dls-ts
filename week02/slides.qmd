@@ -247,7 +247,7 @@ plt.show()
 Two time series $X$ and $Y$ with **same time steps**. 
 
 Their **covariance**
-$$ \mathrm{cov}(X,Y) \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
+$$ \mathrm{cov}(X,Y) = \langle(X - \mu_X)(Y - \mu_Y)\rangle = \frac{1}{N}\sum_{i=0}^{N-1} \left(x_i - \mu_X\right)\left(y_i - \mu_Y\right)\, . $$
 
 The larger the covariance, the more similar the time series.
 

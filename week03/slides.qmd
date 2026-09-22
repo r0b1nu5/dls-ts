@@ -1,0 +1,18 @@
+---
+title: "Applied Statistics: Time Series"
+subtitle: "Advanced basics"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../_brand.yml
+  theme: ../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://dls.hevs.ch/ts/week03/)"
+---
+
+## Interpolating
+
+
