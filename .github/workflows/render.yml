@@ -5,9 +5,14 @@ on:
 
 name: Quarto Publish
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
       contents: read
     steps:
@@ -122,48 +127,57 @@ jobs:
           done
           kill $SERVER_PID 2>/dev/null || true
 
-      - name: Read folder and set as env variable
+      - name: Assemble site
         run: |
-          # Use the pinned interpreter (it has pyyaml installed from requirements.txt).
-          "$QUARTO_PYTHON" - <<'PYEOF'
-          import yaml
-          import os
+          rm -rf site && mkdir site
+          cp -a _book/. site/
+          mv _slides site/slides
 
-          # Load _variables.yml
-          with open('_variables.yml', 'r') as f:
-              data = yaml.safe_load(f)
-
-          # Get the folder value
-          folder = data.get('folder')
-          print(f"Folder: {folder}")
-
-          # Write to GITHUB_ENV to pass to future steps
-          with open(os.environ['GITHUB_ENV'], 'a') as env_file:
-              env_file.write(f"FOLDER={folder}\n")
-          PYEOF
-
-      - name: Package and upload book
-        env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-        run: |
-          echo "Folder: $FOLDER"
-
-          # Create zip file with _book
-          (cd _book && zip -r ../${FOLDER}.zip * .)
-          mv _slides slides
-          zip -r ${FOLDER}.zip slides
-
-          # Upload to dls.hevs.ch using the API_TOKEN secret
-          curl -X POST \
-            -F "API_TOKEN=${API_TOKEN}" \
-            -F "destination=${FOLDER}" \
-            -F "zip_file=@${FOLDER}.zip" \
-            -F "trigger=gitpush" \
-            https://dls.hevs.ch/upload/
-
-      - name: Upload Artifact
+      - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
-          name: folder
-          path: ${{ env.FOLDER }}.zip
+          name: site
+          path: site
           retention-days: 5
+          if-no-files-found: error
+          include-hidden-files: true
+          overwrite: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions: {}
+    steps:
+      # dls.hevs.ch pulls the `site` artifact of this run itself (see new_upload/README.md):
+      # the server downloads it with gh and rsyncs it into /var/www/html/ts. The destination
+      # folder comes from the server allow-list. This course has no notebooks, so the
+      # JupyterLite rebuild is skipped (build_notebooks=0).
+      - name: Deploy to dls.hevs.ch
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+          ENDPOINT: https://dls.hevs.ch/deploy/
+        run: |
+          set -euo pipefail
+          auth=(-H "Authorization: Bearer ${API_TOKEN}")
+          resp=$(curl -sS --fail-with-body -G "${auth[@]}" "$ENDPOINT" \
+                   --data-urlencode action=deploy \
+                   --data-urlencode "repo=${GITHUB_REPOSITORY}" \
+                   --data-urlencode "run_id=${GITHUB_RUN_ID}" \
+                   --data-urlencode artifact=site \
+                   --data-urlencode build_notebooks=0) || { echo "$resp"; exit 1; }
+          echo "$resp"
+          job=$(jq -r .job <<<"$resp")
+          deadline=$((SECONDS + 10*60))
+          while :; do
+            s=$(curl -sS -G "${auth[@]}" "$ENDPOINT" --data-urlencode action=status \
+                  --data-urlencode "job=$job" --data-urlencode lines=30)
+            state=$(jq -r .status <<<"$s"); stage=$(jq -r '.stage // ""' <<<"$s")
+            echo "[$(date -u +%T)] $state $stage"
+            case "$state" in
+              success) jq -r '.log_tail[]' <<<"$s"; exit 0 ;;
+              failed)  jq -r '.log_tail[]' <<<"$s"; echo "::error::deploy failed (job $job)"; exit 1 ;;
+            esac
+            (( SECONDS < deadline )) || { jq -r '.log_tail[]' <<<"$s"; echo "::error::deploy timed out"; exit 1; }
+            sleep 15
+          done
