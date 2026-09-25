@@ -205,7 +205,7 @@ Notice that in the smoothing process, we loose some information.
 The new time series $Y$ starts at time step $i=T/2$ and ends at time step $i=N-T/2+1$.
 
 ```{pyodide}
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8,6))
 
 T = 10 # window size
 i = 6 # one time step
@@ -214,7 +214,7 @@ i0 = i-int(T/2) # first step in the MA
 t0 = data2.index[i0].total_seconds()/3600
 i1 = i+int(T/2)-1 # last step in the MA
 t1 = data2.index[i1].total_seconds()/3600
-x = data2.iloc[i0:i1,1]
+x = data2.iloc[i0:i1,0]
 y = x.mean()
 
 mi = data2.iloc[:20].min()
@@ -226,11 +226,37 @@ ax.plot(t,y,'o',label='average value')
 
 ax.set_xlabel('t (h)')
 ax.set_ylabel('Temperature')
+ax.legend()
 
 plt.show()
 ```
 
 Try to change the value of `i`to see the window moving.
+
+```{pyodide}
+fig, ax = plt.subplots(figsize=(8,6))
+
+T = 10 # window size
+y = []
+for i in range(5,15):
+ t = data2.index[i].total_seconds()/3600
+ i0 = i-int(T/2) # first step in the MA
+ i1 = i+int(T/2)-1 # last step in the MA
+ y.append(data2.iloc[i0:i1,0].mean())
+
+ax.plot(data2.index[:20].total_seconds()/3600, data2.iloc[:20], '-o', label='original data')
+ax.plot(data2.index[range(5,15)].total_seconds()/3600,y,'o',label='moving average')
+
+ax.set_xlabel('t (h)')
+ax.set_ylabel('Temperature')
+ax.legend()
+
+plt.show()
+```
+
+```{pyodide}
+data1['moving average'] = data1.rolling(window=10).mean()
+```
 
 ### Sliding window
 Sometimes, one may want to smooth a signal, but give more weight to some time steps than others.
