@@ -137,7 +137,8 @@ fig,ax = plt.subplots()
 # Plot vertical lines between days
 day_index = data2.index[data2.index.total_seconds() % (3600*24) == 0.0]
 for t in day_index:
- ax.plot([t,t],[data2.min(),data2.max()],'--',color=(.8,.8,.8))
+ tf = t.total_seconds()/3600/24
+ ax.plot([tf,tf],[data2.min(),data2.max()],'--',color=(.8,.8,.8))
 
 # Plot the original data
 ax.plot(data2.index.total_seconds()/3600/24,data2,color=(.7,.7,.7),label='orginial data')
@@ -171,7 +172,7 @@ data_5min = data2.resample('5min')
 #...with different methods
 data_5min_lin = data_5min.interpolate(method='linear')
 data_5min_time = data_5min.interpolate(method='time')
-data_5min_ff = data_5min.interpolate(method='ffill')
+data_5min_ff = data_5min.ffill()
 
 # Using minutes as units
 x_12min = data2.index.total_seconds()/60
