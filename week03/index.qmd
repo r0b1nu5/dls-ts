@@ -4,19 +4,187 @@
 [Slides PDF]({{< var base_url>}}slides/week03/slides.pdf){.btn .btn-outline-secondary .btn role="button"} 
 
 ## Interpolating
+We have seen in the first class how to coarse-grain a time series. 
 The other way around, sometimes, the sampling is too coarse for my purpose.
-Can I split each time step into finer ones?
+
+**Question:** Can I split each time step into finer ones?
 
 The answer is yes, but with care.
 
 Of course, we cannot create measurements out of the blue.
 However, there are various ways to fill the gaps with reasonable guesses.
+This is called **interpolation**.
 
 ### Linear interpolation
 The most intuitive interpolation is the linear one.
 Basically, it boils down to drawing a strait line between two known measurements and assume the time steps in between fall on this line.
 
-### Polynomial interpolation (see Modélisation)
+Let us get back to our penicillin bioreactor data set. 
+For the sake of the exercise, we focus on the temperature of batch nr. 1.
+
+```{pyodide}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('../files/penicillin-data-01.csv')
+data1 = data.loc[data['Batch ID'==1],['Time (h)','Temperature(T:K)']]
+data1.head()
+```
+
+Currently, the time step in 0.2 hours, i.e., 12 minutes.
+Let us change this time step to 5 minutes.
+
+Keeping the first time step unchanged, the new time steps are
+$$(0.2, 0.283, 0.367,0.45,0.533,...)\, .$$
+
+```{pyodide}
+# Build the array of new time steps, keeping the first time step unchanged.
+new_time = np.arange(data1['Time (h)'].iloc[0],data1['Time (h)'].iloc[-1],1/12)
+```
+
+To interpolate at time $t$, we need to draw the line between the two closest measured points $t_0\leq t\leq t_1$. 
+The equation of this line is (see *Algèbre Linéraire 1*)
+$$ T(t) = \frac{T(t_1)-T(t_0)}{t_1-t_0}(t-t_0) + T(t_0)\, .$$
+It is the easy to compute the temperature that we should use at our new time $t$.
+
+```{pyodide}
+# We first need the coordinates (time and temperature) of the two closest data points.
+t = new_time[1]
+t0 = data1['Time (h)'].loc[data1['Time (h)'] < t].max()
+t1 = data1['Time (h)'].loc[data1['Time (h)'] > t].min()
+temp0 = data1['Temperature(T:K)'].loc[data1['Time (h)'] == t0].iloc[0]
+temp1 = data1['Temperature(T:K)'].loc[data1['Time (h)'] == t1].iloc[0]
+
+# Show the linear interpolation
+fig, ax = plt.subplots()
+ax.plt([t0,t1],[temp0,temp1],'-o',label='original data')
+ax.set_xlabel('t')
+ax.set_ylabel('Temperature')
+
+# Compute the temperature at the new time step
+temp = (temp1-temp0)/(t1-t0)*(t-t0) + temp0
+
+ax.plot(t,temp,"o",label='interpolated data')
+
+ax.legend()
+plt.show()
+```
+
+We can now repeat the process for a more data points.
+
+```{pyodide}
+# Initialize the new list of temperatures with first measured value
+new_temp = [data1['Temperature(T:K)'].iloc[0],]
+
+# We begin with 8 data points
+for t in new_time[1:8]:
+ t0 = data1['Time (h)'].loc[data1['Time (h)'] < t].max()
+ t1 = data1['Time (h)'].loc[data1['Time (h)'] > t].min()
+ temp0 = data1['Temperature(T:K)'].loc[data1['Time (h)'] == t0].iloc[0]
+ temp1 = data1['Temperature(T:K)'].loc[data1['Time (h)'] == t1].iloc[0]
+
+ temp = (temp1-temp0)/(t1-t0)*(t-t0) + temp0
+
+ new_temp.append(temp)
+
+new_temp = [data1['Temperature(T:K)'].iloc[0],]
+
+fig,ax = plt.subplots()
+
+ax.plot(data1['Time (h)'].iloc[0:4],data1['Temperature(T:K)'].iloc[0:4],'-o',label='original data')
+ax.plot(new_time[0:8],new_temp,'o',label='interpolated data')
+ax.set_xlabel('t')
+ax.set_ylabel('Temperature')
+plt.legend()
+plt.show()
+```
+
+And we can easily do it for all data points in the time series.
+
+### Built-in resampling function
+In Python, the `pandas` library has a built-in `resample` function. 
+However, it requires that time steps are in `DatetimeIndex` format, which is not the case in our time series. 
+So far, the time is measured as a float and the index are integers. 
+
+Let us fix that.
+
+```{pyodide}
+# Change the time field (which is of type 'float') to a DateTime type.
+data1['Time (h)'] = pd.to_timedelta(data1['Time (h)'], unit='h')
+
+# Create a new DataFrame whose indices are time steps.
+data2 = data1[['Temperature(T:K)']].set_index(data1['Time (h)'])
+```
+
+We can now use the `resample()` function. 
+If we are **downsamping**, i.e., reducing the number of data points, we need to specify how to aggregate the data. 
+
+```{pyodide}
+# Downsampling to daily value
+data2_mean = data2.resample('D').mean()
+data2_mean.head()
+
+data2_median = data2.resample('D').median()
+data2_median.head()
+
+data2_max = data2.resample('D').max()
+data2_max.head()
+
+# Day numbering for the x-axis
+x_days = data2_mean.index.total_seconds()/3600/24
+
+fig,ax = plt.subplots()
+
+ax.plot(x_days,data_mean,'o',label='mean')
+ax.plot(x_days,data_median,'o',label='median')
+ax.plot(x_days,data_max,'o',label='max')
+
+ax.set_xlabel('Time (days)'=
+ax.set_ylabel('Daily temperature')
+ax.legend()
+
+plt.show()
+```
+
+If we are **upsampling**, i.e., increasing the number of data points, the `resample` function will put `NaN` at unmeasured time steps.
+
+```{pyodide}
+data_5min = data2.resample('5min').asfreq()
+data_5min.head(20)
+```
+
+There are various ways to fill these gaps, i.e., **interpolate**. 
+The approprate one is problem-dependent and needs to be chosen by the user (you).
+
+```{pyodide}
+# Resampling...
+data_5min = data3.resample('5min')
+
+#...with different methods
+data_5min_lin = data_5min.interpolate(method='linear')
+data_5min_time = data_5min.interpolate(method='time')
+data_5min_ff = data_5min.interpolate(method='ffill')
+
+# Using minutes as units
+x_12min = data2.index.total_seconds()/60
+x_5min = data_5min_lin.index.total_seconds()/60
+
+fig,ax = plt.subplots()
+
+ax.plot(x_12min[0:10],data2.iloc[0:10],'-o',label='original data')
+ax.plot(x_5min[0:20],data_5min_lin.iloc[0:20],'o',label='linear')
+ax.plot(x_5min[0:20],data_5min_time.iloc[0:20],'o',label='time')
+ax.plot(x_5min[0:20],data_5min_ff.iloc[0:20],'o',label='ffill')
+
+ax.set_xlabel('t (min)')
+ax.set_ylabel('Temperature')
+ax.legend()
+
+plt.show()
+```
+
+### Polynomial interpolation (see *Analyse 1*)
 Using more than two points, we can perform more elaborate interpolations.
 
 **Question:** What is the maximal degree of a polynomial that interpolates $n$ points?

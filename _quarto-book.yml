@@ -18,6 +18,8 @@ book:
       chapters:
         - week02/index.qmd
     - part: "Course 3"
+      chapters:
+        - week03/index.qmd
     - part: "Course 4"
     - part: "Course 5"
     - part: "Course 6"
