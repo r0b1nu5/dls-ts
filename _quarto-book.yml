@@ -35,6 +35,7 @@ book:
 
 format:
   live-html:
+    include-after-body: _includes/dls-menu.html
     theme: cosmo
   pdf:
     documentclass: scrreprt
