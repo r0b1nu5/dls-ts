@@ -220,7 +220,7 @@ When a process is not stationary, there are some techniques to preprocess the da
 The **autocorrelation function (ACF)** computes the correlation of a time series with itself after a given time lag $\tau$.
 Given a time series $X=(x_0,x_1,x_2,...)$, let us define the shifted time series $X_{\tau}=(x_{\tau},x_{\tau+1},x_{\tau+2},...)$.
 Then the ACF of $X$ at time lag $\tau$ is
-$$ {\rm ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{{\rm cov}(X,X_{\tau})}{\sigma_X^2} = \frac{\sum_{i=0}^{N-\tau-1}(x_i-\mu_X)(x_{i+\tau}-\mu_X)}{\sigma_X^2}\, .$$
+$$ \mathrm{ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{\mathrm{cov}(X,X_{\tau})}{\sigma_X^2} = \frac{\sum_{i=0}^{N-\tau-1}(x_i-\mu_X)(x_{i+\tau}-\mu_X)}{\sigma_X^2}\, .$$
 
 **Remarks:**
 - Notice that we assumed stationarity because the mean $\mu_X$ is the same for any value of the time lag $\tau$.
