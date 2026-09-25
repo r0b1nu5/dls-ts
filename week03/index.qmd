@@ -193,16 +193,44 @@ plt.show()
 ```
 
 ## Smoothing
-In order to mitigate noise in a signal, one may want to smooth it in post-processing.
+Due to noise, most realistic time series will be non-smooth.
+An intuitive way to mitigate noise in a signal is the moving (or sliding) average. 
+Late in the course, we will see other smoothing methods.
 
-### Sliding average
+### Moving average
 The most intuitive way to smooth a time series is to apply a **moving average**.
 Namely, given a time series $X=(x_0,x_1,...,x_{N-1})$, one chooses a window size $T\in\mathbb{N}$ and computes a new time series $Y$, where
-$$ y_i = \frac{1}{2T+1}\sum_{k=-T}^{T}x_{i+k}\, .$$
+$$ y_i = \frac{1}{T}\sum_{k=-T/2}^{T/2-1}x_{i+k}\, .$$
 Notice that in the smoothing process, we loose some information.
-The new time series $Y$ starts at time step $T$ and ends at time step $N-T-1$.
+The new time series $Y$ starts at time step $i=T/2$ and ends at time step $i=N-T/2+1$.
 
-**TODO: Illustrate the moving average with a rectangular window.**
+```{pyodide}
+fig, ax = plt.subplots()
+
+T = 10 # window size
+i = 6 # one time step
+t = data2.index[i].total_seconds()/3600
+i0 = i-int(T/2) # first step in the MA
+t0 = data2.index[i0].total_seconds()/3600
+i1 = i+int(T/2)-1 # last step in the MA
+t1 = data2.index[i1].total_seconds()/3600
+x = data2.iloc[i0:i1,1]
+y = x.mean()
+
+mi = data2.iloc[:20].min()
+ma = data2.iloc[:20].max()
+
+ax.fill([t0,t1,t1,t0], [mi,mi,ma,ma], color='C1', alpha=.2, label='averaging window')
+ax.plot(data2.index[:20].total_seconds()/3600, data2.iloc[:20], '-o', label='original data')
+ax.plot(t,y,'o',label='average value')
+
+ax.set_xlabel('t (h)')
+ax.set_ylabel('Temperature')
+
+plt.show()
+```
+
+Try to change the value of `i`to see the window moving.
 
 ### Sliding window
 Sometimes, one may want to smooth a signal, but give more weight to some time steps than others.
@@ -219,7 +247,7 @@ In a stationary process, mean and variance remain consant over time.
 
 When a process is not stationary, there are some techniques to preprocess the data and make it stationary.
 
-### Seasonality
+## Seasonality
 Typically, the ACF can be used to detect any seasonality in a time series.
 
 **Seasonality** in a time series is a recurring, periodic behavior.
