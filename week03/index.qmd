@@ -27,8 +27,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('../files/penicillin-data-01.csv')
-data1 = data.loc[data['Batch ID'==1],['Time (h)','Temperature(T:K)']]
+data = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
+data1 = data.loc[data['Batch ID'] == 1,['Time (h)','Temperature(T:K)']]
 data1.head()
 ```
 
@@ -58,8 +58,8 @@ temp1 = data1['Temperature(T:K)'].loc[data1['Time (h)'] == t1].iloc[0]
 
 # Show the linear interpolation
 fig, ax = plt.subplots()
-ax.plt([t0,t1],[temp0,temp1],'-o',label='original data')
-ax.set_xlabel('t')
+ax.plot([t0,t1],[temp0,temp1],'-o',label='original data')
+ax.set_xlabel('t (h)')
 ax.set_ylabel('Temperature')
 
 # Compute the temperature at the new time step
@@ -88,13 +88,11 @@ for t in new_time[1:8]:
 
  new_temp.append(temp)
 
-new_temp = [data1['Temperature(T:K)'].iloc[0],]
-
 fig,ax = plt.subplots()
 
 ax.plot(data1['Time (h)'].iloc[0:4],data1['Temperature(T:K)'].iloc[0:4],'-o',label='original data')
 ax.plot(new_time[0:8],new_temp,'o',label='interpolated data')
-ax.set_xlabel('t')
+ax.set_xlabel('t (h)')
 ax.set_ylabel('Temperature')
 plt.legend()
 plt.show()
@@ -136,11 +134,20 @@ x_days = data2_mean.index.total_seconds()/3600/24
 
 fig,ax = plt.subplots()
 
-ax.plot(x_days,data_mean,'o',label='mean')
-ax.plot(x_days,data_median,'o',label='median')
-ax.plot(x_days,data_max,'o',label='max')
+# Plot vertical lines between days
+day_index = data2.index[data2.index.total_seconds() % (3600*24) == 0.0]
+for t in day_index:
+ ax.plot([t,t],[data2.min(),data2.max()],'--',color=(.8,.8,.8))
 
-ax.set_xlabel('Time (days)'=
+# Plot the original data
+ax.plot(data2.index.total_seconds()/3600/24,data2,color=(.7,.7,.7),label='orginial data')
+
+# Plot the coarse grained data
+ax.plot(x_days,data2_mean,'o',label='mean')
+ax.plot(x_days,data2_median,'o',label='median')
+ax.plot(x_days,data2_max,'o',label='max')
+
+ax.set_xlabel('Time (days)')
 ax.set_ylabel('Daily temperature')
 ax.legend()
 
@@ -159,7 +166,7 @@ The approprate one is problem-dependent and needs to be chosen by the user (you)
 
 ```{pyodide}
 # Resampling...
-data_5min = data3.resample('5min')
+data_5min = data2.resample('5min')
 
 #...with different methods
 data_5min_lin = data_5min.interpolate(method='linear')
@@ -183,11 +190,6 @@ ax.legend()
 
 plt.show()
 ```
-
-### Polynomial interpolation (see *Analyse 1*)
-Using more than two points, we can perform more elaborate interpolations.
-
-**Question:** What is the maximal degree of a polynomial that interpolates $n$ points?
 
 ## Smoothing
 In order to mitigate noise in a signal, one may want to smooth it in post-processing.
@@ -216,6 +218,15 @@ In a stationary process, mean and variance remain consant over time.
 
 When a process is not stationary, there are some techniques to preprocess the data and make it stationary.
 
+### Seasonality
+Typically, the ACF can be used to detect any seasonality in a time series.
+
+**Seasonality** in a time series is a recurring, periodic behavior.
+
+    Example:
+    There is obviously seasonality in the daily temperature measurements at an outdoor location.
+    In this case, the seasonality period is one year.
+
 ## Autocorrelation function (ACF)
 The **autocorrelation function (ACF)** computes the correlation of a time series with itself after a given time lag $\tau$.
 Given a time series $X=(x_0,x_1,x_2,...)$, let us define the shifted time series $X_{\tau}=(x_{\tau},x_{\tau+1},x_{\tau+2},...)$.
@@ -228,14 +239,6 @@ $$ \mathrm{ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{\mathrm{cov}(X,X_{\tau})}{\sigm
 
 **TODO: Examples of computation, illustration, and interpretation.**
 
-### Seasonality
-Typically, the ACF can be used to detect any seasonality in a time series.
-
-**Seasonality** in a time series is a recurring, periodic behavior.
-
-    Example:
-    There is obviously seasonality in the daily temperature measurements at an outdoor location.
-    In this case, the seasonality period is one year.
 
 ## Hands on
 
