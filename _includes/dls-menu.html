@@ -1,0 +1,88 @@
+<!-- DLS course menu (trial). Floating button bottom-left; the course list pops up above it. -->
+<nav id="dls-menu" aria-label="DLS courses">
+  <button id="dls-menu-toggle" type="button" aria-expanded="false" aria-controls="dls-menu-panel"
+          title="DLS courses">
+    <svg class="dls-menu-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="dls-menu-label">DLS</span>
+    <span class="dls-menu-current">Semester 5</span>
+  </button>
+  <div id="dls-menu-panel">
+    <p class="dls-menu-title">DLS courses</p>
+    <p class="dls-menu-sem">Semester 3</p>
+    <ul>
+      <li><a href="https://dls.hevs.ch/apa/"><b>APA</b> Advanced Programming and Algorithms</a></li>
+      <li><a href="https://dls.hevs.ch/occ/"><b>OCC</b> Operating Systems, Code and Computation</a></li>
+      <li><a href="https://dls.hevs.ch/starting-ai/"><b>AI</b> Starting with AI</a></li>
+    </ul>
+    <p class="dls-menu-sem">Semester 4</p>
+    <ul>
+      <li><a href="https://dls.hevs.ch/nms/"><b>NMS</b></a></li>
+      <li><a href="https://dls.hevs.ch/pldl/"><b>PLDL</b> Project Lab</a></li>
+      <li><a href="https://dls.hevs.ch/dsc/"><b>DSC</b> Data Science</a></li>
+    </ul>
+    <p class="dls-menu-sem">Semester 5</p>
+    <ul>
+      <li><a href="https://dls.hevs.ch/ts/" aria-current="page"><b>TS</b> Time Series</a></li>
+      <li><a href="https://dls.hevs.ch/bayes/"><b>DA</b> Data Analysis</a></li>
+      <li><a href="https://dls.hevs.ch/mlai/"><b>ML</b> Machine Learning</a></li>
+      <li><a href="https://dls.hevs.ch/dnh/"><b>DB</b> Databases and HPC</a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  #dls-menu { --dls-fg: #222222; --dls-accent: #ddeaf1; --dls-bg: #ffffff; --dls-line: #e3e3e3;
+              position: fixed; left: 16px; bottom: 16px; z-index: 1100;
+              font-family: Barlow, system-ui, sans-serif; }
+  #dls-menu-toggle { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center;
+                     gap: 6px; padding: 8px 14px; border-radius: 999px; color: var(--dls-fg);
+                     background: var(--dls-bg); border: 1px solid var(--dls-line);
+                     box-shadow: 0 2px 10px rgba(0,0,0,.15); }
+  #dls-menu-toggle:hover, #dls-menu.open #dls-menu-toggle { background: var(--dls-accent); }
+  #dls-menu-toggle:focus-visible { outline: 2px solid #0098db; outline-offset: 2px; }
+  .dls-menu-icon { display: block; }
+  .dls-menu-label { font-family: Inter, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .06em; }
+  .dls-menu-current { font-size: 13px; color: #555; padding-left: 7px; border-left: 1px solid #c8c8c8; }
+  #dls-menu-panel { display: none; position: absolute; left: 0; bottom: calc(100% + 8px);
+                    width: min(270px, calc(100vw - 32px)); max-height: calc(100vh - 90px); overflow-y: auto;
+                    padding: 14px 16px 18px; border-radius: 10px; background: var(--dls-bg);
+                    color: var(--dls-fg); border: 1px solid var(--dls-line);
+                    box-shadow: 0 4px 18px rgba(0,0,0,.15); }
+  #dls-menu.open #dls-menu-panel { display: block; }
+  .dls-menu-title { font-family: Inter, sans-serif; font-weight: 600; margin: 0 0 6px; }
+  .dls-menu-sem { font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+                  color: #6b6b6b; margin: 12px 0 4px; }
+  #dls-menu ul { list-style: none; margin: 0; padding: 0; }
+  #dls-menu li a { display: block; padding: 5px 8px; border-radius: 6px; color: var(--dls-fg);
+                   text-decoration: none; font-size: 14px; line-height: 1.3; }
+  #dls-menu li a b { display: inline-block; min-width: 2.8em; font-family: Inter, sans-serif; font-size: 12px; }
+  #dls-menu li a:hover, #dls-menu li a:focus-visible { background: var(--dls-accent); }
+  #dls-menu li a[aria-current="page"] { background: var(--dls-accent); font-weight: 600; }
+
+  /* Keep pages phone-width: long reference URLs and wide tables made the layout wider than the
+     screen, which pushed the fixed button below the visible area */
+  .csl-entry { overflow-wrap: anywhere; }
+  @media (max-width: 991.98px) { main.content table { display: block; overflow-x: auto; } }
+  @media print { #dls-menu { display: none !important; } }
+</style>
+
+<script>
+(function () {
+  var menu = document.getElementById('dls-menu');
+  var btn = document.getElementById('dls-menu-toggle');
+  // Quarto injects this inside its layout grid; move it to <body> so no ancestor stacking context hides it
+  document.body.appendChild(menu);
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () { setOpen(!menu.classList.contains('open')); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); btn.focus(); }
+  });
+  document.addEventListener('click', function (e) { if (!menu.contains(e.target)) setOpen(false); });
+})();
+</script>
