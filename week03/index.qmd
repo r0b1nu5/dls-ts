@@ -231,10 +231,12 @@ ax.legend()
 plt.show()
 ```
 
-Try to change the value of `i`to see the window moving.
+Try to change the value of `i` to see the window moving.
+
+Repeating this process for each value of `i` process a new time series that is smoother than the original one.
 
 ```{pyodide}
-fig, ax = plt.subplots(figsize=(8,6))
+fig, ax = plt.subplots(figsize=(7,4))
 
 T = 10 # window size
 y = []
@@ -254,33 +256,75 @@ ax.legend()
 plt.show()
 ```
 
+Of course, there is a built-in tool to compate a moving average in `pandas`.
+
 ```{pyodide}
 data1['moving average'] = data1.rolling(window=10).mean()
+
+fig, ax = plt.subplots(figsize=(7,4))
+
+ax.plot(data1.index,data1['Temperature(T:K)'])
+ax.plot(data1.index,data1['moving average'])
+
+ax.set_xlabel('t (h)')
+ax.set_ylabel('temperature')
+
+plt.show()
 ```
+
+Try to tune the window size (`window` parameter) to see the impact on the signal.
 
 ### Sliding window
 Sometimes, one may want to smooth a signal, but give more weight to some time steps than others.
 In this case, we use more fancy windows for the moving average.
 
-**TODO: Illustrate different windows.**
+Let $W=(w_{-T/2},w_{-T/2+1},...,w_{-1},w_0,w_1,...,w_{T/2-1})$ be a list of weights defining the window. 
+The moving average of time series $X$ with window $W$ is the time series $Y=(y_{T/2},y_{T/2+1},...)$ where
+$$ y_i = \sum_{k=-T/2}^{T/2-1} w_{k}x_{i+k}\, . $$
+
+**Remark:** 
+The moving average corresponds to a rectangle window with uniform weights $w_k=1/T$. 
+
+```{pyodide}
+# SciPy is a nice library for building windows
+from scipy.signal.windows import get_window
+
+l = 10 # window size
+
+# Examples of window names: 'triang', 'hamming', 'hanning', 'blackman', ('gaussian',std), ('exponential',lambda).
+win_name = 'hamming'
+
+w = get_window(win_name,l)
+data1['windowed'] = data1.rolling(l).apply(
+ lambda x: np.dot(x,w) / w.sum(), raw=True
+)
+
+fig, (ax1,ax2) = plt.subplots(nrows=2,figsize=(7,6))
+
+ax1.plot(w,'-o')
+ax1.set_xlabel('idx')
+ax1.set_ylabel('w')
+
+ax2.plot(data1.index.total_seconds()/3600,data1['Temperature(T:k)'],label='raw data')
+ax2.plot(data1.index.total_seconds()/3600,data1['windowed with '+win_name],)
+ax2.set_xlabel('t (h)')
+ax2.set_ylabel('T (K)')
+ax2.legend()
+
+plt.show()
+```
 
 
 ## Stationarity
 In this course, we will assume that the processes we study are **stationary**, i.e., their statistical characteristics remain constant over time.
 In a stationary process, mean and variance remain consant over time.
 
-    Example: ...
+    Example: For humans, the heart rate (which is a time series) changes depending on the person's age or state of conciousness. 
+    We do not expect to observe the same heart rate if measure on a child or on an adult, on someone awake or someone asleep. 
+    Therefore, on the scale of years or of days, the heart rate is not a stationary process. 
 
-When a process is not stationary, there are some techniques to preprocess the data and make it stationary.
+When a process is not stationary, there are some techniques to preprocess the data and make it stationary, but this is the topic for another course.
 
-## Seasonality
-Typically, the ACF can be used to detect any seasonality in a time series.
-
-**Seasonality** in a time series is a recurring, periodic behavior.
-
-    Example:
-    There is obviously seasonality in the daily temperature measurements at an outdoor location.
-    In this case, the seasonality period is one year.
 
 ## Autocorrelation function (ACF)
 The **autocorrelation function (ACF)** computes the correlation of a time series with itself after a given time lag $\tau$.
@@ -291,6 +335,20 @@ $$ \mathrm{ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{\mathrm{cov}(X,X_{\tau})}{\sigm
 **Remarks:**
 - Notice that we assumed stationarity because the mean $\mu_X$ is the same for any value of the time lag $\tau$.
 - We had to truncate the summation to $N-\tau-1$ to accommodate for the time lag.
+
+### Seasonality or periodicity
+Typically, the ACF can be used to detect any seasonality or periodicity in a time series.
+
+**Seasonality or perioditicty** in a time series is a recurring, periodic behavior.
+
+    Example:
+    There is obviously yearly seasonality in the daily temperature measurements at an outdoor location.
+    In this case, the seasonality period is one year.
+
+    There is also a daily periodicity in the electrity consumption of a household, whose behavior is strongly correlated with the hour of the day.
+
+Generally, the work "seasonality" is preferred for events that are calendar-driven (time of the year, time of the day, week-day vs. weekend,...). 
+The word "periodicity" is more general and applies to any recurring process.
 
 **TODO: Examples of computation, illustration, and interpretation.**
 
