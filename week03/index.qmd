@@ -259,12 +259,12 @@ plt.show()
 Of course, there is a built-in tool to compate a moving average in `pandas`.
 
 ```{pyodide}
-data1['moving average'] = data1.rolling(window=10).mean()
+data1['moving average'] = data1['Temperature(T:K)'].rolling(window=10).mean()
 
 fig, ax = plt.subplots(figsize=(7,4))
 
-ax.plot(data1.index,data1['Temperature(T:K)'])
-ax.plot(data1.index,data1['moving average'])
+ax.plot(data1['Time (h)'],data1['Temperature(T:K)'])
+ax.plot(data1['Time (h)'],data1['moving average'])
 
 ax.set_xlabel('t (h)')
 ax.set_ylabel('temperature')
@@ -295,7 +295,7 @@ l = 10 # window size
 win_name = 'hamming'
 
 w = get_window(win_name,l)
-data1['windowed'] = data1.rolling(l).apply(
+data1['windowed'] = data1['Temperature(T:K)'].rolling(l).apply(
  lambda x: np.dot(x,w) / w.sum(), raw=True
 )
 
@@ -305,8 +305,8 @@ ax1.plot(w,'-o')
 ax1.set_xlabel('idx')
 ax1.set_ylabel('w')
 
-ax2.plot(data1.index.total_seconds()/3600,data1['Temperature(T:k)'],label='raw data')
-ax2.plot(data1.index.total_seconds()/3600,data1['windowed with '+win_name],)
+ax2.plot(data1['Time (h)'],data1['Temperature(T:K)'],label='raw data')
+ax2.plot(data1['Time (h)'],data1['windowed'],label='windowed with '+win_name])
 ax2.set_xlabel('t (h)')
 ax2.set_ylabel('T (K)')
 ax2.legend()
