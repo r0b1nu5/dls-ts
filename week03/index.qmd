@@ -32,7 +32,7 @@ data1 = data.loc[data['Batch ID'] == 1,['Time (h)','Temperature(T:K)']]
 data1.head()
 ```
 
-Currently, the time step in 0.2 hours, i.e., 12 minutes.
+Currently, the time step is 0.2 hours, i.e., 12 minutes.
 Let us change this time step to 5 minutes.
 
 Keeping the first time step unchanged, the new time steps are
@@ -46,7 +46,7 @@ new_time = np.arange(data1['Time (h)'].iloc[0],data1['Time (h)'].iloc[-1],1/12)
 To interpolate at time $t$, we need to draw the line between the two closest measured points $t_0\leq t\leq t_1$. 
 The equation of this line is (see *Algèbre Linéraire 1*)
 $$ T(t) = \frac{T(t_1)-T(t_0)}{t_1-t_0}(t-t_0) + T(t_0)\, .$$
-It is the easy to compute the temperature that we should use at our new time $t$.
+It is then easy to compute the temperature that we should use at our new time $t$.
 
 ```{pyodide}
 # We first need the coordinates (time and temperature) of the two closest data points.
@@ -233,7 +233,7 @@ plt.show()
 
 Try to change the value of `i` to see the window moving.
 
-Repeating this process for each value of `i` process a new time series that is smoother than the original one.
+Repeating this process for each value of `i` produces a new time series that is smoother than the original one.
 
 ```{pyodide}
 fig, ax = plt.subplots(figsize=(7,4))
@@ -256,7 +256,7 @@ ax.legend()
 plt.show()
 ```
 
-Of course, there is a built-in tool to compate a moving average in `pandas`.
+Of course, there is a built-in tool to compute a moving average in `pandas`.
 
 ```{pyodide}
 data1['moving average'] = data1['Temperature(T:K)'].rolling(window=10).mean()
@@ -333,8 +333,56 @@ Then the ACF of $X$ at time lag $\tau$ is
 $$ \mathrm{ACF}_X(\tau) = r_{X,X_{\tau}} = \frac{\mathrm{cov}(X,X_{\tau})}{\sigma_X^2} = \frac{\sum_{i=0}^{N-\tau-1}(x_i-\mu_X)(x_{i+\tau}-\mu_X)}{\sigma_X^2}\, .$$
 
 **Remarks:**
+
 - Notice that we assumed stationarity because the mean $\mu_X$ is the same for any value of the time lag $\tau$.
+
 - We had to truncate the summation to $N-\tau-1$ to accommodate for the time lag.
+
+Recall that the **correlation** quantifies the similarity between two time series, with a number between -1 and 1. 
+
+ Example: 
+ The website [spurious correlations](https://www.tylervigen.com/spurious-correlations) highlights some time series that look very similar, but do not have any relation with each other.
+
+Therefore, the autocorrelation quantifies to what extent a time series "looks like itself later in time". 
+A high autocorrelation coefficient indicates that a pattern is recurring in time.
+
+We will highlight this with a new time series: [daily average temperature in Sion, from January 2000 to December 2021](https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sio/ogd-smn_sio_d_historical.csv)
+
+```{pyodide}
+df = pd.read_csv('https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sio/ogd-smn_sio_d_historical.csv', delimiter=';').loc[range(16985,25021),[1,2]]
+df.head()
+```
+
+Let us compute the ACF for this time series. 
+What do you expect?
+
+```{pyodide}
+acf_df = [df['tre200d0'].autocorr(lag=tau) for tau in range(1,4000)]
+
+fig, ax = plt.subplots(figsize(7,4))
+ax.plot(df['tre200d0'])
+ax.set_xlabel('tau (days)')
+ax.set_ylabel('ACF')
+
+plt.show()
+```
+We observe a maximum every 365 time steps, i.e., every year. 
+
+Let us look more closely at the time series and its lagged version
+
+```{pyodide}
+fig, ax = plt.subplots(figsize=(7,4))
+
+lag = 10
+ax.plot(df['tre200d0'].iloc[range(0,1000)], label='original time series')
+ax.plot(df['tre200d0'].iloc(range(lag,1000+lag), label='lagged time series (lag = '+lag+')')
+
+ax.set_xaxis('time (days)')
+ax.set_yaxis('temperature')
+ax. legend()
+
+plt.show()
+```
 
 ### Seasonality or periodicity
 Typically, the ACF can be used to detect any seasonality or periodicity in a time series.
@@ -345,16 +393,27 @@ Typically, the ACF can be used to detect any seasonality or periodicity in a tim
     There is obviously yearly seasonality in the daily temperature measurements at an outdoor location.
     In this case, the seasonality period is one year.
 
-    There is also a daily periodicity in the electrity consumption of a household, whose behavior is strongly correlated with the hour of the day.
+    There is also a daily periodicity in the electricity consumption of a household, whose behavior is strongly correlated with the hour of the day.
 
 Generally, the work "seasonality" is preferred for events that are calendar-driven (time of the year, time of the day, week-day vs. weekend,...). 
 The word "periodicity" is more general and applies to any recurring process.
 
-**TODO: Examples of computation, illustration, and interpretation.**
-
 
 ## Hands on
 
+1. Explore the weather data sets from [Meteo Suisse](https://www.meteosuisse.admin.ch/services-et-publications/service/open-data.html). 
+
+1. Choose a weather station and download the temperature time series with a time resolution of 10 minutes for the time period 2010-2019.
+
+1. Is the time series noisy?
+
+1. Apply a sliding window to smooth the signal. 
+
+1. What is an appropriate size for the window? Why? Why not more or less?
+
+1. Compute and display the ACF for this time series. 
+
+1. What periodicity do you identify?
 
 
 
