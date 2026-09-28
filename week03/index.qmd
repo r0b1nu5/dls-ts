@@ -306,7 +306,7 @@ ax1.set_xlabel('idx')
 ax1.set_ylabel('w')
 
 ax2.plot(data1['Time (h)'],data1['Temperature(T:K)'],label='raw data')
-ax2.plot(data1['Time (h)'],data1['windowed'],label='windowed with '+win_name])
+ax2.plot(data1['Time (h)'],data1['windowed'],label='windowed with '+win_name)
 ax2.set_xlabel('t (h)')
 ax2.set_ylabel('T (K)')
 ax2.legend()
@@ -349,7 +349,7 @@ A high autocorrelation coefficient indicates that a pattern is recurring in time
 We will highlight this with a new time series: [daily average temperature in Sion, from January 2000 to December 2021](https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sio/ogd-smn_sio_d_historical.csv)
 
 ```{pyodide}
-df = pd.read_csv('https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sio/ogd-smn_sio_d_historical.csv', delimiter=';').loc[range(16985,25021),[1,2]]
+df = pd.read_csv('https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sio/ogd-smn_sio_d_historical.csv', delimiter=';').iloc[range(16985,25021),[1,2]]
 df.head()
 ```
 
@@ -359,7 +359,7 @@ What do you expect?
 ```{pyodide}
 acf_df = [df['tre200d0'].autocorr(lag=tau) for tau in range(1,4000)]
 
-fig, ax = plt.subplots(figsize(7,4))
+fig, ax = plt.subplots(figsize=(7,4))
 ax.plot(df['tre200d0'])
 ax.set_xlabel('tau (days)')
 ax.set_ylabel('ACF')
@@ -375,10 +375,10 @@ fig, ax = plt.subplots(figsize=(7,4))
 
 lag = 10
 ax.plot(df['tre200d0'].iloc[range(0,1000)], label='original time series')
-ax.plot(df['tre200d0'].iloc(range(lag,1000+lag), label='lagged time series (lag = '+lag+')')
+ax.plot(df['tre200d0'].iloc[range(lag,1000+lag)], label='lagged time series (lag = '+str(lag)+')', alpha=.5)
 
-ax.set_xaxis('time (days)')
-ax.set_yaxis('temperature')
+ax.set_xlabel('time (days)')
+ax.set_ylabel('temperature')
 ax. legend()
 
 plt.show()
