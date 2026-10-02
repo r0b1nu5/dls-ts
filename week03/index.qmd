@@ -360,7 +360,7 @@ What do you expect?
 acf_df = [df['tre200d0'].autocorr(lag=tau) for tau in range(1,4000)]
 
 fig, ax = plt.subplots(figsize=(7,4))
-ax.plot(df['tre200d0'])
+ax.plot(acf_df)
 ax.set_xlabel('tau (days)')
 ax.set_ylabel('ACF')
 
@@ -387,7 +387,7 @@ plt.show()
 ### Seasonality or periodicity
 Typically, the ACF can be used to detect any seasonality or periodicity in a time series.
 
-**Seasonality or perioditicty** in a time series is a recurring, periodic behavior.
+**Seasonality or periodicity** in a time series is a recurring, periodic behavior.
 
     Example:
     There is obviously yearly seasonality in the daily temperature measurements at an outdoor location.
@@ -416,6 +416,7 @@ The word "periodicity" is more general and applies to any recurring process.
 1. What periodicity do you identify?
 
 
+## [Solution](../solutions/week03-solution.ipynb)
 
 
 
