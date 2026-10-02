@@ -135,6 +135,7 @@ This [file](../files/penicillin-data-01.csv) contains a subset of the data simul
 
 1. Resample the time series with time step of one hour and represent it on top of the original time series. How did you choose the value of the resampled time series?
 
+## [Solution](../solutions/week01-solution.ipynb)
 
 
 

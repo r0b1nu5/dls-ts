@@ -214,11 +214,12 @@ Use again our [penicillin data set](../files/penicillin-data-01.csv).
 
 1. Is it expected?
 
-1. Among the other quantities in the [original data set](http://www.industrialpenicillinsimulation.com/) is there one where you expect to see a correlation with the penicillin concentration? 
+1. (Optional) Among the other quantities in the [original data set](http://www.industrialpenicillinsimulation.com/) is there one where you expect to see a correlation with the penicillin concentration? 
    Justify.
 
 1. (Optional) Test your prediction by importing the data and computing the correlation.
 
 
+## [Solution](../solutions/week02-solution.ipynb)
 
 
