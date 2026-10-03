@@ -1,0 +1,164 @@
+# Fault Detection in Bioreactor Time Series
+
+## Course: Applied Statistics & Time Series Analysis
+## Duration: 90 minutes
+## Tools: Python (pandas, numpy, matplotlib, statsmodels)
+
+---
+
+## Background
+
+You will analyze time series data from an industrial penicillin fermentation bioreactor. This data comes from a simulation benchmark (IndPenSim, Goldrick et al., 2019).
+
+**Normal Operating Conditions (NOC):** 15 batches collected during normal operation will serve as your reference baseline.
+
+**Fault Batches:** 3 additional batches contain process faults. Your task is to detect which variable is affected and classify the fault type using only the statistical methods you learned in class.
+
+---
+
+## Part 1: Data Exploration (15 minutes)
+
+**Goal:** Understand the structure and quality of your reference dataset.
+
+### Tasks
+
+1. Load the reference data file (`noc_reference.csv`)
+2. Answer the following questions:
+   - How many rows and columns are in the dataset?
+   - What are the column names?
+   - Are there any missing values? If yes, which columns?
+   - What is the sampling frequency (time between consecutive measurements)?
+
+3. Select one batch from the reference data and plot the DO₂ (dissolved oxygen) variable over time. Describe what you observe.
+
+4. Save your work: Keep a copy of your code for submission.
+
+---
+
+## Part 2: Quantile Band Analysis (20 minutes)
+
+**Goal:** Establish normal ranges for each variable using quantiles.
+
+### Tasks
+
+1. Choose 4 variables to analyze: DO₂, Temperature, pH, and Substrate_Flow.
+
+2. For each variable, compute the 25th percentile (Q1), 50th percentile (median), and 75th percentile (Q3) using ALL reference batches combined. Record these values in a table.
+
+3. Load Fault Batch 01 (`fault_batch_01.csv`). For each of the 4 variables:
+   - How many data points fall below Q1 or above Q3?
+   - What percentage of the batch is affected by outliers?
+
+4. Create a plot for DO₂ that shows:
+   - The Fault Batch 01 DO₂ values over time (as a line)
+   - The Q1 and Q3 lines as horizontal dashed lines
+   - The median as a dotted line
+   - A shaded gray area between Q1 and Q3
+
+5. Which variable in Fault Batch 01 shows the most outliers? What might cause this pattern in a bioreactor?
+
+---
+
+## Part 3: Boxplot Outlier Detection (20 minutes)
+
+**Goal:** Use boxplots to identify outliers beyond the interquartile range.
+
+### Tasks
+
+1. Recall the boxplot outlier definition:
+   - IQR = Q3 - Q1
+   - Lower whisker = Q1 - 1.5 × IQR
+   - Upper whisker = Q3 + 1.5 × IQR
+   - Outliers = values below lower whisker OR above upper whisker
+
+2. Using ONLY the Temperature variable from the reference data:
+   - Calculate Q1, Q3, and IQR
+   - Calculate the lower and upper whisker boundaries
+
+3. Load Fault Batch 02 (`fault_batch_02.csv`). Count how many Temperature values exceed the upper whisker boundary you calculated.
+
+4. Create side-by-side boxplots showing:
+   - Left: Reference Temperature data
+   - Right: Fault Batch 02 Temperature data
+   
+5. Which variable shows the clearest outlier pattern in Fault Batch 02? What equipment issue could cause temperature to drift upward?
+
+---
+
+## Part 4: ACF Analysis (25 minutes)
+
+**Goal:** Use autocorrelation to detect periodic patterns.
+
+### Tasks
+
+1. Load Fault Batch 03 (`fault_batch_03.csv`). Check if there are any missing values in the Nitrogen column.
+
+2. Interpolate the missing values in the Nitrogen column using linear interpolation. Verify that all missing values are now filled.
+
+3. Select the pH variable from:
+   - One reference batch (choose any)
+   - Fault Batch 03
+   
+4. Remove any missing values (NaN) before computing ACF.
+
+5. Compute and plot the ACF for both:
+   - Reference pH (up to lag 30)
+   - Fault Batch 03 pH (up to lag 30)
+
+6. Examine the ACF values specifically at lag 10:
+   - What is the ACF value at lag 10 for the reference?
+   - What is the ACF value at lag 10 for Fault Batch 03?
+   - What is the difference between them?
+
+7. Convert lag 10 to real time units (remember: sampling frequency = 12 minutes per sample).
+
+8. Reflection Questions (write 2-3 sentences for each):
+   
+   **Q1:** Does the fault batch show stronger or weaker correlation at lag 10 compared to reference? What does this tell you about the data structure?
+   
+   **Q2:** What type of process phenomenon could create periodic peaks at lag 10 (every 2 hours)? Consider what happens in an industrial fermentation facility on a regular schedule.
+   
+   **Q3:** Why can't we detect this fault using quantile bands or boxplots alone? What does this teach us about choosing analysis methods?
+
+---
+
+## Part 5: Fault Classification Report (10 minutes)
+
+**Goal:** Synthesize your findings into a diagnostic conclusion.
+
+### Submit a 1-page report with the following sections:
+
+1. **Summary Table:** For each of the 3 fault batches, indicate:
+   - Which variable showed anomalies (DO₂, Temperature, pH, or Substrate_Flow)
+   - Which method detected it (Quantiles, Boxplots, or ACF)
+   - Number of outliers or statistical evidence
+
+2. **Diagnosis for Each Batch:**
+   - Suspected fault type (in your own words)
+   - Justification with specific statistics you computed
+   - What physical process issue could cause this?
+
+3. **Final Reflection:**
+   - Which statistical method was most effective overall? Why?
+   - Which method would be best for real-time monitoring? Why?
+
+---
+
+## Submission Checklist
+
+- [ ] Python script with all code you wrote (`.py` file)
+- [ ] Completed PDF or Word document with plots and reflections
+- [ ] Fault Classification Report (1 page)
+
+**Naming convention:** `FirstName_LastName_PenicillinLab.py` and `FirstName_LastName_PenicillinLab_Report.pdf`
+
+**Due date:** End of lab session
+
+---
+
+## Notes
+
+- The data files are provided in the same folder as this document
+- All statistical calculations must be done by you (not copied from examples)
+- Plots should have titles, axis labels, and legends where appropriate
+- If you get stuck, ask for help—but try to understand the "why" behind each step
