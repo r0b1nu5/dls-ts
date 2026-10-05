@@ -1,6 +1,6 @@
 ---
-title: "Applied Statistics: Time Series"
-subtitle: "Course introduction"
+title: "Course introduction"
+subtitle: "Applied Statistics: Time Series"
 format:
  live-revealjs:
   slide-number: true

@@ -1,0 +1,147 @@
+---
+title: "Recap of vectorial geometry"
+subtitle: "Applied Statistics: Time Series"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../_brand.yml
+  theme: ../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://dls.hevs.ch/ts/week05/)"
+---
+
+## Introductory remark
+A time series $X$ composed of $N$ time steps
+
+$\iff$
+
+A sequence of $N$ numbers
+
+$\iff$
+
+A vector in $\mathbb{R}^N$.
+
+## Vectors
+A $N$-dimensional **vector** $\vec{v}$ is an arrow in $\mathbb{R}^N$:
+
+- A direction: the line supporting the arrow,
+
+- A orientation: the way the arrow's head points to,
+	
+- A magnitude: the length of the arrow, called the **norm**, computed as
+$$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$
+
+**TODO: Show an arrow.**
+
+## Normalization
+A vector is **normalized** if $\|\vec{v}\| = 1$. 
+
+If 
+$$ \vec{u} = \frac{1}{\|\vec{v}\|}\vec{v}\, , $$
+then
+$$\|\vec{u}\| = 1\, .$$
+ 
+## Coordinates
+Tail at the origin and coordinates of the head.
+
+**TODO: Illustrate a vector with coordinates**
+
+## Linear combination
+A **linear combination** of vectors 
+$$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
+is itself a vector.
+
+**TODO: Illustrate a linear combination of vectors.**
+
+## Basis
+A **basis** of $\mathbb{R}^N$ is a very set of vectors, 
+$$ \mathcal{B} = \left\{\vec{u}_1,\vec{u}_2,...,\vec{u}_n\right\}\, ,$$
+such that:
+
+1. **Independence**: None of the vectors $\vec{u}_i\in\mathcal{B}$ can be created as a linear combination of the $N-1$ others.
+
+1. **Generative**: A basis of $\mathbb{R}^N$ is composed of precisely $N$ vectors.
+
+**TODO:    Examples:...**
+
+## Basis (cont'd)
+Given any vector $\vec{v}\in\mathbb{R}^N$,
+$$\vec{v} = \alpha_1\vec{u}_1 + \alpha_2\vec{u}_2 + \cdots + \alpha_N\vec{u}_N\, .$$
+
+This choice of $\alpha$'s is unique.
+
+## Scalar product
+The **scalar product** of $\vec{x}$ and $\vec{y}$ is 
+$$\vec{x}\cdot\vec{y} = \sum_{i=1}^{N}x_iy_i\, .$$
+
+Equivalent form:
+$$\vec{x}\cdot\vec{y} = \|\vec{x}\|\cdot\|\vec{y}\|\cdot\cos(\phi)\, ,$$
+where $\phi\in[-\pi,\pi]$ is the angle between $\vec{x}$ and $\vec{y}$.
+
+## Scalar product (cont'd)
+If $\vec{x} and $\vec{y} are colinear, then $\cos(\pm\phi)=\pm1$. 
+
+If $\vec{x} and $\vec{y} are perpendicular (orthogonal), then $\vec{x}\dot\vec{y}=0$. 
+
+Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
+
+## Orthogonal projection
+
+The **orthogonal projection** of $\vec{v}$ on $\vec{u}$ is
+$$\vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
+
+**TODO: Illustrate the orthogonal projection.**
+
+
+## Orthonormal basis
+A basis $\mathcal{B}=\{\vec{u}_1,\vec{u}_2,...,\vec{u}_N\}$ is **orthonormal** if:
+
+1. $\|\vec{u}_i\|^2 = \vec{u}_i\cdot\vec{u}_i = 1$ for all $i\in\{1,...,N\}$; and
+
+1. $\vec{u}_i\cdot\vec{u}_j = 0$ for all $i\neq j$.
+
+## Orthonormal basis (cont'd)
+For any vector $\vec{v}$, 
+$$ \vec{v} = \alpha_1\vec{u}_1 + \alpha_2\vec{u}_2 + \cdots + \alpha_N\vec{u}_N\, . $$
+
+Remarkably, With an orthonormal basis, 
+$$ \alpha_i\vec{u}_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2}\vec{u}_i\, . $$
+
+Therefore, 
+$$ \alpha_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2} = \vec{v}\cdot\vec{u}_i\, .$$
+
+
+## Change of basis
+Let us define the $N\times N$ matrix 
+$$ U = \begin{pmatrix} \cdots & \vec{u}_1 & \cdots \\
+\cdots & \vec{u}_2 & \dots \\
+& \vdots & \\
+\cdots & \vec{u}_N & \cdots \end{pmatrix}\, . $$
+
+The product
+$$ U\cdot \vec{v} 
+= \begin{pmatrix} \cdots & \vec{u}_1 & \cdots \\
+\cdots & \vec{u}_2 & \dots \\
+& \vdots & \\
+\cdots & \vec{u}_N & \cdots \end{pmatrix} \cdot \begin{pmatrix} \vdots \\ \vec{v} \\ \vdots \end{pmatrix} 
+= \begin{pmatrix} \vec{u}_1\cdot\vec{v} \\ \vec{u}_2\cdot\vec{v} \\ \vdots \\ \vec{u}_N\cdot\vec{v}\end{pmatrix} 
+= \begin{pmatrix}\alpha_1 \\ \alpha_2 \\ \vdots \\ \alpha_N \end{pmatrix}\, . $$
+gives the coordinates of $\vec{v}$ in $\mathcal{B}$. 
+
+
+## Vectorial interpretation of the covariance and correlation
+The time series $X$ and $Y$ are $N$-dimensional vectors, writtens $\vec{x}$ and $\vec{y}$ respectively.
+
+Then, 
+$$\text{covariance} = \vec{x}\dot\vec{y}$$
+and 
+$$\text{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\dot\frac{\vec{y}}{\|\vec{y}\|}$$
+
+
+## Hands on
+
+See [webpage](https://dls.hevs.ch/ts/week05).
+
