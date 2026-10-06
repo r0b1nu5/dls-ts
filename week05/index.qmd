@@ -27,13 +27,13 @@ is normalized.
 A vector is typically represented by the coordinates of its head when its tail lies on at the origin.
 We typically write a vector as a 1-column matrix, whose components are the coordinates.
 
-![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png){width="60%", fig-align="center"}
+![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png){.any_class width="60%"}
 
 One of the fundamental properties of vectors is that a **linear combination** of vectors 
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
 is itself a vector.
 
-![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){width="60%", fig-align="center"}
+![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){.none width="60%"}
 
 ## Basis
 A **basis** of $\mathbb{R}^N$ is a very specific set of vectors, 
@@ -80,7 +80,7 @@ $$ \vec{v}\cdot\vec{v} = \|\vec{v}\|^2\, .$$
 ## Orthogonal projection
 The **orthogonal projection** of a vector $\vec{v}$ on another vector $\vec{u}$ is the best approximation of $\vec{v}$ by a vector collinear to $\vec{u}$. 
 
-![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){width="60%", fig-align="center"}
+![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){.any_class width="60%"}
 
 The projected vector $\vec{v}_{\vec{u}}$ is computed as
 $$ \vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
