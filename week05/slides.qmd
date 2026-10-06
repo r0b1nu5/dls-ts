@@ -32,7 +32,7 @@ A $N$-dimensional **vector** $\vec{v}$ is an arrow in $\mathbb{R}^N$:
 - A orientation: the way the arrow's head points to,
 	
 - A magnitude: the length of the arrow, called the **norm**, computed as
-$$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$
+<!--$$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$-->
 
 ![A vector is an arrow](./figs/arrow.png)
 
@@ -54,7 +54,7 @@ A **linear combination** of vectors
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
 is itself a vector.
 
-**TODO: Illustrate a linear combination of vectors.**
+![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){width=60%, fig-align="center"}
 
 ## Basis
 A **basis** of $\mathbb{R}^N$ is a very set of vectors, 
