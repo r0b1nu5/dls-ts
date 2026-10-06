@@ -27,7 +27,7 @@ is normalized.
 A vector is typically represented by the coordinates of its head when its tail lies on at the origin.
 We typically write a vector as a 1-column matrix, whose components are the coordinates.
 
-**TODO: Illustrate a vector with coordinates**
+![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png)
 
 One of the fundamental properties of vectors is that a **linear combination** of vectors 
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$

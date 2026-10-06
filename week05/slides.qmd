@@ -47,7 +47,7 @@ $$\|\vec{u}\| = 1\, .$$
 ## Coordinates
 Tail at the origin and coordinates of the head.
 
-**TODO: Illustrate a vector with coordinates**
+![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png)
 
 ## Linear combination
 A **linear combination** of vectors 
