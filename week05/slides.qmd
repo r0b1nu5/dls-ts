@@ -34,7 +34,7 @@ A $N$-dimensional **vector** $\vec{v}$ is an arrow in $\mathbb{R}^N$:
 - A magnitude: the length of the arrow, called the **norm**, computed as
 $$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$
 
-**TODO: Show an arrow.**
+![A vector is an arrow](./figs/arrow.png)
 
 ## Normalization
 A vector is **normalized** if $\|\vec{v}\| = 1$. 
