@@ -16,7 +16,7 @@ A $N$-dimensional **vector** $\vec{v}$ is an arrow in $\mathbb{R}^N$, i.e., it i
 - A magnitude: the length of the arrow, called the **norm**, computed as
 $$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$
 
-![A vector is an arrow](./figs/arrow.png){width=10%, fig-align="center"}
+![A vector is an arrow](./figs/arrow.png){.float-right width="60%"}
 
 A vector is said to be **normalized** if it has norm 1. 
 A vector can be normalized by dividing it by its own norm. 
