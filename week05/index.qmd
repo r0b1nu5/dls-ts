@@ -16,7 +16,7 @@ A $N$-dimensional **vector** $\vec{v}$ is an arrow in $\mathbb{R}^N$, i.e., it i
 - A magnitude: the length of the arrow, called the **norm**, computed as
 $$\|\vec{v}\| = \sqrt{v_1^2 + v_2^2 + \cdots + v_N^2} = \sqrt{\sum_{i=1}^{N}v_i^2}\, .$$
 
-![A vector is an arrow](./figs/arrow.png)
+![A vector is an arrow](./figs/arrow.png){width=60%, fig-align="center"}
 
 A vector is said to be **normalized** if it has norm 1. 
 A vector can be normalized by dividing it by its own norm. 
@@ -27,7 +27,7 @@ is normalized.
 A vector is typically represented by the coordinates of its head when its tail lies on at the origin.
 We typically write a vector as a 1-column matrix, whose components are the coordinates.
 
-![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png)
+![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png){width=60%, fig-align="center"}
 
 One of the fundamental properties of vectors is that a **linear combination** of vectors 
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
