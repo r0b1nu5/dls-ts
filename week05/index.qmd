@@ -27,13 +27,13 @@ is normalized.
 A vector is typically represented by the coordinates of its head when its tail lies on at the origin.
 We typically write a vector as a 1-column matrix, whose components are the coordinates.
 
-![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png){width=1%, fig-align="center"}
+![Coordinates of a vector in $\mathbb{R}^2$](figs/coordinates.png){width="60%", fig-align="center"}
 
 One of the fundamental properties of vectors is that a **linear combination** of vectors 
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
 is itself a vector.
 
-![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){width=60%, fig-align="center"}
+![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){width="60%", fig-align="center"}
 
 ## Basis
 A **basis** of $\mathbb{R}^N$ is a very specific set of vectors, 
@@ -44,7 +44,21 @@ A basis satisfies at two conditions:
 
 1. **Generative**: A basis of $\mathbb{R}^N$ is composed of precisely $N$ vectors.
 
-**TODO:    Examples:...**
+    Examples: The vectors
+    $$\vec{u}_1 = \begin{pmatrix}1\\0\\0\end{pmatrix}\, , \qquad
+    \vec{u}_2 = \begin{pmatrix}0\\1\\0\end{pmatrix}\, , \qquad
+    \vec{u}_3 = \begin{pmatrix}0\\0\\1\end{pmatrix}\, , \qquad
+    \vec{u}_4 = \begin{pmatrix}1\\1\\1\end{pmatrix}\, ,$$
+    are not linearly independent. 
+    Indeed, $\vec{u}_4 = \vec{u}_1+\vec{u}_2+\vec{u}_3$. 
+
+    The vectors
+    $$\vec{u}_1 = \begin{pmatrix}1\\1\\0\end{pmatrix}\, , \qquad
+    \vec{u}_2 = \begin{pmatrix}0\\1\\1\end{pmatrix}\, ,$$
+    are linearly independent, but not generative. 
+    Indeed, the vector
+    $$\vec{v} = \begin{pmatrix}1\\1\\-1\end{pmatrix}\, ,$$
+    cannot be written as a linear combination of $\vec{u}_1$ and $\vec{u}_2$.
 
 Any vector can be written in a given basis (i.e., as a linear combination of the basis' elements) in unique fashion.
 In other words, given any vector $\vec{v}\in\mathbb{R}^N$, there exists a unique choice of coefficients $\{\alpha_1,...,\alpha_N\}\subset\mathbb{R}$ such that 
@@ -57,16 +71,16 @@ One can prove that the scalar product can equivalently be computed as
 $$\vec{x}\cdot\vec{y} = \|\vec{x}\|\cdot\|\vec{y}\|\cdot\cos(\phi)\, ,$$
 where $\phi\in[-\pi,\pi]$ is the angle between the two vectors $\vec{x}$ and $\vec{y}$.
 
-In particular, one realizes that two vectors are colinear with identical (resp. opposite) orientation if and only if $\cos(\phi)=1$ (resp. $\cos(\phi)=-1$). 
+In particular, one realizes that two vectors are collinear with identical (resp. opposite) orientation if and only if $\cos(\phi)=1$ (resp. $\cos(\phi)=-1$). 
 Furthermore, two vectors are orthogonal (perpendicular) if and only if their scalar product is zero.
 
 Finally, taking the scalar product between a vector $\vec{v}$ and itself gives the squared norm of $\vec{v}$, 
 $$ \vec{v}\cdot\vec{v} = \|\vec{v}\|^2\, .$$
 
 ## Orthogonal projection
-The **orthogonal projection** of a vector $\vec{v}$ on another vector $\vec{u}$ is the best approximation of $\vec{v}$ by a vector colinear to $\vec{u}$. 
+The **orthogonal projection** of a vector $\vec{v}$ on another vector $\vec{u}$ is the best approximation of $\vec{v}$ by a vector collinear to $\vec{u}$. 
 
-**TODO: Illustrate the orthogonal projection.**
+![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){width="60%", fig-align="center"}
 
 The projected vector $\vec{v}_{\vec{u}}$ is computed as
 $$ \vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
@@ -85,6 +99,7 @@ $$ \alpha_i\vec{u}_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2}\vec{u}_i\, 
 Therefore, 
 $$ \alpha_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2} = \vec{v}\cdot\vec{u}_i\, .$$
 
+**TODO: Illustrate the orthogonal projection.**
 
 ## Change of basis
 Notice that stacking each vector $\vec{u}_i$ as a row of a $N\times N$ matrix 

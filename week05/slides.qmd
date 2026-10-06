@@ -65,7 +65,23 @@ such that:
 
 1. **Generative**: A basis of $\mathbb{R}^N$ is composed of precisely $N$ vectors.
 
-**TODO:    Examples:...**
+## Example
+
+The vectors
+$$\vec{u}_1 = \begin{pmatrix}1\\0\\0\end{pmatrix}\, , \qquad
+\vec{u}_2 = \begin{pmatrix}0\\1\\0\end{pmatrix}\, , \qquad
+\vec{u}_3 = \begin{pmatrix}0\\0\\1\end{pmatrix}\, , \qquad
+\vec{u}_4 = \begin{pmatrix}1\\1\\1\end{pmatrix}\, ,$$
+are not linearly independent: $\vec{u}_4 = \vec{u}_1+\vec{u}_2+\vec{u}_3$. 
+
+## Example
+
+The vectors
+$$\vec{u}_1 = \begin{pmatrix}1\\1\\0\end{pmatrix}\, , \qquad
+\vec{u}_2 = \begin{pmatrix}0\\1\\1\end{pmatrix}\, ,$$
+are linearly independent, but not generative:
+$$\vec{v} = \begin{pmatrix}1\\1\\-1\end{pmatrix}\, ,$$
+cannot be written as a linear combination of $\vec{u}_1$ and $\vec{u}_2$.
 
 ## Basis (cont'd)
 Given any vector $\vec{v}\in\mathbb{R}^N$,
@@ -93,7 +109,7 @@ Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
 The **orthogonal projection** of $\vec{v}$ on $\vec{u}$ is
 $$\vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
 
-**TODO: Illustrate the orthogonal projection.**
+![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){width="60%", fig-align="center"}
 
 
 ## Orthonormal basis
@@ -113,6 +129,7 @@ $$ \alpha_i\vec{u}_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2}\vec{u}_i\, 
 Therefore, 
 $$ \alpha_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2} = \vec{v}\cdot\vec{u}_i\, .$$
 
+**TODO: Illustrate the orthogonal projection.**
 
 ## Change of basis
 Let us define the $N\times N$ matrix 
