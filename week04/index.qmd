@@ -1,4 +1,4 @@
-# Lab 1: Fault Detection in Bioreactor Time Series {.unnumbered}
+# Lab 1: Fault detection in bioreactor time series {.unnumbered}
 
 ## Background
 
