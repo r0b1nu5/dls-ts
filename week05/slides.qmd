@@ -109,7 +109,7 @@ Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
 The **orthogonal projection** of $\vec{v}$ on $\vec{u}$ is
 $$\vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
 
-![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){.any_class width="60%"}
+![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){.any_class width="40%"}
 
 
 ## Orthonormal basis
@@ -151,9 +151,9 @@ gives the coordinates of $\vec{v}$ in $\mathcal{B}$.
 The time series $X$ and $Y$ are $N$-dimensional vectors, written $\vec{x}$ and $\vec{y}$ respectively.
 
 Then, 
-$$\text{covariance} = \vec{x}\dot\vec{y}$$
+$$\mathrm{covariance} = \vec{x}\dot\vec{y}$$
 and 
-$$\text{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\dot\frac{\vec{y}}{\|\vec{y}\|}$$
+$$\mathrm{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\dot\frac{\vec{y}}{\|\vec{y}\|}$$
 
 ## Illustration
 Let $x$ and $y$ be two time series / vectors:
