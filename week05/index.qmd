@@ -99,7 +99,7 @@ $$ \alpha_i\vec{u}_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2}\vec{u}_i\, 
 Therefore, 
 $$ \alpha_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2} = \vec{v}\cdot\vec{u}_i\, .$$
 
-**TODO: Illustrate the orthogonal projection.**
+![Projection on an orthonormal basis](figs/proj-basis.png)
 
 ## Change of basis
 Notice that stacking each vector $\vec{u}_i$ as a row of a $N\times N$ matrix 
@@ -121,12 +121,67 @@ This means that the matrix $U$ allowed us to write the vector $\vec{v}$ in the c
 The time series $X$ and $Y$ can be seen as $N$-dimensional vectors, that we will write as $\vec{x}$ and $\vec{y}$ respectively.
 From this point of view, we notice that the covariance is the scalar product of the two vectors and the correlation is the scalar product of the same two vectors, normalized to have norm 1.
 
+### Covariance
 Let us assume that $X$ and $Y$ have zero mean. 
 Hence, their covariance is computed exactly as the scalar product,
 $$ \mathrm{cov}(X,Y) = \sum_{i=0}^{N-1}x_iy_i = \vec{x}\cdot\vec{y}\, .$$
 
+### Correlation
 Furthermore, normalizing $\vec{x}$ and $\vec{y}$, and taking their scalar product yields exactly the Pearson correlation,
 $$ \left(\frac{\vec{x}}{\|\vec{x}\|}\right)\cdot\left(\frac{\vec{y}}{\|\vec{y}\|}\right) = \frac{\vec{x}\cdot\vec{y}}{\|\vec{x}\|\, \|\vec{y}\|} = \frac{\sum_{i=0}^{N-1}x_iy_i}{\sqrt{\sum_{i=0}^{N-1}x_i^2}\sqrt{\sum_{i=0}^{N-1}y_i^2}} = r_{XY}\, .$$
+
+### Illustration
+Let us look a two (artificial) time series and compute their correlation.
+
+```{pyodide}
+import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0,10,200)
+
+x = np.random.uniform()*np.sin(t) + np.random.uniform()*np.cos(2*t) + np.random.uniform()*np.sin(3*t)
+y = np.random.uniform()*np.cos(t) + np.random.uniform()*np.sin(2*t) + np.random.uniform()*np.cos(3*t)
+y /= np.linalg.norm(y)
+
+r = np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))
+
+print(f'r = {r}')
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,x,'.')
+ax.plot(t,y,'.')
+
+ax.set_xlabel('t')
+ax.set_title(f'r = {r}')
+
+plt.show()
+```
+
+Let us now built a third time series
+$$z = \gamma x + (1-\gamma) y\, ,$$
+and compute it correlation with $x$. 
+
+Try to tune the parameter $\gamma$ between 0 and 1.
+
+```{pyodide}
+gamma = .5
+
+z = gamma*x + (1-gamma)*y
+
+r = dot(x,z)/(np.linalg.norm(x)*np.linalg.norm(z))
+print(f'r = {r}')
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,x,'.')
+ax.plot(t,z,'.')
+
+ax.set_xlabel('t')
+ax.set_title(f'r = {r}')
+
+plt.show()
+```
 
 ## Hands on
 
