@@ -169,7 +169,7 @@ gamma = .5
 
 z = gamma*x + (1-gamma)*y
 
-r = dot(x,z)/(np.linalg.norm(x)*np.linalg.norm(z))
+r = np.dot(x,z)/(np.linalg.norm(x)*np.linalg.norm(z))
 print(f'r = {r}')
 
 fig, ax = plt.subplots(figsize=(7,3))

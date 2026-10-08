@@ -54,7 +54,7 @@ A **linear combination** of vectors
 $$\vec{v} = \alpha_1\vec{v}_1 + \alpha_2\vec{v}_2 + \alpha_3\vec{v}_3\, ,$$
 is itself a vector.
 
-![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb.png){width=60%, fig-align="center"}
+![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb-slides.png)
 
 ## Basis
 A **basis** of $\mathbb{R}^N$ is a very set of vectors, 
@@ -98,9 +98,9 @@ $$\vec{x}\cdot\vec{y} = \|\vec{x}\|\cdot\|\vec{y}\|\cdot\cos(\phi)\, ,$$
 where $\phi\in[-\pi,\pi]$ is the angle between $\vec{x}$ and $\vec{y}$.
 
 ## Scalar product (cont'd)
-If $\vec{x} and $\vec{y} are colinear, then $\cos(\pm\phi)=\pm1$. 
+If $\vec{x}$ and $\vec{y}$ are collinear, then $\cos(\pm\phi)=\pm1$. 
 
-If $\vec{x} and $\vec{y} are perpendicular (orthogonal), then $\vec{x}\dot\vec{y}=0$. 
+If $\vec{x}$ and $\vec{y}$ are perpendicular (orthogonal), then $\vec{x}\dot\vec{y}=0$. 
 
 Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
 
@@ -109,7 +109,7 @@ Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
 The **orthogonal projection** of $\vec{v}$ on $\vec{u}$ is
 $$\vec{v}_{\vec u} = \frac{\vec{v}\cdot\vec{u}}{\|\vec{u}\|^2}\vec{u}\, .$$
 
-![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){width="60%", fig-align="center"}
+![Orthogonal projection of $\vec{v}$ onto $\vec{u}$.](figs/ortho-proj.png){.any_class width="60%"}
 
 
 ## Orthonormal basis
@@ -123,13 +123,10 @@ A basis $\mathcal{B}=\{\vec{u}_1,\vec{u}_2,...,\vec{u}_N\}$ is **orthonormal** i
 For any vector $\vec{v}$, 
 $$ \vec{v} = \alpha_1\vec{u}_1 + \alpha_2\vec{u}_2 + \cdots + \alpha_N\vec{u}_N\, . $$
 
-Remarkably, With an orthonormal basis, 
-$$ \alpha_i\vec{u}_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2}\vec{u}_i\, . $$
-
-Therefore, 
+With an orthonormal basis, the coefficients are 
 $$ \alpha_i = \frac{\vec{v}\cdot\vec{u}_i}{\|\vec{u}_i\|^2} = \vec{v}\cdot\vec{u}_i\, .$$
 
-**TODO: Illustrate the orthogonal projection.**
+![Projection on an orthonormal basis](figs/proj-basis.png)
 
 ## Change of basis
 Let us define the $N\times N$ matrix 
@@ -138,6 +135,7 @@ $$ U = \begin{pmatrix} \cdots & \vec{u}_1 & \cdots \\
 & \vdots & \\
 \cdots & \vec{u}_N & \cdots \end{pmatrix}\, . $$
 
+## Change of basis (cont'd)
 The product
 $$ U\cdot \vec{v} 
 = \begin{pmatrix} \cdots & \vec{u}_1 & \cdots \\
@@ -150,12 +148,60 @@ gives the coordinates of $\vec{v}$ in $\mathcal{B}$.
 
 
 ## Vectorial interpretation of the covariance and correlation
-The time series $X$ and $Y$ are $N$-dimensional vectors, writtens $\vec{x}$ and $\vec{y}$ respectively.
+The time series $X$ and $Y$ are $N$-dimensional vectors, written $\vec{x}$ and $\vec{y}$ respectively.
 
 Then, 
 $$\text{covariance} = \vec{x}\dot\vec{y}$$
 and 
 $$\text{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\dot\frac{\vec{y}}{\|\vec{y}\|}$$
+
+## Illustration
+Let $x$ and $y$ be two time series / vectors:
+```{pyodide}
+import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0,10,200)
+
+x = np.random.uniform()*np.sin(t) + np.random.uniform()*np.cos(2*t) + np.random.uniform()*np.sin(3*t)
+y = np.random.uniform()*np.cos(t) + np.random.uniform()*np.sin(2*t) + np.random.uniform()*np.cos(3*t)
+
+r = np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))
+
+print(f'r = {r}')
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,x,'.')
+ax.plot(t,y,'.')
+
+ax.set_xlabel('t')
+ax.set_title(f'r = {r}')
+
+plt.show()
+```
+
+## Illustration
+Let $z = \gamma x + (1-\gamma) y\, ,$
+
+```{pyodide}
+gamma = .5
+
+z = gamma*x + (1-gamma)*y
+
+r = np.dot(x,z)/(np.linalg.norm(x)*np.linalg.norm(z))
+print(f'r = {r}')
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,x,'.')
+ax.plot(t,z,'.')
+
+ax.set_xlabel('t')
+ax.set_title(f'r = {r}')
+
+plt.show()
+```
 
 
 ## Hands on
