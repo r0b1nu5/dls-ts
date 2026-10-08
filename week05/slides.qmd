@@ -100,7 +100,7 @@ where $\phi\in[-\pi,\pi]$ is the angle between $\vec{x}$ and $\vec{y}$.
 ## Scalar product (cont'd)
 If $\vec{x}$ and $\vec{y}$ are collinear, then $\cos(\pm\phi)=\pm1$. 
 
-If $\vec{x}$ and $\vec{y}$ are perpendicular (orthogonal), then $\vec{x}\dot\vec{y}=0$. 
+If $\vec{x}$ and $\vec{y}$ are perpendicular (orthogonal), then $\vec{x}\cdot\vec{y}=0$. 
 
 Finally, $\vec{v}\cdot\vec{v} = \|\vec{v}\|^2$.
 
@@ -151,9 +151,9 @@ gives the coordinates of $\vec{v}$ in $\mathcal{B}$.
 The time series $X$ and $Y$ are $N$-dimensional vectors, written $\vec{x}$ and $\vec{y}$ respectively.
 
 Then, 
-$$\mathrm{covariance} = \vec{x}\dot\vec{y}$$
+$$\mathrm{covariance} = \vec{x}\cdot\vec{y}$$
 and 
-$$\mathrm{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\dot\frac{\vec{y}}{\|\vec{y}\|}$$
+$$\mathrm{correlation} = \frac{\vec{x}}{\|\vec{x}\|}\cdot\frac{\vec{y}}{\|\vec{y}\|}$$
 
 ## Illustration
 Let $x$ and $y$ be two time series / vectors:
