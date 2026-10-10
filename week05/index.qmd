@@ -202,23 +202,25 @@ We will interpret some known tools under the light of vectorial geometry.
       and compute the scalar product of $\vec{m}_5$ with $\vec{x}_5$, composed of the five first components of $\vec{x}$. 
 
    1. Let us now consider the matrix 
-      $$M_1 = \begin{pmatrix}0.2&0.2&0.2&0.2&0.2&0&0&0&0&0&0&0&0&0&0\\
-      0&0&0&0&0&0.2&0.2&0.2&0.2&0.2&0&0&0&0&0\\
-      0&0&0&0&0&0&0&0&0&0&0.2&0.2&0.2&0.2&0.2\end{pmatrix}\, .$$
+      $$M_1 = \begin{pmatrix}
+      0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 
+      \end{pmatrix}\, .$$
       If $\vec{x}_15$ is the vector of the first 15 components of $\vec{x}$, then what do we get when conputing $M_1\vec{x}_15$?
       What is the size of the vector obtained? How are its components computed?
 
    1. Similarly, consider the matrix 
       $$M_2=\begin{pmatrix}
-      1&0&0\\
-      0.25&0.75&0\\
-      0.5&0.5&0\\
-      0.25&0.75\\
-      0&1&0 \\
-      0&0.75&0.25\\
-      0&0.5&0.5\\
-      0&0.25&0.75\\
-      0&0&1
+      1 & 0 & 0 \\
+      0.25 & 0.75 & 0 \\
+      0.5 & 0.5 & 0 \\
+      0.25 & 0.75 & 0 \\
+      0 & 1 & 0 \\
+      0 & 0.75 & 0.25 \\
+      0 & 0.5 & 0.5 \\
+      0 & 0.25 & 0.75 \\
+      0 & 0 & 1
       \end{pmatrix}\, .$$
       What do we get when computing $M_2\vec{x}$? How many time steps do we get? How are the components computed?
 
