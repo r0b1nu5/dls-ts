@@ -203,9 +203,8 @@ We will interpret some known tools under the light of vectorial geometry.
 
    1. Let us now consider the matrix 
       $$M_1 = \begin{pmatrix}
-      0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 0 & 0 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0 & 0 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 
+      0.2 & 0.2 & 0.2 & 0.2 & 0.2 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0.2 & 0.2 & 0.2 & 0.2 & 0.2 
       \end{pmatrix}\, .$$
       If $\vec{x}_15$ is the vector of the first 15 components of $\vec{x}$, then what do we get when conputing $M_1\vec{x}_15$?
       What is the size of the vector obtained? How are its components computed?
