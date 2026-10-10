@@ -188,7 +188,7 @@ The goal of these exercises is to manipulate the above concepts of vectorial geo
 We will interpret some known tools under the light of vectorial geometry. 
 
 1. Let $\vec{m}\in\mathbb{R}^n$ be a vector with all components equal to $1/n$:
-   $$\vec{m} = \begin{pmatrix}1/n\\1/n\\ \vdots \\1/n\end{pmatrix}
+   $$\vec{m} = \begin{pmatrix}1/n\\1/n\\ \vdots \\1/n\end{pmatrix}\, .$$
    
    1. Write down the formula of the scalar product $\vec{m}\cdot\vec{x}$ for 
    $$\vec{x} = \begin{pmatrix}x_1\\x_2\\ \vdots\\x_n\end{pmatrix}\, .$$
