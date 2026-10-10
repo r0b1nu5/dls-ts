@@ -184,5 +184,49 @@ plt.show()
 ```
 
 ## Hands on
+The goal of these exercises is to manipulate the above concepts of vectorial geometry and get used to see time series as high-dimensional vectors.
+We will interpret some known tools under the light of vectorial geometry. 
+
+1. Let $\vec{m}\in\mathbb{R}^n$ be a vector with all components equal to $1/n$:
+   $$\vec{m} = \begin{pmatrix}1/n\\1/n\\ \vdots \\1/n\end{pmatrix}
+   
+   1. Write down the formula of the scalar product $\vec{m}\cdot\vec{x}$ for 
+   $$\vec{x} = \begin{pmatrix}x_1\\x_2\\ \vdots\\x_n\end{pmatrix}\, .$$
+
+   1. What do you see?
+
+2. Assume that you have a time series $\vec{x}$ with a time step of 12 minutes. 
+   
+   1. Let us consider the vector
+      $$\vec{m}_5 = \begin{pmatrix}0.2\\0.2\\0.2\\0.2\\0.2\end{pmatrix}\, ,$$
+      and compute the scalar product of $\vec{m}_5$ with $\vec{x}_5$, composed of the five first components of $\vec{x}$. 
+
+   1. Let us now consider the matrix 
+      $$M_1 = \begin{pmatrix}0.2&0.2&0.2&0.2&0.2&0&0&0&0&0&0&0&0&0&0\\
+      0&0&0&0&0&0.2&0.2&0.2&0.2&0.2&0&0&0&0&0\\
+      0&0&0&0&0&0&0&0&0&0&0.2&0.2&0.2&0.2&0.2\end{pmatrix}\, .$$
+      If $\vec{x}_15$ is the vector of the first 15 components of $\vec{x}$, then what do we get when conputing $M_1\vec{x}_15$?
+      What is the size of the vector obtained? How are its components computed?
+
+   1. Similarly, consider the matrix 
+      $$M_2=\begin{pmatrix}
+      1&0&0\\
+      0.25&0.75&0\\
+      0.5&0.5&0\\
+      0.25&0.75\\
+      0&1&0 \\
+      0&0.75&0.25\\
+      0&0.5&0.5\\
+      0&0.25&0.75\\
+      0&0&1
+      \end{pmatrix}\, .$$
+      What do we get when computing $M_2\vec{x}$? How many time steps do we get? How are the components computed?
+
+
+
+
+
+
+
 
 
