@@ -1,0 +1,91 @@
+# The Fourier Transform 1/2 {.unnumbered}
+
+The Fourier Transform is a fundamental tool for the analysis of time series. 
+The idea is represent the time series in a very different, yet equivalent formulation, that emphasizes new aspects. 
+
+One way of interpreting this "new formulation" is as a change of basis. 
+
+*Remark: For the sake of simplicity, we now consider that all of our time series have an odd number of components. In case this number is even, we discard the late element.*
+
+## The Fourier basis
+Let $N$ be the length of our time series, i.e., the number of time steps, and let $\delta_t$ denote the duration of each time step. 
+Recall that a time series $X=(x_0,x_1,x_2,...,x_{N-1})$ can be seen as a $N$-dimensional vector. 
+
+For each value of $k\in\{1,2,...,(N-1)/2\}$, we define the **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$ with components
+$$ \vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right) \\
+\vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right)\, ,$$
+where $i=0,1,...,N-1$. 
+Additionally, we define the constant vector 
+$$\vec{c}^{(0)} = \left(\frac{1}{\sqrt{N}},\frac{1}{\sqrt{N}},\cdots,\frac{1}{\sqrt{N}}\right)\, .$$
+
+**TODO: Illustrate a few of these vectors.**
+
+**TODO: Check the number of indices in what follows.**
+
+*Exercise: Check that these vectors form an orthonormal basis (number of vectors, scalar products).*
+
+$$ \vec{s}^{(k)}\cdot\vec{s}^{(\ell)}
+= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\sin\left(\frac{2\pi i \ell}{N}\right) \\
+= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\cos\left(\frac{2\pi i (k-\ell)}{N}\right) - \cos\left(\frac{2\pi i(k+\ell)}{N}\right)\right]
+= \left\{\begin{array}{ll} 0 & k\neq\ell \\ 1 & k=\ell\end{array}\right.$$
+
+$$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
+= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\cos\left(\frac{2\pi i \ell}{N}\right) \\
+= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
+
+
+## The Discrete Fourier Transform (DFT)
+The **Discrete Fourier Transform** of a time series
+$$ X = (x_0,x_1,..,x_{N-1}) $$
+is the list of its coefficients in the Fourier basis. 
+Namely, we write the DFT $\tilde{X}$ as a sequence of the coefficient $c_0$ and $(N-1)/2$ pairs of coefficients
+$$ \tilde{X} = \left(c_0,(c_1,s_1),...,(c_{(N-1)/2},s_{(N-1)/2})\right)\, , $$
+where
+$$ c_k = \vec{x}\cdot\vec{c}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\cos\left(\frac{2\pi i k}{N}\right) \\
+s_k = \vec{x}\cdot\vec{s}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\sin\left(\frac{2\pi i k}{N}\right) $$
+
+**TODO: Illustrated example.**
+
+
+## Why $(N-1)/2$ pairs?
+### Quantity of information
+Instead of $N$ single values, we have now $(N-1)/2$ pairs of values [$(c_k,s_k)$] and an additional value $c_0$. 
+In total, we then have 
+$$ 2\cdot\frac{N-1}{2} + 1 = N$$
+values. 
+This balance means that we have not lost any information in the process. 
+Actually, we will see that the original time series $X$ can be reconstructed uniquely from its DFT $\tilde{X}$. 
+
+### Balance between sine and cosine
+We observe that for each $k\in\{1,2,...,N/2\}$, we have two values, one corresponding to the "cosine" ($c_k$) and one to the "sine" ($s_k$). 
+Each of these values is the result of a scalar product, i.e., a measure of similarity between the original time series $\vec{x}$ and the basis vector $\vec{c}^{(k)}$ (resp. $\vec{s}^{(k)}$). 
+
+In general, a time series is neither a pure sine nor pure cosine, but rather something in between. 
+The two coefficients $c_k$ and $s_k$ tell us if the original time series looks more like a cosine or like a cosine. 
+
+For $k=0$, we have a single value that relates to average value of the time series. 
+More precisely, we verify that if $\mu_X$ is the average value of the time series $X$, then $c_0 = \sqrt{N}\mu_X$. 
+
+**TODO: Examples.**
+
+## The Fast Fourier Transform (FFT)
+The standard algorithm for computing the DFT is called the **Fast Fourier Transform (FFT)**. 
+The FFT relies on a framework that is out of the scope for the DLS curriculum (aka [complex numbers](https://en.wikipedia.org/wiki/Complex_number)). Therefore, for the purpose of this class, we will see how to turn the output of the FFT into something we can work with. 
+
+**TODO: Make an example where I compute the FFT of a time series to show what the output looks like.**
+
+We see the that FFT outputs a list of $N$ elements, each of the form `a+im*b`.
+
+First, notice that the first element is precisely $c_0$. 
+To compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
+$$ a_0+ib_0, a_1+ib_1,\cdots,a_{(N-1)/2}+ib_{(N-1)/2-1} $$
+and recombine them as
+$$ c_0 = \frac{1}{\sqrt{N}}\cdot a_0 \\
+c_k = \sqrt{\frac{2}{N}}\cdot a_k \\
+s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
+
+
+## Hands on
+
+**TODO**
+
