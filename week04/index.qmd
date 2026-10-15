@@ -109,3 +109,4 @@ Your goal is to analyze the time series from the three faulty batches and figure
 
 **Goal:** Synthesize your findings into a diagnostic conclusion.
 
+## [Solution](../solutions/week04-solution.ipynb)
