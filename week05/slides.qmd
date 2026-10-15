@@ -57,7 +57,7 @@ is itself a vector.
 ![A linear combination of $\vec{u}_1$, $\vec{u}_2$, and $\vec{u}_3$](figs/lin-comb-slides.png)
 
 ## Basis
-A **basis** of $\mathbb{R}^N$ is a very set of vectors, 
+A **basis** of $\mathbb{R}^N$ is a set of vectors, 
 $$ \mathcal{B} = \left\{\vec{u}_1,\vec{u}_2,...,\vec{u}_n\right\}\, ,$$
 such that:
 
@@ -161,15 +161,18 @@ Let $x$ and $y$ be two time series / vectors:
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Generate the time series
 t = np.linspace(0,10,200)
 
 x = np.random.uniform()*np.sin(t) + np.random.uniform()*np.cos(2*t) + np.random.uniform()*np.sin(3*t)
 y = np.random.uniform()*np.cos(t) + np.random.uniform()*np.sin(2*t) + np.random.uniform()*np.cos(3*t)
 
+# Compute the correlation, using the scalar product!
 r = np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))
 
 print(f'r = {r}')
 
+# Show the time series
 fig, ax = plt.subplots(figsize=(7,3))
 
 ax.plot(t,x,'.')
@@ -185,13 +188,17 @@ plt.show()
 Let $z = \gamma x + (1-\gamma) y\, ,$
 
 ```{pyodide}
+# Choose the correlation parameter in [0,1]
 gamma = .5
 
+# Built the new time series z
 z = gamma*x + (1-gamma)*y
 
+# Compute the correlation, using the scalar product
 r = np.dot(x,z)/(np.linalg.norm(x)*np.linalg.norm(z))
 print(f'r = {r}')
 
+# Show the time series
 fig, ax = plt.subplots(figsize=(7,3))
 
 ax.plot(t,x,'.')
