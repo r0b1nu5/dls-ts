@@ -1,53 +1,128 @@
 # The Fourier Transform 1/2 {.unnumbered}
 
 The Fourier Transform is a fundamental tool for the analysis of time series. 
-The idea is represent the time series in a very different, yet equivalent formulation, that emphasizes new aspects. 
+The idea is to represent the time series in a very different, yet equivalent formulation, that emphasizes new aspects. 
 
 One way of interpreting this "new formulation" is as a change of basis. 
 
-*Remark: For the sake of simplicity, we now consider that all of our time series have an odd number of components. In case this number is even, we discard the late element.*
+*Remark: For the sake of simplicity, we now consider that all of our time series have an odd number of components. 
+In case this number is even, we discard the late element.*
 
 ## The Fourier basis
 Let $N$ be the length of our time series, i.e., the number of time steps, and let $\delta_t$ denote the duration of each time step. 
 Recall that a time series $X=(x_0,x_1,x_2,...,x_{N-1})$ can be seen as a $N$-dimensional vector. 
 
 For each value of $k\in\{1,2,...,(N-1)/2\}$, we define the **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$ with components
-$$ \vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right) \\
 \vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right)\, ,$$
+$$ \vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right) \\
 where $i=0,1,...,N-1$. 
 Additionally, we define the constant vector 
 $$\vec{c}^{(0)} = \left(\frac{1}{\sqrt{N}},\frac{1}{\sqrt{N}},\cdots,\frac{1}{\sqrt{N}}\right)\, .$$
 
-**TODO: Illustrate a few of these vectors.**
+Let us have a look at the shape of these vectors.
 
-**TODO: Check the number of indices in what follows.**
+```{pyodide}
+import numpy as np
+import matplotlib.pyplot as plt
 
-*Exercise: Check that these vectors form an orthonormal basis (number of vectors, scalar products).*
+N = 100 # Length of the vector/time series
 
-$$ \vec{s}^{(k)}\cdot\vec{s}^{(\ell)}
-= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\sin\left(\frac{2\pi i \ell}{N}\right) \\
-= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\cos\left(\frac{2\pi i (k-\ell)}{N}\right) - \cos\left(\frac{2\pi i(k+\ell)}{N}\right)\right]
-= \left\{\begin{array}{ll} 0 & k\neq\ell \\ 1 & k=\ell\end{array}\right.$$
+c0 = np.ones(N)/np.sqrt(N)
+c1 = np.cos(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+s1 = np.sin(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+c3 = np.cos(2*np.pi*np.arange(N)*3/N)*np.sqrt(2/N)
 
-$$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
-= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\cos\left(\frac{2\pi i \ell}{N}\right) \\
-= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(np.arange(N), c0, '.', label='c0')
+ax.plot(np.arange(N), c1, '.', label='c1')
+ax.plot(np.arange(N), s1, '.', label='s1')
+ax.plot(np.arange(N), c3, '.', label='c3')
+
+ax.set_xlabel('i')
+ax.set_ylabel('c_i, s_i')
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+*Exercise: Explain in words what each of these vectors look like.
+What is the difference between $\vec{c}^{(1)}$ and $\vec{s}^{(1)}$?
+What is the difference between $\vec{c}^{(1)}$ and $\vec{c}^{(3)}$?*
+
 
 
 ## The Discrete Fourier Transform (DFT)
 The **Discrete Fourier Transform** of a time series
 $$ X = (x_0,x_1,..,x_{N-1}) $$
-is the list of its coefficients in the Fourier basis. 
+is the **list of its coefficients** in the Fourier basis. 
 Namely, we write the DFT $\tilde{X}$ as a sequence of the coefficient $c_0$ and $(N-1)/2$ pairs of coefficients
 $$ \tilde{X} = \left(c_0,(c_1,s_1),...,(c_{(N-1)/2},s_{(N-1)/2})\right)\, , $$
 where
 $$ c_k = \vec{x}\cdot\vec{c}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\cos\left(\frac{2\pi i k}{N}\right) \\
 s_k = \vec{x}\cdot\vec{s}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\sin\left(\frac{2\pi i k}{N}\right) $$
 
-**TODO: Illustrated example.**
+Let us go back to our penicillin bioreactor. 
 
+```{pyodide}
+import pandas as pd
+
+# Load data
+df = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
+
+# Extract the time series of pH for one of the batches
+X = df[df['Batch ID'] == 66]['pH(pH:pH)']
+
+# Number of time steps, make it odd if necessary
+T = len(X)
+if T%2 == 0:
+    X = X[:T-1]
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,(T-1)/2):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+# Let us have a look at the coefficients
+fig, ax = plt.subplots(2,1,figsize=(9,6))
+
+ax[0].plot(c)
+ax[0].set_ylabel('c')
+
+ax[1].plot(s, color='C1')
+ax[1].set_xlabel('k')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
+We see that the first value $c_0$ is much larger than the others. 
+Let us get rid of it for the graphical representation.
+
+```{pyodide}
+fig, ax = plt.subplots(2,1,figsize=(9,6))
+
+ax[0].plot(c[1:])
+ax[0].set_ylabel('c')
+
+ax[1].plot(s[1:], color='C1')
+ax[1].set_xlabel('k')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
 
 ## Why $(N-1)/2$ pairs?
+
 ### Quantity of information
 Instead of $N$ single values, we have now $(N-1)/2$ pairs of values [$(c_k,s_k)$] and an additional value $c_0$. 
 In total, we then have 
@@ -63,7 +138,7 @@ Each of these values is the result of a scalar product, i.e., a measure of simil
 In general, a time series is neither a pure sine nor pure cosine, but rather something in between. 
 The two coefficients $c_k$ and $s_k$ tell us if the original time series looks more like a cosine or like a cosine. 
 
-For $k=0$, we have a single value that relates to average value of the time series. 
+For $k=0$, we have a single value that relates to the average value of the time series. 
 More precisely, we verify that if $\mu_X$ is the average value of the time series $X$, then $c_0 = \sqrt{N}\mu_X$. 
 
 **TODO: Examples.**
@@ -88,4 +163,22 @@ s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
 ## Hands on
 
 **TODO**
+
+1. Check that the vectors of the Fourier basis form an orthonormal basis (number of vectors, scalar products).
+This can be done by hand of by code.
+
+<!--
+$$ \vec{s}^{(k)}\cdot\vec{s}^{(\ell)}
+= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\sin\left(\frac{2\pi i \ell}{N}\right) \\
+= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\cos\left(\frac{2\pi i (k-\ell)}{N}\right) - \cos\left(\frac{2\pi i(k+\ell)}{N}\right)\right]
+= \left\{\begin{array}{ll} 0 & k\neq\ell \\ 1 & k=\ell\end{array}\right.$$
+
+$$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
+= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\cos\left(\frac{2\pi i \ell}{N}\right) \\
+= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
+-->
+
+1. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
+
+
 

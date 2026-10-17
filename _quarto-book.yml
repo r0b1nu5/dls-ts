@@ -27,6 +27,8 @@ book:
       chapters:
         - week05/index.qmd
     - part: "Course 6"
+      chapters:
+        - week06/index.qmd
     - part: "Course 7"
     - part: "Course 8"
     - part: "Course 9"
