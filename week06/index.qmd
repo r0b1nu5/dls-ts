@@ -13,8 +13,8 @@ Let $N$ be the length of our time series, i.e., the number of time steps, and le
 Recall that a time series $X=(x_0,x_1,x_2,...,x_{N-1})$ can be seen as a $N$-dimensional vector. 
 
 For each value of $k\in\{1,2,...,(N-1)/2\}$, we define the **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$ with components
-\vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right)\, ,$$
-$$ \vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right) \\
+$$\vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right) \\
+\vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right)\, ,$$
 where $i=0,1,...,N-1$. 
 Additionally, we define the constant vector 
 $$\vec{c}^{(0)} = \left(\frac{1}{\sqrt{N}},\frac{1}{\sqrt{N}},\cdots,\frac{1}{\sqrt{N}}\right)\, .$$
