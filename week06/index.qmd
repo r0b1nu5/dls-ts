@@ -169,7 +169,10 @@ Y = np.roll(X, shift)
 c_68 = np.dot(Y, np.cos(2*np.pi*np.arange(T)*68/T)*np.sqrt(2/T))
 s_68 = np.dot(Y, np.sin(2*np.pi*np.arange(T)*68/T)*np.sqrt(2/T))
 
-print(f'c_68 = {c_68}, s_68 = {s_68}')
+fig, ax = plt.subplots()
+
+ax.bar([0,1], [c_68,s_68])
+ax.set_xtickslabels(['c_68','s_68'])
 ```
 
 For $k=0$, we have a single value that relates to the average value of the time series. 
@@ -193,19 +196,19 @@ F = np.fft.fft(X)
 print(F)
 ```
 
-We see the that FFT outputs a list of $N$ elements, each of the form `a+im*b`.
+We see the that FFT outputs a list of $N$ elements, each of the form `a + bj`.
 
 First, notice that the first element is precisely $c_0$. 
 
 Then to compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
-$$ a_0+ib_0, a_1+ib_1,\cdots,a_{(N-1)/2}+ib_{(N-1)/2-1} $$
+$$ a_0+b_0j, a_1+b_1j,\cdots,a_{(N-1)/2}+b_{(N-1)/2-1}j $$
 and recombine them as
-$$ c_0 = \frac{1}{\sqrt{N}}\cdot a_0 \\
-c_k = \sqrt{\frac{2}{N}}\cdot a_k \\
-s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
+$$c_0 = \frac{1}{\sqrt{N}}\cdot a_0$$
+$$c_k = \sqrt{\frac{2}{N}}\cdot a_k$$
+$$s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
 
 ```{pyodide}
-print(f'Recall: c_68 = {c_68}, s_68 = {s_68}')
+print(f'Recall: c_68 = {c[68]}, s_68 = {s[68]}')
 
 print(f'a + im*b = {F[68]}')
 
