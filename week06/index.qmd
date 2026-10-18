@@ -1,5 +1,8 @@
 # The Fourier Transform 1/2 {.unnumbered}
 
+[Slides]({{< var base_url>}}slides/week06/slides.html){.btn .btn-outline-primary .btn         role="button"}
+[Slides PDF]({{< var base_url>}}slides/week06/slides.pdf){.btn .btn-outline-secondary .btn    role="button"}
+
 The Fourier Transform is a fundamental tool for the analysis of time series. 
 The idea is to represent the time series in a very different, yet equivalent formulation, that emphasizes new aspects. 
 
@@ -172,7 +175,12 @@ s_68 = np.dot(Y, np.sin(2*np.pi*np.arange(T)*68/T)*np.sqrt(2/T))
 fig, ax = plt.subplots()
 
 ax.bar([0,1], [c_68,s_68])
-ax.set_xtickslabels(['c_68','s_68'])
+ax.set_xticks([0,1])
+ax.set_xticklabels(['c_68','s_68'])
+ax.set_ybound(-.2,.2)
+
+plt.tight_layout()
+plt.show()
 ```
 
 For $k=0$, we have a single value that relates to the average value of the time series. 
@@ -212,8 +220,8 @@ print(f'Recall: c_68 = {c[68]}, s_68 = {s[68]}')
 
 print(f'a + im*b = {F[68]}')
 
-print(f'sqrt(2/T)*a = {np.sqrt(2/T)*F[68].real})
-print(f'sqrt(2/T)*b = {np.sqrt(2/T)*F[68].imag})
+print(f'sqrt(2/T)*a = {np.sqrt(2/T)*F[68].real}')
+print(f'sqrt(2/T)*b = {np.sqrt(2/T)*F[68].imag}')
 ```
 
 ## Hands on
