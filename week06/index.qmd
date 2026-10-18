@@ -77,21 +77,22 @@ X = df[df['Batch ID'] == 66]['pH(pH:pH)']
 # Number of time steps, make it odd if necessary
 T = len(X)
 if T%2 == 0:
-    X = X[:T-1]
+    T -= 1
+    X = X[:T]
 
 # Compute c0 and an artificial first term for s0
 c = np.array([sum(X)/np.sqrt(T),])
 s = np.array([0,])
 
 # For each k, compute ck and sk, and append it to the corresponding list of values
-for k in range(1,(T-1)/2):
+for k in range(1,int((T-1)/2)):
     ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
     sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
     c = np.append(c, np.dot(X,ck))
     s = np.append(s, np.dot(X,sk))
 
 # Let us have a look at the coefficients
-fig, ax = plt.subplots(2,1,figsize=(9,6))
+fig, ax = plt.subplots(2, 1, figsize=(7,5))
 
 ax[0].plot(c)
 ax[0].set_ylabel('c')
@@ -108,12 +109,28 @@ We see that the first value $c_0$ is much larger than the others.
 Let us get rid of it for the graphical representation.
 
 ```{pyodide}
-fig, ax = plt.subplots(2,1,figsize=(9,6))
+fig, ax = plt.subplots(2,1,figsize=(7,5))
 
 ax[0].plot(c[1:])
 ax[0].set_ylabel('c')
 
 ax[1].plot(s[1:], color='C1')
+ax[1].set_xlabel('k')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
+To get a clearer view of which are the dominant components, we can look a the absolute values of the coefficients.
+
+```{pyodide}
+fig, ax = plt.subplots(2,1,figsize=(7,5))
+
+ax[0].plot(np.abs(c[1:]))
+ax[0].set_ylabel('c')
+
+ax[1].plot(np.abs(s[1:]), color='C1')
 ax[1].set_xlabel('k')
 ax[1].set_ylabel('s')
 
@@ -138,31 +155,65 @@ Each of these values is the result of a scalar product, i.e., a measure of simil
 In general, a time series is neither a pure sine nor pure cosine, but rather something in between. 
 The two coefficients $c_k$ and $s_k$ tell us if the original time series looks more like a cosine or like a cosine. 
 
+Actually, the only difference between a sine and a cosine is a horizontal shift. 
+Let us have a look at what happens to the coefficients $c_{68}$ and $s_{68}$ of our time series above, when we artificially shift it horizontally.
+
+```{pyodide}
+# Choose here your time shift
+shift = 0
+
+# Shift the time series
+Y = np.roll(X, shift)
+
+# Compute the coefficients c_68 and s_68
+c_68 = np.dot(Y, np.cos(2*np.pi*np.arange(T)*68/T)*np.sqrt(2/T))
+s_68 = np.dot(Y, np.sin(2*np.pi*np.arange(T)*68/T)*np.sqrt(2/T))
+
+print(f'c_68 = {c_68}, s_68 = {s_68}')
+```
+
 For $k=0$, we have a single value that relates to the average value of the time series. 
 More precisely, we verify that if $\mu_X$ is the average value of the time series $X$, then $c_0 = \sqrt{N}\mu_X$. 
 
-**TODO: Examples.**
+```{pyodide}
+print(f'c_0 = {c[0]}')
+print(f'mu_X = {np.mean(X)}')
+print(f'sqrt(T) = {np.sqrt(T)}')
+print(f'mu_X*sqrt(T) = {np.mean(X)*np.sqrt(T)}')
+```
 
 ## The Fast Fourier Transform (FFT)
 The standard algorithm for computing the DFT is called the **Fast Fourier Transform (FFT)**. 
 The FFT relies on a framework that is out of the scope for the DLS curriculum (aka [complex numbers](https://en.wikipedia.org/wiki/Complex_number)). Therefore, for the purpose of this class, we will see how to turn the output of the FFT into something we can work with. 
 
-**TODO: Make an example where I compute the FFT of a time series to show what the output looks like.**
+
+```{pyodide}
+# NumPy has an fft implemeted
+F = np.fft.fft(X)
+print(F)
+```
 
 We see the that FFT outputs a list of $N$ elements, each of the form `a+im*b`.
 
 First, notice that the first element is precisely $c_0$. 
-To compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
+
+Then to compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
 $$ a_0+ib_0, a_1+ib_1,\cdots,a_{(N-1)/2}+ib_{(N-1)/2-1} $$
 and recombine them as
 $$ c_0 = \frac{1}{\sqrt{N}}\cdot a_0 \\
 c_k = \sqrt{\frac{2}{N}}\cdot a_k \\
 s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
 
+```{pyodide}
+print(f'Recall: c_68 = {c_68}, s_68 = {s_68}')
+
+print(f'a + im*b = {F[68]}')
+
+print(f'sqrt(2/T)*a = {np.sqrt(2/T)*F[68].real})
+print(f'sqrt(2/T)*b = {np.sqrt(2/T)*F[68].imag})
+```
 
 ## Hands on
-
-**TODO**
 
 1. Check that the vectors of the Fourier basis form an orthonormal basis (number of vectors, scalar products).
 This can be done by hand of by code.
@@ -178,7 +229,7 @@ $$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
 = \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
 -->
 
-1. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
-
+2. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
+Embed it in a function `my_DFT` that take a time series as input and returns our DFT as output.
 
 
