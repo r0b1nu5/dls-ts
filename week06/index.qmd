@@ -9,7 +9,7 @@ The idea is to represent the time series in a very different, yet equivalent for
 One way of interpreting this "new formulation" is as a change of basis. 
 
 *Remark: For the sake of simplicity, we now consider that all of our time series have an odd number of components. 
-In case this number is even, we discard the late element.*
+In case this number is even, we discard the last element.*
 
 ## The Fourier basis
 Let $N$ be the length of our time series, i.e., the number of time steps, and let $\delta_t$ denote the duration of each time step. 
@@ -243,4 +243,5 @@ $$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
 2. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
 Embed it in a function `my_DFT` that take a time series as input and returns our DFT as output.
 
-
+3. Let $\tilde{X}$ be the DFT of the time series $X$. 
+   Express the component $X_t$ as a combination of the components of $\tilde{X}$.

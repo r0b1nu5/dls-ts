@@ -1,24 +1,50 @@
-# The Fourier Transform 1/2 {.unnumbered}
+---
+title: "The Fourier Transform 1/2"
+subtitle: "Applied Statistics: Time Series"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../_brand.yml
+  theme: ../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://dls.hevs.ch/ts/week06/)"
+---
 
-The Fourier Transform is a fundamental tool for the analysis of time series. 
-The idea is to represent the time series in a very different, yet equivalent formulation, that emphasizes new aspects. 
+## The Fourier Transform
 
-One way of interpreting this "new formulation" is as a change of basis. 
+**Idea:** Represent the time series in a different, yet equivalent formulation.
 
-*Remark: For the sake of simplicity, we now consider that all of our time series have an odd number of components. 
-In case this number is even, we discard the late element.*
+![Same object, different perspective...](./figs/shapes.jpg)
+
+Fourier Transform $\approx$ Change of basis
+
+## Technical remark
+
+We consider that time series have an odd number of components. 
+
+In case this number is even, we discard the last element.
 
 ## The Fourier basis
-Let $N$ be the length of our time series, i.e., the number of time steps, and let $\delta_t$ denote the duration of each time step. 
-Recall that a time series $X=(x_0,x_1,x_2,...,x_{N-1})$ can be seen as a $N$-dimensional vector. 
 
-For each value of $k\in\{1,2,...,(N-1)/2\}$, we define the **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$ with components
-$$\vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right) \\
-\vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right)\, ,$$
-where $i=0,1,...,N-1$. 
+$N$: length of our time series
+
+$\delta_t$: duration of each time step.
+
+**Reminder:** $X=(x_0,x_1,x_2,...,x_{N-1})$ is a $N$-dimensional vector. 
+
+The **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$:
+
+$$\vec{c}^{(k)}_i = \sqrt{\frac{2}{N}}\cos\left(\frac{2\pi i k}{N}\right)$$
+
+$$\vec{s}^{(k)}_i = \sqrt{\frac{2}{N}}\sin\left(\frac{2\pi i k}{N}\right)$$
+
 Additionally, we define the constant vector 
 $$\vec{c}^{(0)} = \left(\frac{1}{\sqrt{N}},\frac{1}{\sqrt{N}},\cdots,\frac{1}{\sqrt{N}}\right)\, .$$
 
+## The Fourier basis (cont'd)
 Let us have a look at the shape of these vectors.
 
 ```{pyodide}
@@ -47,9 +73,12 @@ plt.tight_layout()
 plt.show()
 ```
 
-*Exercise: Explain in words what each of these vectors look like.
-What is the difference between $\vec{c}^{(1)}$ and $\vec{s}^{(1)}$?
-What is the difference between $\vec{c}^{(1)}$ and $\vec{c}^{(3)}$?*
+## Exercise
+*Explain in words what each of these vectors look like.*
+
+*What is the difference between $\vec{c}^{(1)}$ and $\vec{s}^{(1)}$?*
+
+*What is the difference between $\vec{c}^{(1)}$ and $\vec{c}^{(3)}$?*
 
 
 
@@ -57,12 +86,14 @@ What is the difference between $\vec{c}^{(1)}$ and $\vec{c}^{(3)}$?*
 The **Discrete Fourier Transform** of a time series
 $$ X = (x_0,x_1,..,x_{N-1}) $$
 is the **list of its coefficients** in the Fourier basis. 
-Namely, we write the DFT $\tilde{X}$ as a sequence of the coefficient $c_0$ and $(N-1)/2$ pairs of coefficients
+
+The DFT $\tilde{X}$ is
 $$ \tilde{X} = \left(c_0,(c_1,s_1),...,(c_{(N-1)/2},s_{(N-1)/2})\right)\, , $$
 where
 $$ c_k = \vec{x}\cdot\vec{c}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\cos\left(\frac{2\pi i k}{N}\right) \\
 s_k = \vec{x}\cdot\vec{s}^{(k)} = \sqrt{\frac{2}{N}}\sum_{i=0}^{N-1}x_i\sin\left(\frac{2\pi i k}{N}\right) $$
 
+## Example
 Let us go back to our penicillin bioreactor. 
 
 ```{pyodide}
@@ -105,38 +136,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-We see that the first value $c_0$ is much larger than the others. 
-Let us get rid of it for the graphical representation.
-
-```{pyodide}
-fig, ax = plt.subplots(2,1,figsize=(7,5))
-
-ax[0].plot(c[1:])
-ax[0].set_ylabel('c')
-
-ax[1].plot(s[1:], color='C1')
-ax[1].set_xlabel('k')
-ax[1].set_ylabel('s')
-
-plt.tight_layout()
-plt.show()
-```
-
-To get a clearer view of which are the dominant components, we can look a the absolute values of the coefficients.
-
-```{pyodide}
-fig, ax = plt.subplots(2,1,figsize=(7,5))
-
-ax[0].plot(np.abs(c[1:]))
-ax[0].set_ylabel('c')
-
-ax[1].plot(np.abs(s[1:]), color='C1')
-ax[1].set_xlabel('k')
-ax[1].set_ylabel('s')
-
-plt.tight_layout()
-plt.show()
-```
 
 ## Why $(N-1)/2$ pairs?
 
