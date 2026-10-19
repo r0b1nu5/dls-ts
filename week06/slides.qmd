@@ -137,25 +137,29 @@ plt.show()
 ```
 
 
-## Why $(N-1)/2$ pairs?
+## Quantity of information
 
-### Quantity of information
-Instead of $N$ single values, we have now $(N-1)/2$ pairs of values [$(c_k,s_k)$] and an additional value $c_0$. 
-In total, we then have 
-$$ 2\cdot\frac{N-1}{2} + 1 = N$$
-values. 
-This balance means that we have not lost any information in the process. 
-Actually, we will see that the original time series $X$ can be reconstructed uniquely from its DFT $\tilde{X}$. 
+**Number of values**
 
-### Balance between sine and cosine
-We observe that for each $k\in\{1,2,...,N/2\}$, we have two values, one corresponding to the "cosine" ($c_k$) and one to the "sine" ($s_k$). 
-Each of these values is the result of a scalar product, i.e., a measure of similarity between the original time series $\vec{x}$ and the basis vector $\vec{c}^{(k)}$ (resp. $\vec{s}^{(k)}$). 
+- in $X$: $N$
 
-In general, a time series is neither a pure sine nor pure cosine, but rather something in between. 
-The two coefficients $c_k$ and $s_k$ tell us if the original time series looks more like a cosine or like a cosine. 
+- in $\tilde{X}$: $2\cdot(N-1)/2 + 1$
 
-Actually, the only difference between a sine and a cosine is a horizontal shift. 
-Let us have a look at what happens to the coefficients $c_{68}$ and $s_{68}$ of our time series above, when we artificially shift it horizontally.
+No loss of information.
+
+*Remark: $X$ can be reconstructed uniquely from $\tilde{X}$.* 
+
+
+## Balance between sine and cosine
+
+$c_k$: similarity between $X$ and a cosine.
+
+$s_k$: similarity between $X$ and a sine.
+
+**Questions:** Is it more a sine or a cosine?
+
+## Time shift
+Let us shift $X$ and look at the impact on $c_k$ and $s_k$.
 
 ```{pyodide}
 # Choose here your time shift
@@ -179,8 +183,11 @@ plt.tight_layout()
 plt.show()
 ```
 
-For $k=0$, we have a single value that relates to the average value of the time series. 
-More precisely, we verify that if $\mu_X$ is the average value of the time series $X$, then $c_0 = \sqrt{N}\mu_X$. 
+## Average value
+
+$c_0$ relates to the average value of $X$.
+
+More precisely, $c_0 = \sqrt{N}\mu_X$. 
 
 ```{pyodide}
 print(f'c_0 = {c[0]}')
@@ -191,8 +198,8 @@ print(f'mu_X*sqrt(T) = {np.mean(X)*np.sqrt(T)}')
 
 ## The Fast Fourier Transform (FFT)
 The standard algorithm for computing the DFT is called the **Fast Fourier Transform (FFT)**. 
-The FFT relies on a framework that is out of the scope for the DLS curriculum (aka [complex numbers](https://en.wikipedia.org/wiki/Complex_number)). Therefore, for the purpose of this class, we will see how to turn the output of the FFT into something we can work with. 
 
+Unfortunately, the output is a bit cryptic...
 
 ```{pyodide}
 # NumPy has an fft implemeted
@@ -200,17 +207,28 @@ F = np.fft.fft(X)
 print(F)
 ```
 
-We see the that FFT outputs a list of $N$ elements, each of the form `a + bj`.
+**Output:** A list of `a + bj`.
 
-First, notice that the first element is precisely $c_0$. 
+## Average value
 
-Then to compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
-$$ a_0+b_0j, a_1+b_1j,\cdots,a_{(N-1)/2}+b_{(N-1)/2-1}j $$
-and recombine them as
+The first element is precisely $c_0$. 
+
+```{pyodide}
+# NumPy has an fft implemeted
+F = np.fft.fft(X)
+print(F)
+```
+
+## Recipe for $c_k$ and $s_k$
+Only keep the first $(N+1)/2$ first elements of the FFT 
+$$ a_0+b_0j, a_1+b_1j,\cdots,a_{(N-1)/2}+b_{(N-1)/2-1}j\, . $$
+
+Recombine them as
 $$c_0 = \frac{1}{\sqrt{N}}\cdot a_0$$
 $$c_k = \sqrt{\frac{2}{N}}\cdot a_k$$
 $$s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
 
+## Example
 ```{pyodide}
 print(f'Recall: c_68 = {c[68]}, s_68 = {s[68]}')
 
@@ -222,21 +240,5 @@ print(f'sqrt(2/T)*b = {np.sqrt(2/T)*F[68].imag}')
 
 ## Hands on
 
-1. Check that the vectors of the Fourier basis form an orthonormal basis (number of vectors, scalar products).
-This can be done by hand of by code.
-
-<!--
-$$ \vec{s}^{(k)}\cdot\vec{s}^{(\ell)}
-= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\sin\left(\frac{2\pi i \ell}{N}\right) \\
-= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\cos\left(\frac{2\pi i (k-\ell)}{N}\right) - \cos\left(\frac{2\pi i(k+\ell)}{N}\right)\right]
-= \left\{\begin{array}{ll} 0 & k\neq\ell \\ 1 & k=\ell\end{array}\right.$$
-
-$$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
-= \frac{2}{N}\sum_{i=0}^{N-1}\sin\left(\frac{2\pi i k}{N}\right)\cos\left(\frac{2\pi i \ell}{N}\right) \\
-= \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
--->
-
-2. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
-Embed it in a function `my_DFT` that take a time series as input and returns our DFT as output.
-
+See [webpage](https://dls.hevs.ch/ts/week06).
 
