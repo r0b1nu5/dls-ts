@@ -12,7 +12,7 @@ One way of interpreting this "new formulation" is as a change of basis.
 In case this number is even, we discard the last element.*
 
 ## The Fourier basis
-Let $N$ be the length of our time series, i.e., the number of time steps, and let $\delta_t$ denote the duration of each time step. 
+Let $N$ be the length of our time series, i.e., the number of time steps. 
 Recall that a time series $X=(x_0,x_1,x_2,...,x_{N-1})$ can be seen as a $N$-dimensional vector. 
 
 For each value of $k\in\{1,2,...,(N-1)/2\}$, we define the **Fourier vectors** $\vec{s}^{(k)}$ and $\vec{c}^{(k)}$ with components
