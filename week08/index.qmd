@@ -1,0 +1,58 @@
+# Week 7 (20.10.26): The Fourier Transform 2/2
+
+Now that we know how to compute the DFT we will see how to represent it appropriately and how to interpret it.
+
+## Representing the DFT
+### Indexing with the number of periods
+First we observe that each vector of the Fourier basis represents a periodic oscillation.
+
+**TODO: Plot a few vectors of the Fourier basis.**
+
+Furthermore, the index $k$ of $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ indicates the number of full **periods** accomplished by the vector over the times steps $i=0,1,...,N-1$. 
+One natural way to represent the DFT
+$$ \tilde{X} = \left(c_0,(c_1,s_1),\cdots,(c_{(N-1)/2},s_{(N-1)/2})\right) $$
+is then to show the coefficients $c_k$ and $s_k$ as a function of the index $k$, i.e., the number of periods.
+
+**TODO: Show the coefficient wrt the index/number of periods.**
+
+### Indexing with frequency
+Notice that up to this point, we did not use the duration of the time series. 
+Indeed, computation of the DFT is independent of the time units. 
+
+However, as an engineer, we usually know for how long our system has been measured ($T$) and with what sampling rate $\delta_t$ (recall week 1). 
+With this information at hand, one realizes that $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ both accomplish $k$ periods over the course of $T$ seconds. 
+
+Therefore, the frequency of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
+$$ f_k = \frac{k}{T}~{\rm s}^{-1} $$
+The unit of the frequency is a number of periods per second (${\rm s}^{-1}$), also called **Herz** (${\rm Hz}$). 
+
+Instead of indexing the coefficients of the DFT with the number of periods $k$, we can then use the frequency on the horizontal axis.
+
+**TODO: Show the coefficients wrt the frequency.**
+
+### Combining sine and cosine
+Finally, for a given frequency, there is not much distinction between sine and cosine. 
+Both are periodic oscillations with the same frequency. 
+We mostly needed to distinguish them for mathematical purposes. 
+
+When representing the DFT, we will usually combine them in a single coefficient, called **amplitude**:
+$$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
+
+**TODO: Show the Fourier amplitude wrt frequency.**
+
+What we obtained is called the **frequency spectrum** of the original time series. 
+
+## Interpretation of the DFT
+We have seen that the DFT estimates to what extent a time series "looks like" a sine or a cosine time series. 
+In more technical terms, the DFT extracts the frequency content of a signal. 
+
+A peak in the frequency spectrum indicates that the associated frequency (or rather the sine/cosine thereof) has an important contribution in the time series. 
+In the analysis of a time series, we will be interested in identifying such peaks. 
+
+    Examples...
+
+*Exercice: Relate a time series with a spectrum. 
+Relate a phenomenon with a spectrum.*
+
+
+

@@ -10,7 +10,7 @@ This page contains the material for the class *Applied Statistics: Time Series*.
 - October 6 and 8, 2026: [Lab 1 - Fault detection in bioreactor time series](week04/index.qmd)
 - October 15, 2026: [Recap of vectorial geometry](week05/index.qmd)
 - October 20, 2026: [The Fourier Transform 1/2](week06/index.qmd)
-- November 3, 2026: Autonomous work, mock exam
+- November 3, 2026: [Autonomous work, mock exam](week07/index.qmd)
 - November 9, 2026: The Fourier Transform 2/2
 - November 10, 2026: Lab 2
 - November 17, 2026: Intermediate exam

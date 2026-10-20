@@ -201,7 +201,7 @@ The standard algorithm for computing the DFT is called the **Fast Fourier Transf
 Unfortunately, the output is a bit cryptic...
 
 ```{pyodide}
-# NumPy has an fft implemeted
+# NumPy has an fft implemented
 F = np.fft.fft(X)
 print(F)
 ```

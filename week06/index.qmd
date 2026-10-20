@@ -125,7 +125,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-To get a clearer view of which are the dominant components, we can look a the absolute values of the coefficients.
+To get a clearer view of which are the dominant components, we can look at the absolute values of the coefficients.
 
 ```{pyodide}
 fig, ax = plt.subplots(2,1,figsize=(7,5))
@@ -199,7 +199,7 @@ The FFT relies on a framework that is out of the scope for the DLS curriculum (a
 
 
 ```{pyodide}
-# NumPy has an fft implemeted
+# NumPy has an fft implemented
 F = np.fft.fft(X)
 print(F)
 ```
@@ -240,7 +240,7 @@ $$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
 = \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
 -->
 
-2. Write a script that transforms that output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
+2. Write a script that transforms the output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
 Embed it in a function `my_DFT` that take a time series as input and returns our DFT as output.
 
 3. Let $\tilde{X}$ be the DFT of the time series $X$. 
