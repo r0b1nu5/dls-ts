@@ -245,3 +245,7 @@ Embed it in a function `my_DFT` that take a time series as input and returns our
 
 3. Let $\tilde{X}$ be the DFT of the time series $X$. 
    Express the component $X_t$ as a combination of the components of $\tilde{X}$.
+
+
+
+## [Solution](../solutions/week06-solution.ipynb)
