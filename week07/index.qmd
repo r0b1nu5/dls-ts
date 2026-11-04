@@ -2,6 +2,5 @@
 
 [Link to the mock exam.](../files/2627-mock-exam.pdf)
 
-
-Solution: available soon...
+[Link to the solutions](../files/2627-mock-exam-sol.pdf)
 
