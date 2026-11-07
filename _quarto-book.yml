@@ -33,6 +33,8 @@ book:
       chapters:
         - week07/index.qmd
     - part: "Course 8"
+      chapters:
+        - week08/index.qmd
     - part: "Course 9"
     - part: "Course 10"
     - part: "Course 11"
