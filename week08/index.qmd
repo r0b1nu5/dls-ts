@@ -1,58 +1,52 @@
-# Week 7 (20.10.26): The Fourier Transform 2/2
+# Lab 2.1: The Fourier Transform and spectrograms {.unnumbered}
 
-Now that we know how to compute the DFT we will see how to represent it appropriately and how to interpret it.
+## Background
 
-## Representing the DFT
-### Indexing with the number of periods
-First we observe that each vector of the Fourier basis represents a periodic oscillation.
+You are responsible for data vizualisation in a team of neuroimagery. 
+In particular, your laboratory performs electroencephalograms (EEG) on human patients.
 
-**TODO: Plot a few vectors of the Fourier basis.**
+When performing and EEG, 64 electrodes are placed on the scalp of the patient according to the figure below. 
+Each electrode records a voltage (in microvolts), induced by the brain activity. 
+The sampling rate is 160 Hz, i.e., 160 measurements per second.
 
-Furthermore, the index $k$ of $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ indicates the number of full **periods** accomplished by the vector over the times steps $i=0,1,...,N-1$. 
-One natural way to represent the DFT
-$$ \tilde{X} = \left(c_0,(c_1,s_1),\cdots,(c_{(N-1)/2},s_{(N-1)/2})\right) $$
-is then to show the coefficients $c_k$ and $s_k$ as a function of the index $k$, i.e., the number of periods.
+![Placement of the 64 electrodes](./figs/64_channel_sharbrough.png)
 
-**TODO: Show the coefficient wrt the index/number of periods.**
+The file [`S089R03.csv`](../files/S089R03.csv) contains the EEG recording of a patient during a motor task. 
 
-### Indexing with frequency
-Notice that up to this point, we did not use the duration of the time series. 
-Indeed, computation of the DFT is independent of the time units. 
 
-However, as an engineer, we usually know for how long our system has been measured ($T$) and with what sampling rate $\delta_t$ (recall week 1). 
-With this information at hand, one realizes that $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ both accomplish $k$ periods over the course of $T$ seconds. 
+## Part 1: The discrete Fourier transform
 
-Therefore, the frequency of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
-$$ f_k = \frac{k}{T}~{\rm s}^{-1} $$
-The unit of the frequency is a number of periods per second (${\rm s}^{-1}$), also called **Herz** (${\rm Hz}$). 
+**Goal:** Recall the DFT.
 
-Instead of indexing the coefficients of the DFT with the number of periods $k$, we can then use the frequency on the horizontal axis.
+1. For now, let us focus on the time series of sensor `Af7.`. 
+   Using the script you created in the hands of [this course](https://dls.hevs.ch/ts/week06), compute the DFT of the column `Af7.` from the EEG data. 
 
-**TODO: Show the coefficients wrt the frequency.**
+2. Plot the coefficient $c_k$ and $s_k$ of the DFT as functions of $k$.
 
-### Combining sine and cosine
-Finally, for a given frequency, there is not much distinction between sine and cosine. 
-Both are periodic oscillations with the same frequency. 
-We mostly needed to distinguish them for mathematical purposes. 
 
-When representing the DFT, we will usually combine them in a single coefficient, called **amplitude**:
-$$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
+## Part 2: The spectrogram
 
-**TODO: Show the Fourier amplitude wrt frequency.**
+**Goal:** Build a spectrogram (interpretation will be left for next class).
 
-What we obtained is called the **frequency spectrum** of the original time series. 
+The idea of a spectrogram is to compute the DFT of a signal on multiple, consecutive time intervals. 
 
-## Interpretation of the DFT
-We have seen that the DFT estimates to what extent a time series "looks like" a sine or a cosine time series. 
-In more technical terms, the DFT extracts the frequency content of a signal. 
+3. Compute again the DFT of column `Af7.`, but only on the first 3001 time steps. 
+   Only keep the coefficients $c_k$ for now. 
 
-A peak in the frequency spectrum indicates that the associated frequency (or rather the sine/cosine thereof) has an important contribution in the time series. 
-In the analysis of a time series, we will be interested in identifying such peaks. 
+4. For the same column, compute the DFT for time steps from 500 to 3501. 
+   And for time steps 1000 to 4001. 
+   Repeat this process as many times as possible and store all the $c_k$ coefficents in a table. 
+   At each repetition, you compute the DFT of a time series of length 3001 time steps and that starts 500 time steps after the previous one. 
+   You should end up with a table with 1501 rows and 51 columns. 
 
-    Examples...
+5. Using the `contourf` function of `matplotlib.pyplot`, provide a graphical representation of the obtained table. 
+   This is a spectrogram. 
 
-*Exercice: Relate a time series with a spectrum. 
-Relate a phenomenon with a spectrum.*
+*Remark: You may want to use the logarithm of the values in your table to emphasize the smaller values.*
+
+6. Gather steps 3-5 into a script and represent the spectrograms for colums `Fp1.`, `Fp2.`, `Iz..`, `Oz..`, and `T8..`. 
+
+*Remark: In the next class, we will see how to interpret the content of the DFT and of the spectrogram.*
 
 
 
