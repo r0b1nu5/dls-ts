@@ -90,7 +90,7 @@ However, as an engineer, we usually know for how long our system has been measur
 With this information at hand, one realizes that $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ both accomplish $k$ periods over the course of $T$ seconds. 
 
 Therefore, the **frequency** of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
-$$ f_k = \frac{k}{T}~{\rm s}^{-1}\, .$$
+$$ f_k = \frac{k}{T}~\mathrm{s}^{-1}\, .$$
 The unit of the frequency is a number of periods per second ($\mathrm{s}^{-1}$), also called **Herz** ($\mathrm{Hz}$). 
 
 Instead of indexing the coefficients of the DFT with the number of periods $k$, we can then use the frequency on the horizontal axis.
