@@ -89,13 +89,35 @@ Indeed, computation of the DFT is independent of the time units.
 However, as an engineer, we usually know for how long our system has been measured ($T$) and with what sampling rate $\delta_t$ (recall week 1). 
 With this information at hand, one realizes that $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ both accomplish $k$ periods over the course of $T$ seconds. 
 
-Therefore, the frequency of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
-$$ f_k = \frac{k}{T}~{\rm s}^{-1} $$
-The unit of the frequency is a number of periods per second (${\rm s}^{-1}$), also called **Herz** (${\rm Hz}$). 
+Therefore, the **frequency** of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
+$$ f_k = \frac{k}{T}~{\rm s}^{-1}\, .$$
+The unit of the frequency is a number of periods per second ($\mathrm{s}^{-1}$), also called **Herz** ($\mathrm{Hz}$). 
 
 Instead of indexing the coefficients of the DFT with the number of periods $k$, we can then use the frequency on the horizontal axis.
 
-**TODO: Show the coefficients wrt the frequency.**
+### Example
+In the previous example, we know that measurements have been taken for a duration of $T = 1149~\mathrm{time steps} = 827'280~\mathrm{s}$. 
+The $k$-th frequency $f_k$ is then
+$$ f_k = \frac{k}{827'280}~\mathrm{Hz}\, .$$
+Hence, the list of frequencies is
+$$ (f_0, f_1, f_2, f_3,...,f_{T/2}) = (0, 1.2\cdot10^{-6}, 2.4\cdot10^{-6}, 3.6\cdot10^{-6},...,1.39\cdot10^{-3})\, .$$
+
+Let us represent the DFT with frequencies on the x-axis.
+
+```{pyodide}
+fig, ax = plt.subplots(2,1,figsize=(7,5))
+
+ax[0].plot(range(T)/T, np.abs(c[1:]))
+ax[0].set_ylabel('c')
+
+ax[1].plot(range(T)/T, np.abs(s[1:]), color='C1')
+ax[1].set_xlabel('f (Hz)')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
 
 ### Combining sine and cosine
 Finally, for a given frequency, there is not much distinction between sine and cosine. 
@@ -105,21 +127,47 @@ We mostly needed to distinguish them for mathematical purposes.
 When representing the DFT, we will usually combine them in a single coefficient, called **amplitude**:
 $$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
 
-**TODO: Show the Fourier amplitude wrt frequency.**
+```{pyodide}
+fig, ax = plt.subplots(figsize=(7,3))
 
-What we obtained is called the **frequency spectrum** of the original time series. 
+ax.plot(range(T)/T, np.sqrt(c[1:]^2 + s[1:]^2))
+ax[0].set_ylabel('xt')
+ax[1].set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+
+What we obtained is called the **amplitude spectrum** of the original time series. 
 
 ## Interpretation of the DFT
 We have seen that the DFT estimates to what extent a time series "looks like" a sine or a cosine time series. 
 In more technical terms, the DFT extracts the frequency content of a signal. 
 
-A peak in the frequency spectrum indicates that the associated frequency (or rather the sine/cosine thereof) has an important contribution in the time series. 
+A peak in the frequency spectrum indicates that the associated frequency (or rather the associated oscillation) has an important contribution in the time series. 
 In the analysis of a time series, we will be interested in identifying such peaks. 
 
-    Examples: Spectrometry,...
+### Example 1: Pure oscillations
 
+Let us construct an artificial time series composed of three pure oscillations and some noise:
+$$ X_t = \sin(4t - 2) + 2\sin(6t) - \cos(9t+1) + \mu_t\, , $$
+where $\mu_t$ is a white, gaussian noise.
+
+```{pyodide}
+X = ...
+```
+
+### Example 2: Hourly outdoor temperature (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
+
+### Example 3: FID (Source: Fabrice Micaux)
+
+
+## Hands on
+Write a script that plots the amplitude spectrum from the output of your script computing the DFT.
+
+<!--
 *Exercice: Relate a time series with a spectrum. 
 Relate a phenomenon with a spectrum.*
-
+-->
 
 

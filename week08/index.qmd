@@ -13,6 +13,8 @@ The sampling rate is 160 Hz, i.e., 160 measurements per second.
 
 The file [`S089R03.csv`](../files/S089R03.csv) contains the EEG recording of a patient during a motor task. 
 
+*Source: [Physionet, EEG Motor Movement/Imagery Dataset](https://physionet.org/content/eegmmidb/1.0.0/).*
+
 
 ## Part 1: The discrete Fourier transform
 

@@ -12,7 +12,7 @@ This page contains the material for the class *Applied Statistics: Time Series*.
 - October 20, 2026: [The Fourier Transform 1/2](week06/index.qmd)
 - November 3, 2026: [Autonomous work, mock exam](week07/index.qmd)
 - November 9, 2026: [Lab 2.1 - The Fourier transofmr and spectrograms](week08/index.qmd)
-- November 10, 2026: The Fourier Transform 2/2
+- November 10, 2026: [The Fourier Transform 2/2](week09/index.qmd)
 - November 17, 2026: Intermediate exam
 - November 19, 2026
 - December 10, 2026
