@@ -1,19 +1,86 @@
-# Week 7 (20.10.26): The Fourier Transform 2/2
+# The Fourier Transform 2/2 {.unnumbered}
+
+[Slides]({{< var base_url>}}slides/week09/slides.html){.btn .btn-outline-primary .btn         role="button"}
+[Slides PDF]({{< var base_url>}}slides/week09/slides.pdf){.btn .btn-outline-secondary .btn    role="button"}
 
 Now that we know how to compute the DFT we will see how to represent it appropriately and how to interpret it.
 
 ## Representing the DFT
+
 ### Indexing with the number of periods
 First we observe that each vector of the Fourier basis represents a periodic oscillation.
 
-**TODO: Plot a few vectors of the Fourier basis.**
+```{pyodide}
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 100 # Length of the vector/time series
+
+c0 = np.ones(N)/np.sqrt(N)
+c1 = np.cos(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+s1 = np.sin(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+c3 = np.cos(2*np.pi*np.arange(N)*3/N)*np.sqrt(2/N)
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(np.arange(N), c0, '.', label='c0')
+ax.plot(np.arange(N), c1, '.', label='c1')
+ax.plot(np.arange(N), s1, '.', label='s1')
+ax.plot(np.arange(N), c3, '.', label='c3')
+
+ax.set_xlabel('i')
+ax.set_ylabel('c_i, s_i')
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
 
 Furthermore, the index $k$ of $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ indicates the number of full **periods** accomplished by the vector over the times steps $i=0,1,...,N-1$. 
 One natural way to represent the DFT
 $$ \tilde{X} = \left(c_0,(c_1,s_1),\cdots,(c_{(N-1)/2},s_{(N-1)/2})\right) $$
 is then to show the coefficients $c_k$ and $s_k$ as a function of the index $k$, i.e., the number of periods.
 
-**TODO: Show the coefficient wrt the index/number of periods.**
+```{pyodide}
+import pandas as pd
+
+# Load data
+df = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
+
+# Extract the time series of pH for one of the batches
+X = df[df['Batch ID'] == 66]['pH(pH:pH)']
+
+# Number of time steps, make it odd if necessary
+T = len(X)
+if T%2 == 0:
+    T -= 1
+    X = X[:T]
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T-1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+# Let us have a look at the coefficients
+fig, ax = plt.subplots(2,1,figsize=(7,5))
+
+ax[0].plot(np.abs(c[1:]))
+ax[0].set_ylabel('c')
+
+ax[1].plot(np.abs(s[1:]), color='C1')
+ax[1].set_xlabel('k')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
 
 ### Indexing with frequency
 Notice that up to this point, we did not use the duration of the time series. 
@@ -49,7 +116,7 @@ In more technical terms, the DFT extracts the frequency content of a signal.
 A peak in the frequency spectrum indicates that the associated frequency (or rather the sine/cosine thereof) has an important contribution in the time series. 
 In the analysis of a time series, we will be interested in identifying such peaks. 
 
-    Examples...
+    Examples: Spectrometry,...
 
 *Exercice: Relate a time series with a spectrum. 
 Relate a phenomenon with a spectrum.*

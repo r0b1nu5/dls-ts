@@ -19,7 +19,7 @@ The file [`S089R03.csv`](../files/S089R03.csv) contains the EEG recording of a p
 **Goal:** Recall the DFT.
 
 1. For now, let us focus on the time series of sensor `Af7.`. 
-   Using the script you created in the hands of [this course](https://dls.hevs.ch/ts/week06), compute the DFT of the column `Af7.` from the EEG data. 
+   Using the script you created in the hands on of [this course](https://dls.hevs.ch/ts/week06), compute the DFT of the column `Af7.` from the EEG data. 
 
 2. Plot the coefficient $c_k$ and $s_k$ of the DFT as functions of $k$.
 
@@ -44,7 +44,10 @@ The idea of a spectrogram is to compute the DFT of a signal on multiple, consecu
 
 *Remark: You may want to use the logarithm of the values in your table to emphasize the smaller values.*
 
-6. Gather steps 3-5 into a script and represent the spectrograms for colums `Fp1.`, `Fp2.`, `Iz..`, `Oz..`, and `T8..`. 
+6. The spectrogram built at the previous point represents three dimensions (x-axis, y-axis, color scale). 
+   What should be the labels of these different dimensions?
+   
+7. Gather steps 3-5 into a script and represent the spectrograms for colums `Fp1.`, `Fp2.`, `Iz..`, `Oz..`, and `T8..`. 
 
 *Remark: In the next class, we will see how to interpret the content of the DFT and of the spectrogram.*
 
