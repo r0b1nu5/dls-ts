@@ -1,0 +1,302 @@
+---
+title: "The Fourier Transform 2/2"
+subtitle: "Applied Statistics: Time Series"
+format:
+ live-revealjs:
+  slide-number: true
+  brand: ../_brand.yml
+  theme: ../hevs.scss
+  show-slide-number: all
+  preview-links: auto
+  chalkboard: true
+  logo: Https://www.hevs.ch/_nuxt/img/logo_hesso.9af1d79.svg
+  footer: "[Time Series](https://dls.hevs.ch/ts/week09/)"
+---
+
+## The Fourier Transform 2/2
+
+**Goal**
+
+- Represent the DFT
+
+- Interpret the DFT
+
+## Indexing with the number of periods
+
+Fourier basis = oscillations
+
+```{pyodide}
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 100 # Length of the vector/time series
+
+c0 = np.ones(N)/np.sqrt(N)
+c1 = np.cos(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+s1 = np.sin(2*np.pi*np.arange(N)*1/N)*np.sqrt(2/N)
+c3 = np.cos(2*np.pi*np.arange(N)*3/N)*np.sqrt(2/N)
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(np.arange(N), c0, '.', label='c0')
+ax.plot(np.arange(N), c1, '.', label='c1')
+ax.plot(np.arange(N), s1, '.', label='s1')
+ax.plot(np.arange(N), c3, '.', label='c3')
+
+ax.set_xlabel('i')
+ax.set_ylabel('c_i, s_i')
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+## In words
+
+Index $k$ of $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ = number of full **periods**.
+
+Let us plot the DFT
+$$ \tilde{X} = \left(c_0,(c_1,s_1),\cdots,(c_{(N-1)/2},s_{(N-1)/2})\right) $$
+
+```{pyodide}
+import pandas as pd
+
+# Load data
+df = pd.read_csv('https://dls.hevs.ch/ts/files/penicillin-data-01.csv')
+
+# Extract the time series of pH for one of the batches
+X = df[df['Batch ID'] == 66]['pH(pH:pH)']
+
+# Number of time steps, make it odd if necessary
+T = len(X)
+if T%2 == 0:
+    T -= 1
+    X = X[:T]
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T-1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+# Let us have a look at the coefficients
+fig, ax = plt.subplots(2,1,figsize=(7,5))
+
+ax[0].plot(np.abs(c[1:]))
+ax[0].set_ylabel('c')
+
+ax[1].plot(np.abs(s[1:]), color='C1')
+ax[1].set_xlabel('k')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Indexing with frequency
+We did not use the duration of the time series. 
+
+Vectors $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$: $k$ periods over $T$ seconds. 
+
+The **frequency** of the oscillations $\vec{c}^{(k)}$ and $\vec{s}^{(k)}$ is 
+$$ f_k = \frac{k}{T}~\mathrm{s}^{-1}\, .$$
+
+**Units:** per second $\mathrm{s}^{-1}$ also called **Herz** ($\mathrm{Hz}$). 
+
+## Previous example (penicillin reactor)
+
+**Duration:** $T = 1149~\mathrm{time steps} = 827'280~\mathrm{s}$. 
+
+The $k$-th frequency $f_k$ is
+$$ f_k = \frac{k}{827'280}~\mathrm{Hz}\, .$$
+
+And the list of frequencies is
+$$ (f_0, f_1, f_2, f_3,...,f_{T/2}) = (0, 1.2\cdot10^{-6}, 2.4\cdot10^{-6}, 3.6\cdot10^{-6},...,1.39\cdot10^{-3})\, .$$
+
+## Frequencies on the x-axis
+
+```{pyodide}
+fig, ax = plt.subplots(2,1,figsize=(7,5))
+
+total_time = df["Time (h)"].max()*3600 # total time is seconds
+
+ax[0].plot(np.arange(2,(T+1)/2)/total_time, np.abs(c[1:]))
+ax[0].set_ylabel('c')
+
+ax[1].plot(np.arange(2,(T+1)/2)/total_time, np.abs(s[1:]), color='C1')
+ax[1].set_xlabel('f (Hz)')
+ax[1].set_ylabel('s')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Combining sine and cosine
+
+No need to distinguish sine and cosine. 
+
+Combine them in the **amplitude**:
+$$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
+
+```{pyodide}
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(np.arange(2,(T+1)/2)/total_time, np.sqrt(c[1:]**2 + s[1:]**2))
+ax.set_ylabel('xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+
+This is the **amplitude spectrum** of the original time series. 
+
+
+## Interpretation of the DFT
+
+Main interpretation: "similarity with a pure sine wave".
+
+
+A peak in the frequency spectrum = strong importance of the associated frequency.
+
+## Example 1: Pure oscillations
+
+Let us construct an artificial time series composed of three pure oscillations and some noise:
+$$ X_t = \sin(4t - 2) + 2\sin(6t) - \cos(9t+1) + \mu_t\, , $$
+where $\mu_t$ is a white, gaussian noise.
+
+```{pyodide}
+T = 10
+N = 501
+t = np.linspace(0,T,N)
+dt = t[1] - t[0]
+
+X = np.sin(4*t - 2) + np.sin(6*t) - np.cos(9*t + 1) + np.random.normal(0.0, 1.0, N)
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(N),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((N+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(N)*k/N)*np.sqrt(2/N)
+    sk = np.sin(2*np.pi*np.arange(N)*k/N)*np.sqrt(2/N)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c**2 + s**2)
+
+f = np.arange((N+1)/2)/T
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Example 2: Hourly CO2 concentration 
+*Source: [Zenodo (2026)](https://zenodo.org/records/21306261)*
+
+Let us load the hourly concentration of CO2 in the atmosphere (at the location of the sensor). 
+Measurements are in PPM.
+
+```{pyodide}
+df = pd.read_csv('https://dls.hevs.ch/ts/files/co2-prs-hourly.csv')
+
+X = df['CO2 (ppm)']
+T = len(X)
+if T%2 == 0:
+  T -= 1
+  X = X[:-1]
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c**2 + s**2)
+
+f = np.arange(T)/(T*3600)
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Example 3: Free Induction Decay (FID) of a Nuclear Magnetic Resonance (NMR) experiment 
+*Source: Fabrice Micaux*
+
+On realizes that the voltage time series (FID) is unreadable by humans.
+
+```{pyodide}
+df = pd.read_csv('https://dls.hevs.ch/ts/files/fid-real-01.csv')
+
+t = df['Time (s)']
+X = df['FID']
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,X)
+ax.set_xlabel('Time (s)')
+ax.set_ylabel('FID')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Example 3: Fourier spectrum of the FID
+
+The Fourier spectrum, however, is much clearer.
+
+```{pyodide}
+T = len(t)
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c**2 + s**2)
+
+f = np.arange(T)/t.max()
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+## Hands on
+
+See [webpage](https://dls.hevs.ch/ts/week09).
+
+

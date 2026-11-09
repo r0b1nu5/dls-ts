@@ -180,7 +180,7 @@ f = np.arange((N+1)/2)/T
 
 fig, ax = plt.subplots(figsize=(7,3))
 
-ax.plot(f, F)
+ax.plot(f[0:50], F[0:50])
 ax.set_ylabel('Xt')
 ax.set_xlabel('f (Hz)')
 
@@ -190,13 +190,13 @@ plt.show()
 
 ### Example 2: Hourly CO2 concentration (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
 
-Let us load the hourly concentration of CO2 in the atmosphere (at the location of the sensor). 
+Let us load the [hourly concentration of CO2](../files/co2-prs-hourly.csv) in the atmosphere (at the location of the sensor). 
 Measurements are in PPM.
 
 ```{pyodide}
-df = pd.read_csv('https://dls.hevs.ch/ts/files/c02-prs-hourly.csv')
+df = pd.read_csv('https://dls.hevs.ch/ts/files/oo2-prs-hourly.csv')
 
-X = df["CO2 (ppm)"]
+X = df['CO2 (ppm)']
 T = len(X)
 if T%2 == 0:
   T -= 1
@@ -235,7 +235,7 @@ Then, introducing a short pulse tilts all the spins away from the general magnet
 The spins relax at a speed and with a precession frequency specific to the atom and to its links to neighboring atoms (i.e., specific to the molecule). 
 The relaxation process induces an oscillating voltage whose shape is specific to the atoms in the substrate. 
 
-On realizes that the voltage time series (FID) is unreadable by humans.
+On realizes that the [voltage time series (FID)](../files/fid-real-01.csv) is unreadable by humans.
 
 ```{pyodide}
 df = pd.read_csv('https://dls.hevs.ch/ts/files/fid-real-01.csv')
