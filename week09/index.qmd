@@ -7,6 +7,7 @@ Now that we know how to compute the DFT we will see how to represent it appropri
 
 ## Representing the DFT
 
+
 ### Indexing with the number of periods
 First we observe that each vector of the Fourier basis represents a periodic oscillation.
 
@@ -176,7 +177,7 @@ for k in range(1,int((N+1)/2)):
 
 F = np.sqrt(c**2 + s**2)
 
-f = np.arange((N+1)/2)/T
+f = np.arange((N+1)/2)*2*np.pi/T
 
 fig, ax = plt.subplots(figsize=(7,3))
 
@@ -190,11 +191,27 @@ plt.show()
 
 ### Example 2: Hourly CO2 concentration (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
 
+To deal with long time series, let us load our own DFT function
+
+```{pyodide}
+def my_DFT(X):
+    N = len(X)\n
+
+    F = np.fft.fft(X)
+
+    myF = np.array([F[0].real/np.sqrt(N),])
+
+    for k in range(1,int((N+1)/2)):
+        myF = np.append(myF, np.sqrt((F[k].real*np.sqrt(2/N))**2 + (F[k].imag*np.sqrt(2/N))**2))
+
+    return myF
+```
+
 Let us load the [hourly concentration of CO2](../files/co2-prs-hourly.csv) in the atmosphere (at the location of the sensor). 
 Measurements are in PPM.
 
 ```{pyodide}
-df = pd.read_csv('https://dls.hevs.ch/ts/files/oo2-prs-hourly.csv')
+df = pd.read_csv('https://dls.hevs.ch/ts/files/co2-prs-hourly.csv')
 
 X = df['CO2 (ppm)']
 T = len(X)
@@ -202,19 +219,7 @@ if T%2 == 0:
   T -= 1
   X = X[:-1]
 
-# Compute c0 and an artificial first term for s0
-c = np.array([sum(X)/np.sqrt(T),])
-s = np.array([0,])
-
-# For each k, compute ck and sk, and append it to the corresponding list of values
-for k in range(1,int((T+1)/2)):
-    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
-    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
-    c = np.append(c, np.dot(X,ck))
-    s = np.append(s, np.dot(X,sk))
-
-F = np.sqrt(c**2 + s**2)
-
+F = my_DFT(X)
 f = np.arange(T)/(T*3600)
 
 fig, ax = plt.subplots(figsize=(7,3))
@@ -258,19 +263,7 @@ The Fourier spectrum, however, is much clearer.
 ```{pyodide}
 T = len(t)
 
-# Compute c0 and an artificial first term for s0
-c = np.array([sum(X)/np.sqrt(T),])
-s = np.array([0,])
-
-# For each k, compute ck and sk, and append it to the corresponding list of values
-for k in range(1,int((T+1)/2)):
-    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
-    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
-    c = np.append(c, np.dot(X,ck))
-    s = np.append(s, np.dot(X,sk))
-
-F = np.sqrt(c**2 + s**2)
-
+F = my_DFT(X)
 f = np.arange(T)/t.max()
 
 fig, ax = plt.subplots(figsize=(7,3))
