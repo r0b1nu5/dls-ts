@@ -109,10 +109,10 @@ fig, ax = plt.subplots(2,1,figsize=(7,5))
 
 total_time = df["Time (h)"].max()*3600 # total time is seconds
 
-ax[0].plot(np.arange((T+1)/2)/total_time, np.abs(c[1:]))
+ax[0].plot(np.arange(2,(T+1)/2)/total_time, np.abs(c[1:]))
 ax[0].set_ylabel('c')
 
-ax[1].plot(np.arange((T+1)/2)/total_time, np.abs(s[1:]), color='C1')
+ax[1].plot(np.arange(2,(T+1)/2)/total_time, np.abs(s[1:]), color='C1')
 ax[1].set_xlabel('f (Hz)')
 ax[1].set_ylabel('s')
 
@@ -132,9 +132,9 @@ $$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
 ```{pyodide}
 fig, ax = plt.subplots(figsize=(7,3))
 
-ax.plot(np.arange(T)/total_time, np.sqrt(c[1:]^2 + s[1:]^2))
-ax[0].set_ylabel('xt')
-ax[1].set_xlabel('f (Hz)')
+ax.plot(np.arange(2,(T+1)/2)/total_time, np.sqrt(c[1:]**2 + s[1:]**2))
+ax.set_ylabel('xt')
+ax.set_xlabel('f (Hz)')
 
 plt.tight_layout()
 plt.show()
@@ -161,44 +161,129 @@ N = 501
 t = np.linspace(0,T,N)
 dt = t[1] - t[0]
 
-X = np.sin(4*t - 2) + np.sin(6*t) - np.cos(9*t + 1) + np.randn(500)
+X = np.sin(4*t - 2) + np.sin(6*t) - np.cos(9*t + 1) + np.random.normal(0.0, 1.0, N)
 
 # Compute c0 and an artificial first term for s0
-c = np.array([sum(X)/np.sqrt(T),])
+c = np.array([sum(X)/np.sqrt(N),])
 s = np.array([0,])
 
 # For each k, compute ck and sk, and append it to the corresponding list of values
-for k in range(1,int((T-1)/2)):
-    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
-    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+for k in range(1,int((N+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(N)*k/N)*np.sqrt(2/N)
+    sk = np.sin(2*np.pi*np.arange(N)*k/N)*np.sqrt(2/N)
     c = np.append(c, np.dot(X,ck))
     s = np.append(s, np.dot(X,sk))
 
-F = np.sqrt(c^2 + s^2)
+F = np.sqrt(c**2 + s**2)
 
 f = np.arange((N+1)/2)/T
 
 fig, ax = plt.subplots(figsize=(7,3))
 
 ax.plot(f, F)
-ax[0].set_ylabel('Xt')
-ax[1].set_xlabel('f (Hz)')
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
 
 plt.tight_layout()
 plt.show()
 ```
 
-### Example 2: Hourly outdoor temperature (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
+### Example 2: Hourly CO2 concentration (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
 
-### Example 3: Free Inductino Decay (FID) of a Nuclear Magnetic Resonance (NMR) experiment (Source: Fabrice Micaux)
+Let us load the hourly concentration of CO2 in the atmosphere (at the location of the sensor). 
+Measurements are in PPM.
 
+```{pyodide}
+df = pd.read_csv('https://dls.hevs.ch/ts/files/c02-prs-hourly.csv')
 
+X = df["CO2 (ppm)"]
+T = len(X)
+if T%2 == 0:
+  T -= 1
+  X = X[:-1]
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c**2 + s**2)
+
+f = np.arange(T)/(T*3600)
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
+
+### Example 3: Free Induction Decay (FID) of a Nuclear Magnetic Resonance (NMR) experiment (Source: Fabrice Micaux)
+
+The goal of NMR is to identify the atoms composing a substrate. 
+The idea is to submit the substrate to a strong magnetic field that aligns all its atoms' spins. 
+Then, introducing a short pulse tilts all the spins away from the general magnetic field. 
+The spins relax at a speed and with a precession frequency specific to the atom and to its links to neighboring atoms (i.e., specific to the molecule). 
+The relaxation process induces an oscillating voltage whose shape is specific to the atoms in the substrate. 
+
+On realizes that the voltage time series (FID) is unreadable by humans.
+
+```{pyodide}
+df = pd.read_csv('https://dls.hevs.ch/ts/files/fid-real-01.csv')
+
+t = df['Time (s)']
+X = df['FID']
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(t,X)
+ax.set_xlabel('Time (s)')
+ax.set_ylabel('FID')
+
+plt.tight_layout()
+plt.show()
+```
+
+The Fourier spectrum, however, is much clearer.
+
+```{pyodide}
+T = len(t)
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T+1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c**2 + s**2)
+
+f = np.arange(T)/t.max()
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax.set_ylabel('Xt')
+ax.set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
+```
 ## Hands on
 Write a script that plots the amplitude spectrum from the output of your script computing the DFT.
 
-<!--
-*Exercice: Relate a time series with a spectrum. 
-Relate a phenomenon with a spectrum.*
--->
 
 
