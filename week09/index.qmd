@@ -107,10 +107,12 @@ Let us represent the DFT with frequencies on the x-axis.
 ```{pyodide}
 fig, ax = plt.subplots(2,1,figsize=(7,5))
 
-ax[0].plot(range(T)/T, np.abs(c[1:]))
+total_time = df["Time (h)"].max()*3600 # total time is seconds
+
+ax[0].plot(np.arange((T+1)/2)/total_time, np.abs(c[1:]))
 ax[0].set_ylabel('c')
 
-ax[1].plot(range(T)/T, np.abs(s[1:]), color='C1')
+ax[1].plot(np.arange((T+1)/2)/total_time, np.abs(s[1:]), color='C1')
 ax[1].set_xlabel('f (Hz)')
 ax[1].set_ylabel('s')
 
@@ -130,7 +132,7 @@ $$ \tilde{x}_k = \sqrt{c_k^2+s_k^2}\, .$$
 ```{pyodide}
 fig, ax = plt.subplots(figsize=(7,3))
 
-ax.plot(range(T)/T, np.sqrt(c[1:]^2 + s[1:]^2))
+ax.plot(np.arange(T)/total_time, np.sqrt(c[1:]^2 + s[1:]^2))
 ax[0].set_ylabel('xt')
 ax[1].set_xlabel('f (Hz)')
 
@@ -154,7 +156,36 @@ $$ X_t = \sin(4t - 2) + 2\sin(6t) - \cos(9t+1) + \mu_t\, , $$
 where $\mu_t$ is a white, gaussian noise.
 
 ```{pyodide}
-X = ...
+T = 10
+N = 501
+t = np.linspace(0,T,N)
+dt = t[1] - t[0]
+
+X = np.sin(4*t - 2) + np.sin(6*t) - np.cos(9*t + 1) + np.randn(500)
+
+# Compute c0 and an artificial first term for s0
+c = np.array([sum(X)/np.sqrt(T),])
+s = np.array([0,])
+
+# For each k, compute ck and sk, and append it to the corresponding list of values
+for k in range(1,int((T-1)/2)):
+    ck = np.cos(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    sk = np.sin(2*np.pi*np.arange(T)*k/T)*np.sqrt(2/T)
+    c = np.append(c, np.dot(X,ck))
+    s = np.append(s, np.dot(X,sk))
+
+F = np.sqrt(c^2 + s^2)
+
+f = np.arange((N+1)/2)/T
+
+fig, ax = plt.subplots(figsize=(7,3))
+
+ax.plot(f, F)
+ax[0].set_ylabel('Xt')
+ax[1].set_xlabel('f (Hz)')
+
+plt.tight_layout()
+plt.show()
 ```
 
 ### Example 2: Hourly outdoor temperature (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
