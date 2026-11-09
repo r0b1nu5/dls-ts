@@ -159,7 +159,7 @@ X = ...
 
 ### Example 2: Hourly outdoor temperature (Source: [Zenodo (2026)](https://zenodo.org/records/21306261))
 
-### Example 3: FID (Source: Fabrice Micaux)
+### Example 3: Free Inductino Decay (FID) of a Nuclear Magnetic Resonance (NMR) experiment (Source: Fabrice Micaux)
 
 
 ## Hands on
