@@ -195,7 +195,7 @@ To deal with long time series, let us load our own DFT function
 
 ```{pyodide}
 def my_DFT(X):
-    N = len(X)/n
+    N = len(X)
 
     F = np.fft.fft(X)
 
