@@ -195,7 +195,7 @@ To deal with long time series, let us load our own DFT function
 
 ```{pyodide}
 def my_DFT(X):
-    N = len(X)\n
+    N = len(X)/n
 
     F = np.fft.fft(X)
 
@@ -220,7 +220,7 @@ if T%2 == 0:
   X = X[:-1]
 
 F = my_DFT(X)
-f = np.arange(T)/(T*3600)
+f = np.arange((T+1)/2)/(T*3600)
 
 fig, ax = plt.subplots(figsize=(7,3))
 
@@ -264,7 +264,7 @@ The Fourier spectrum, however, is much clearer.
 T = len(t)
 
 F = my_DFT(X)
-f = np.arange(T)/t.max()
+f = np.arange((T+1)/2)/t.max()
 
 fig, ax = plt.subplots(figsize=(7,3))
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 def my_DFT(X):
-    N = len(X)\n
+    N = len(X)/n
 
     if N%2 == 0:
         X = X[:-1]
