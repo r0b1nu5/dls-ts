@@ -1,4 +1,4 @@
 # Intermediate exam
 
-[Solutions](../files/2627-cc.pdf)
+[Solutions](../files/2627-cc-sol.pdf)
 
