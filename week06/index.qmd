@@ -206,9 +206,7 @@ print(F)
 
 We see the that FFT outputs a list of $N$ elements, each of the form `a + bj`.
 
-First, notice that the first element is precisely $c_0$. 
-
-Then to compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
+To compute "our" DFT, we keep only the $(N+1)/2$ first elements of the FFT 
 $$ a_0+b_0j, a_1+b_1j,\cdots,a_{(N-1)/2}+b_{(N-1)/2-1}j $$
 and recombine them as
 $$c_0 = \frac{1}{\sqrt{N}}\cdot a_0$$
@@ -218,7 +216,7 @@ $$s_k = \sqrt{\frac{2}{N}}\cdot b_k$$
 ```{pyodide}
 print(f'Recall: c_68 = {c[68]}, s_68 = {s[68]}')
 
-print(f'a + im*b = {F[68]}')
+print(f'a + bj = {F[68]}')
 
 print(f'sqrt(2/T)*a = {np.sqrt(2/T)*F[68].real}')
 print(f'sqrt(2/T)*b = {np.sqrt(2/T)*F[68].imag}')
@@ -240,7 +238,7 @@ $$ \vec{s}^{(k)}\cdot\vec{c}^{(\ell)}
 = \frac{1}{N}'\sum_{i=0}^{N-1}\left[\sin\left(\frac{2\pi i (k-\ell)}{N}\right) + \sin\left(\frac{2\pi i(k+\ell)}{N}\right)\right] = 0\, .$$
 -->
 
-2. Write a script that transforms the output of the FFT algorithm (a list of `a+im*b`) into our list of coefficients `ck` and `sk`.
+2. Write a script that transforms the output of the FFT algorithm (a list of `a + bj`) into our list of coefficients `ck` and `sk`.
 Embed it in a function `my_DFT` that take a time series as input and returns our DFT as output.
 
 3. Let $\tilde{X}$ be the DFT of the time series $X$. 

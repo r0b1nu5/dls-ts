@@ -1,7 +1,7 @@
 import numpy as np
 
 def my_DFT(X):
-    N = len(X)/n
+    N = len(X)
 
     if N%2 == 0:
         X = X[:-1]
@@ -18,7 +18,7 @@ def my_DFT(X):
     return myF
 
 def my_DFT_amplitude(X):
-    N = len(X)\n
+    N = len(X)
 
     if N%2 == 0:
         X = X[:-1]

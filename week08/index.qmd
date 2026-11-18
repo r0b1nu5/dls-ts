@@ -54,4 +54,7 @@ The idea of a spectrogram is to compute the DFT of a signal on multiple, consecu
 *Remark: In the next class, we will see how to interpret the content of the DFT and of the spectrogram.*
 
 
+## Solution coming soon...
+<!-- ## [Solution](../solutions/week08-solution.ipynb)-->
+
 
