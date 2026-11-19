@@ -279,4 +279,4 @@ plt.show()
 Write a script that plots the amplitude spectrum from the output of your script computing the DFT.
 
 
-
+<!-- Solution added to [this file](../solutions/myDFT.py) -->
