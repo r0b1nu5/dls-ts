@@ -37,7 +37,7 @@ $$X = c_0\vec{c}^{(0)} + \sum_{k=1}^{(N-1)/2} \left(c_k\vec{c}^{(k)} + s_k\vec{s
 This approach works on paper, but would be very inefficient to implement in code. 
 Instead, as for our DFT, we will leverage the built-in inverse Fourier transform of Python. 
 
-[This script](./my_IDFT.py) exactly reverses the process of the function `my_DFT` from [these hands on](https://dls.hevs.ch/ts/week06)) and returns the original time series.
+[This script](./my_IDFT.py) exactly reverses the process of the function `my_DFT` from [these hands on](https://dls.hevs.ch/ts/week06) and returns the original time series.
 
 1. If needed, adapt this script so it reverses your own DFT from the cited hands on.
 
