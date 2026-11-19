@@ -1,6 +1,6 @@
 # Mock exam {.unnumbered}
 
-[Link to the mock exam.](../files/2627-mock-exam.pdf)
+[Link to the mock exam](../files/2627-mock-exam.pdf)
 
 [Link to the solutions](../files/2627-mock-exam-sol.pdf)
 
